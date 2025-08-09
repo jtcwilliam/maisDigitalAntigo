@@ -29,7 +29,7 @@ class Conexao
         try {
 
 
-            /*
+         
 
             //  servidor desenvolvimento
 
@@ -38,8 +38,8 @@ class Conexao
             $db = 'dbagenddev';
             $host = 'dbagenddev.mysql.dbaas.com.br';
 
+   /*
 
-  */
 
 
             //   servidor oficial
@@ -50,7 +50,7 @@ class Conexao
 
 
 
-
+  */
 
 
 

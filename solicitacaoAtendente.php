@@ -85,6 +85,20 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
                 </button>
             </div>
 
+            <!-- modal tela do atendente -->
+
+            <div class=" large reveal" id="modalManualAtendente" data-reveal style="padding: 60px   ;background-color: rgb(231, 228, 220);">
+
+ 
+                <div id="manualDIV"></div>
+
+
+
+                <button class="close-button" data-close aria-label="Close modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
 
         </div>
     </div>
@@ -158,18 +172,34 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
                 <legend>
                     <h4 id="" onclick="$('#retorno').foundation('open')" style="color: #56658E; "><b>Ações</b></h4>
                 </legend>
+
+                <div class="grid-x  grid-padding-x">
+                    <div class="small-1 cell" style="   display: inline; align-content: center; text-align: justify;color: #56658E">
+                        <h2><i class="fi-torsos-male-female large"></i></h2>
+                    </div>
+                    <div class="small-11 cell" style="display: inline; align-content: center; text-align: justify;color: #56658E">
+                        <a onclick="ajudaAtendente($('#idSolicitacao').val())">
+                            <h4>Quer uma Ajuda? </h4>
+                        </a>
+                    </div>
+                </div>
+
+
                 <div class="grid-x  grid-padding-x">
                     <div class="small-1 cell" style="   display: inline; align-content: center; text-align: justify;color: #56658E">
                         <h2><i class="fi-folder-add large"></i></h2>
                     </div>
                     <div class="small-11 cell" style="display: inline; align-content: center; text-align: justify;color: #56658E">
-
-
                         <a onclick="exbirArquivosDaSolicitacao($('#idSolicitacao').val())">
                             <h4>Arquivos da Solicitação </h4>
                         </a>
                     </div>
                 </div>
+
+
+
+
+
                 <div class="grid-x  grid-padding-x">
                     <div class="small-1 cell" style="   display: inline; align-content: center; text-align: justify;color: #56658E">
                         <h2><i class="fi-megaphone large"></i></h2>
@@ -268,7 +298,29 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
             });
         }
 
-        ''
+
+        function ajudaAtendente(solicitacao) {
+
+
+            var formData = {
+                solicitacao,
+                ajudaAtendente: '1'
+            }
+            $.ajax({
+                type: 'POST',
+                url: 'ajax/manualAtendenteController.php',
+                data: formData,
+                dataType: 'html',
+                encode: true
+
+            }).done(function(data) {
+                $('#modalManualAtendente').foundation('open');
+                $('#manualDIV').html(data);
+
+            });
+        }
+
+
 
         function apagarArquivosSolicitacao(idArquivo, nomeArquivo) {
 
@@ -320,7 +372,7 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
                 encode: true
             }).done(function(data) {
 
-                 
+
 
                 if (data.retorno == true) {
                     alert('Comunique-se enviado ao cidadão');

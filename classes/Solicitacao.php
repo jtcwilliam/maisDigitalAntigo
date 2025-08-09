@@ -394,6 +394,51 @@ class Solicitacao
     }
 
 
+      public function  pesquisaManualAtendente($idSolicitacao)
+    {
+        try {
+
+            $pdo = $this->getPdoConn();
+
+            $sql = " select * from linkCartaServico lcs inner join servicoDocumento sd on lcs.idLinkCartaServico = sd.idServico 
+            inner join documentos dc on dc.idDoc = sd.idDocumento 
+            inner join solicitacao sl on sl.assuntoSolicitacao = lcs.idlinkCartaServico
+             where servicoHabilitado is not null and sl.idsolicitacao =" . $idSolicitacao ;
+
+
+
+            $stmt = $pdo->prepare($sql);
+
+
+            $stmt->execute();
+
+            //$user = $stmt->fetchAll();
+
+            $retorno = array();
+
+            $dados = array();
+
+            $row = $stmt->fetchAll();
+
+            foreach ($row as $key => $value) {
+                $dados[] = $value;
+            }
+
+
+            if (!isset($dados)) {
+                $retorno['condicao'] = false;
+            }
+
+
+
+
+            return $dados;
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+
 
     public function  atribuirSolicitacaoAtendente()
     {
