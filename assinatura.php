@@ -40,9 +40,7 @@
 </head>
 
 <body style="background-color:rgb(216, 216, 219);">
-  <script>
-    alert('Vire o celular para a posição paisagem (ou seja, deite o celular)');
-  </script>
+
 
   <p><b>Assinatura Mais Digital</b></p>
 
@@ -55,7 +53,7 @@
   </div>
 
 
-  <div id="colherAssinatura">
+  <div id="colherAssinatura"  >
 
     <canvas id="signatureCanvas" width="700" height="150" style="background-color: white;"></canvas>
 
@@ -77,11 +75,63 @@
   </div>
 
 
+
+  <button onclick="rotate(this)" id="button" style="width: 100%; ">
+
+  </button>
+  <button onclick="screen.orientation.unlock()" style="display: none;">
+    Unlock
+  </button>
+
+
   <script>
     $(document).ready(function() {
       $('#infoSucesso').hide();
+      $('#colherAssinatura').hide()
+
+
+
+
     })
 
+
+
+    function updateLockButton() {
+      const lockButton = document.getElementById("button");
+      const newOrientation = getOppositeOrientation();
+      lockButton.textContent = `Clique aqui e faça a mesma assinatura do seu documento pessoal`;
+
+    }
+
+    function getOppositeOrientation() {
+      return screen
+        .orientation
+        .type
+        .startsWith("portrait") ? "landscape" : "portrait";
+    }
+
+    async function rotate(lockButton) {
+
+      $('#colherAssinatura').show();
+      $('#button').hide();
+      if (!document.fullscreenElement) {
+        await document.documentElement.requestFullscreen();
+      }
+      const newOrientation = getOppositeOrientation();
+      await screen.orientation.lock(newOrientation);
+      updateLockButton(lockButton);
+
+
+
+    }
+
+    screen.orientation.addEventListener("change", updateLockButton);
+
+    window.addEventListener("load", updateLockButton);
+
+
+
+    //sobre a assinatura
     function pegarAss() {
 
       var assinatura = $("#savedImage").attr("src");
@@ -112,6 +162,7 @@
           if (data.retorno == true) {
             $('#colherAssinatura').hide();
             $('#infoSucesso').show();
+            screen.orientation.unlock();
 
           }
         });
