@@ -289,7 +289,7 @@ class Solicitacao
         }
     }
 
-
+ 
     public function  consultarRequerimento($idRequerimento)
     {
         try {
@@ -651,7 +651,7 @@ class Solicitacao
 
 
 
-
+      
 
 
 
