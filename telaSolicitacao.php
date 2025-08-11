@@ -281,7 +281,7 @@ echo '</pre>';
                           $('#documentacao').hide(); $('#fieldSolicitacao').hide();
                            $('#escolha').css('color', 'rgba(8, 124, 4, 0.66)' );
                             $('#complemento').css('color', 'rgba(8, 124, 4, 0.66)' ); 
-                            $('#docsEstagio').css('color', 'rgba(8, 124, 4, 0.66)' );" style="  width: 100%; font-size: 1.3em; border-radius: 10px; ">Todos os arquivos foram anexados com sucesso! Clique aqui para assinatura da Solicitação</a></center>
+                            $('#docsEstagio').css('color', 'rgba(8, 124, 4, 0.66)' );" style="  width: 100%; font-size: 1.3em; border-radius: 10px; "> Clique aqui para fazer a assinatura da Solicitação</a></center>
 
                     </div>
                 </div>
