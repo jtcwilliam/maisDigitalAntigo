@@ -19,6 +19,7 @@ $dadosSolicitacao = $objSolicitacao->consultarRequerimento($_GET['codigoRequerim
 
 
  
+ 
 
  
 
@@ -151,7 +152,7 @@ file_put_contents($file, $data);
 
 
 // Adicionar imagem no PDF
-$pdf->Image($file, 60, 190, 90, 0, 'PNG');
+$pdf->Image($file, 60, 245, 90, 0, 'PNG');
 
 unlink($file);
 

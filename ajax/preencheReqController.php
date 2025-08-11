@@ -51,8 +51,8 @@ $objSolicitacao->setSolicitacao($_POST['txtSolicitacao']);
 $objSolicitacao->setBairro($_POST['txtBairro']);
 
 
-//
+ 
 
-$objSolicitacao->setsolicitante($_POST['idRequerimento']);
+$objSolicitacao->setCodigoRequerimento($_POST['idRequerimento']);
 
 $objSolicitacao->gravarRequerimento();

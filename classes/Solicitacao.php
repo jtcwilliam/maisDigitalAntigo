@@ -43,6 +43,9 @@ class Solicitacao
     private $numeroSol;
     private $complemento;
     private $bairro;
+    private $idRequerimento;
+    private $codigoRequerimento;
+    
 
 
     function __construct()
@@ -628,7 +631,7 @@ class Solicitacao
 
             $bairroMorador = $this->getBairro();
 
-            $nomeRandomico = $this->getsolicitante();
+            $nomeRandomico = $this->getCodigoRequerimento();
 
 
             $stmt->bindParam(1,  $nome, PDO::PARAM_LOB);
@@ -1269,6 +1272,46 @@ class Solicitacao
     public function setIdSolicitacao($idSolicitacao)
     {
         $this->idSolicitacao = $idSolicitacao;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of idRequerimento
+     */ 
+    public function getIdRequerimento()
+    {
+        return $this->idRequerimento;
+    }
+
+    /**
+     * Set the value of idRequerimento
+     *
+     * @return  self
+     */ 
+    public function setIdRequerimento($idRequerimento)
+    {
+        $this->idRequerimento = $idRequerimento;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of codigoRequerimento
+     */ 
+    public function getCodigoRequerimento()
+    {
+        return $this->codigoRequerimento;
+    }
+
+    /**
+     * Set the value of codigoRequerimento
+     *
+     * @return  self
+     */ 
+    public function setCodigoRequerimento($codigoRequerimento)
+    {
+        $this->codigoRequerimento = $codigoRequerimento;
 
         return $this;
     }
