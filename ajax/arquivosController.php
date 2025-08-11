@@ -110,7 +110,7 @@ if (isset($_POST['apagarArquivoAtendente'])) {
 
 
                 <a style="color: green; text-decoration: none; font-style: italic;"
-                    href="http://localhost:8888/maisDigital/carregarArquivoSolicitacao.php?idArquivo=<?= $_POST['idArquivo'] ?>" target="_blank">
+                    href="http://localhost:8888/testeDigitalPlus_agosto/carregarArquivoSolicitacao.php?idArquivo=<?= $_POST['idArquivo'] ?>" target="_blank">
                     <h2>Clique aqui para alterar o Arquivo <?= $_POST['nomeArquivo'] ?> </h2>
                 </a>
                 <br>

@@ -79,7 +79,7 @@ if (isset($_POST['comunicarSe']) &&  $_POST['comunicarSe'] == 'solicitarArquivo'
 
 
             <a style="color: green; text-decoration: none; font-style: italic;"
-                href="https://agendafacil.guarulhos.sp.gov.br/maisDigital/carregarArquivoSolicitacao.php?validador=inserirArquivo&trocaArquivo=<?=$codigoArquivoTroca?>&idTipoDocumento=<?= $_POST['codigoId'] ?>&idSolicitacao=<?= $_POST['solicitacao'] ?> " target="_blank">
+                href="https://agendafacil.guarulhos.sp.gov.br/testeDigitalPlus_agosto/carregarArquivoSolicitacao.php?validador=inserirArquivo&trocaArquivo=<?=$codigoArquivoTroca?>&idTipoDocumento=<?= $_POST['codigoId'] ?>&idSolicitacao=<?= $_POST['solicitacao'] ?> " target="_blank">
                 <h2>Clique aqui para enviar o Arquivo Solicitado </h2>
             </a>
             <br>
@@ -153,7 +153,7 @@ if (isset($_POST['comunicarSe']) &&  $_POST['comunicarSe'] == 'excluirArquivo') 
 
 
                 <a style="color: green; text-decoration: none; font-style: italic;"
-                    href="https://agendafacil.guarulhos.sp.gov.br//maisDigital/carregarArquivoSolicitacao.php?validador=Alterar&idTipoDocumento=<?= $_POST['codigoId'] ?>&idSolicitacao=<?= $_POST['solicitacao'] ?> " target="_blank">
+                    href="https://agendafacil.guarulhos.sp.gov.br//testeDigitalPlus_agosto/carregarArquivoSolicitacao.php?validador=Alterar&idTipoDocumento=<?= $_POST['codigoId'] ?>&idSolicitacao=<?= $_POST['solicitacao'] ?> " target="_blank">
                     <h2>Clique aqui para alterar o Arquivo <?= $dadosArquivo[0]['nomeArquivo'] ?> </h2>
                 </a>
                 <br>

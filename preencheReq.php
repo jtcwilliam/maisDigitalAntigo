@@ -220,12 +220,15 @@ include_once 'includes/head.php';
 
                                     <button type="submit" style="display: none;" onclick="inserirAssinaturaDoUsuario()">Enviar Imagem</button>
 
-                                    <button onclick="rotate(this)" id="button" style="width: 100%; ">
+                                    <div id="mostraRodarImagem">
 
-                                    </button>
-                                    <button onclick="screen.orientation.unlock()" style="display: none;">
-                                        Unlock
-                                    </button>
+                                        <button onclick="rotate(this)" id="button" style="width: 100%; ">
+
+                                        </button>
+                                        <button onclick="screen.orientation.unlock()" style="display: none;">
+                                            Unlock
+                                        </button>
+                                    </div>
 
                                 </div>
 
@@ -270,10 +273,58 @@ include_once 'includes/head.php';
 
 
         <script>
-            $('#dadosPessoais').show();
-            $('#endereco').hide();
-            $('#solicitacao').hide();
-            $('#assinatura').hide();
+            $(document).ready(function() {
+                $('#infoSucesso').hide();
+                $('#colherAssinatura').hide()
+
+                $('#dadosPessoais').show();
+                $('#endereco').hide();
+                $('#solicitacao').hide();
+                $('#assinatura').hide();
+
+
+                var browserName = '';
+
+                const userAgent = window.navigator.userAgent;
+
+                if (userAgent.indexOf("Chrome") > -1) {
+                    browserName = "Chrome";
+                } else if (userAgent.indexOf("Firefox") > -1) {
+                    browserName = "Firefox";
+                } else if (userAgent.indexOf("Safari") > -1) {
+                    browserName = "Safari";
+                } else if (userAgent.indexOf("MSIE") > -1 || userAgent.indexOf("Trident") > -1) {
+                    browserName = "Internet Explorer";
+                } else if (userAgent.indexOf("Edge") > -1) {
+                    browserName = "Edge";
+                } else {
+                    browserName = "Desconhecido";
+                }
+
+                if (browserName == 'Safari') {
+
+                    $('#mostraRodarImagem').html('<img src="imgs/rotatePhone.gif" /><br>Por favor, vire o celular para a posição horizontal!');
+
+                    screen.orientation.addEventListener('change', function() {
+
+                        if (window.innerWidth < window.innerHeight) {
+                            orientation = 90; // Paisagem
+
+                            $('#mostraRodarImagem').hide();
+                            $('#colherAssinatura').show();
+                        }
+
+                        if (window.innerWidth > window.innerHeight) {
+                            orientation = 90; // Paisagem
+
+                            $('#mostraRodarImagem').hide();
+                            $('#colherAssinatura').show();
+                        }
+
+
+                    });
+                }
+            })
 
 
 

@@ -53,7 +53,7 @@
   </div>
 
 
-  <div id="colherAssinatura"  >
+  <div id="colherAssinatura">
 
     <canvas id="signatureCanvas" width="700" height="150" style="background-color: white;"></canvas>
 
@@ -75,19 +75,63 @@
   </div>
 
 
+  <div id="mostraRodarImagem">
+    <button onclick="rotate(this)" id="button" style="width: 100%; ">
 
-  <button onclick="rotate(this)" id="button" style="width: 100%; ">
-
-  </button>
-  <button onclick="screen.orientation.unlock()" style="display: none;">
-    Unlock
-  </button>
+    </button>
+    <button onclick="screen.orientation.unlock()" style="display: none;">
+      Unlock
+    </button>
+  </div>
 
 
   <script>
     $(document).ready(function() {
       $('#infoSucesso').hide();
-      $('#colherAssinatura').hide()
+      $('#colherAssinatura').hide();
+
+      var browserName = '';
+
+      const userAgent = window.navigator.userAgent;
+
+      if (userAgent.indexOf("Chrome") > -1) {
+        browserName = "Chrome";
+      } else if (userAgent.indexOf("Firefox") > -1) {
+        browserName = "Firefox";
+      } else if (userAgent.indexOf("Safari") > -1) {
+        browserName = "Safari";
+      } else if (userAgent.indexOf("MSIE") > -1 || userAgent.indexOf("Trident") > -1) {
+        browserName = "Internet Explorer";
+      } else if (userAgent.indexOf("Edge") > -1) {
+        browserName = "Edge";
+      } else {
+        browserName = "Desconhecido";
+      }
+
+      if (browserName == 'Safari') {
+
+        $('#mostraRodarImagem').html('<img src="imgs/rotatePhone.gif" /><br>Por favor, vire o celular para a posição horizontal!');
+
+        screen.orientation.addEventListener('change', function() {
+
+          if (window.innerWidth < window.innerHeight) {
+            orientation = 90; // Paisagem
+
+            $('#mostraRodarImagem').hide();
+            $('#colherAssinatura').show();
+          }
+
+          if (window.innerWidth > window.innerHeight) {
+            orientation = 90; // Paisagem
+
+            $('#mostraRodarImagem').hide();
+            $('#colherAssinatura').show();
+          }
+
+
+        });
+      }
+
 
 
 
