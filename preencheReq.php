@@ -41,11 +41,11 @@ include_once 'includes/head.php';
 
 
 
-                <div class="grid-x grid-padding-x">
+                <div class="grid-x grid-padding-x" id="imagemLogo">
 
                     <div class="small-12 cell large-9">
 
-                    <input type="text"  id="idRequerimento" value="<?=$_GET['idRequerimento'] ?>" />
+                        <input type="text" style="display: none;" id="idRequerimento" value="<?= $_GET['idRequerimento'] ?>" />
                         <br>
                         <center><img src="imgs/gestaoPNG.png" style="width: 50%" /></center>
                     </div>
@@ -185,8 +185,8 @@ include_once 'includes/head.php';
 
 
                         <div class="small-12 cell ">
-                            <a class="button " style="width: 100%;"
-                                onclick="   $('#solicitacao').hide()  ;$('#assinatura').show() ">Clique aqui para assinar o Requerimento</a>
+                            <a class="button " style="width: 100%;" id="button"
+                                onclick=" $('#imagemLogo').hide()  ;rotate(this)  ;$('#solicitacao').hide()  ;$('#assinatura').show() ">Clique aqui para assinar o Requerimento</a>
                         </div>
 
                     </div>
@@ -199,33 +199,39 @@ include_once 'includes/head.php';
                             <label>Assinar o Documento
 
 
+
+
                                 <div id="colherAssinatura">
 
-                                    <canvas id="signatureCanvas" height="430" style="background-color: white; width: 100%;"></canvas>
+                                    <canvas id="signatureCanvas" width="700" height="150" style="background-color: white;"></canvas>
 
-                                    <input type="text" id="idSolicitacao" style="display: none;" />
-                                    <br>
-                                    <br>
+                                    <input type="text" id="idSolicitacao" style="display: none;" value="<?= $_GET['idSolicitacao'] ?>" />
 
-                                    <div class="grid-x grid-padding-x">
-                                        <div class="small-6   cell">
-                                            <button class="button" style="width:100% ;background-color: rgba(232, 91, 3, 1); border-radius: 10px; ; color: white;" onclick="clearCanvas()">Apagar</button>
-                                        </div>
-
-                                        <div class="small-6   cell">
-
-                                            <button class="button" style="width:100% ;background-color: rgba(4, 124, 0, 1);  border-radius: 10px; color: white;" onclick="saveSignature()">Assinar</button>
-
-                                        </div>
-
-
-                                        <img id="savedImage" style="display: none;" alt="Assinatura aparecerá aqui" />
-
-
-
-                                        <button type="submit" style="display: none;" onclick="inserirAssinaturaDoUsuario()">Enviar Imagem</button>
+                                    <div class="buttons">
+                                        <button style="background-color: rgb(30, 32, 37); border-radius: 10px; ; color: white;" onclick="clearCanvas()">Limpar</button>
+                                        <button style="background-color: rgb(30, 32, 37);  border-radius: 10px; color: white;" onclick="saveSignature()">Salvar</button>
 
                                     </div>
+
+
+                                    <img id="savedImage" style="display: none;" alt="Assinatura aparecerá aqui" />
+
+
+
+                                    <button type="submit" style="display: none;" onclick="inserirAssinaturaDoUsuario()">Enviar Imagem</button>
+
+                                    <button onclick="rotate(this)" id="button" style="width: 100%; ">
+
+                                    </button>
+                                    <button onclick="screen.orientation.unlock()" style="display: none;">
+                                        Unlock
+                                    </button>
+
+                                </div>
+
+
+
+
 
 
                             </label>
@@ -274,11 +280,43 @@ include_once 'includes/head.php';
             function pegarAss() {
 
                 var assinatura = $("#savedImage").attr("src");
+            }
 
+
+
+            function updateLockButton() {
+                const lockButton = document.getElementById("button");
+                const newOrientation = getOppositeOrientation();
+                lockButton.textContent = `Clique aqui e faça a mesma assinatura do seu documento pessoal`;
+
+            }
+
+            function getOppositeOrientation() {
+                return screen
+                    .orientation
+                    .type
+                    .startsWith("portrait") ? "landscape" : "portrait";
+            }
+
+            async function rotate(lockButton) {
+
+                $('#colherAssinatura').show();
+                $('#button').hide();
+                if (!document.fullscreenElement) {
+                    await document.documentElement.requestFullscreen();
+                }
+                const newOrientation = getOppositeOrientation();
+                await screen.orientation.lock(newOrientation);
+                updateLockButton(lockButton);
 
 
 
             }
+
+            screen.orientation.addEventListener("change", updateLockButton);
+
+            window.addEventListener("load", updateLockButton);
+
 
 
             function inserirAssinaturaDoUsuario() {
@@ -319,12 +357,14 @@ include_once 'includes/head.php';
                         if (data.retorno == true) {
                             $('#colherAssinatura').hide();
                             $('#infoSucesso').show();
+                            $('#imagemLogo').hide();
 
                         }
                     });
 
                 event.preventDefault();
             }
+
 
 
 
