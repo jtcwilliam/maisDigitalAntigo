@@ -98,15 +98,28 @@ if (isset($_POST['listarArquivosAtendente'])) {
 
         if (!empty($arquivos)) {
 
-            //
+            if ($arquivos[0]['assinadoDigital'] == 0) {
+                $assinaturaDigital = 'Não';
+                $statusArquivo = 1;
+            } else {
+                $assinaturaDigital = 'Sim';
+                $statusArquivo = 0;
+            }
+
+
 
             echo '  <tr ' . $linhaStatusArquivos . '>
                         <td width="15%"  ><b>' . $arquivos[0]['descricaoStatus'] . '</b> </td>
                         <td   ' . $linhaStatusArquivos . ' > <b>' . $arquivos[0]['nomeArquivo'] . '</b></td>
                         <td  ' . $linhaStatusArquivos . '>  <center><a    target="_blank" href="exibirArquivoSolicitacao.php?idArquivo=' . $arquivos[0]['idArquivo'] . '" >   <h4><i ' . $linhaStatusArquivos . ' class="fi-zoom-in large"></i></h4> </a> </center> </td>
                         <td  ' . $linhaStatusArquivos . '> <center>-</center>  </td>
+
                         <td  ' . $linhaStatusArquivos . '><center>    
                             <a  ' . $linhaStatusArquivos . ' onclick="$(\'#modalComunicaArquivo\').foundation(\'open\');    $(\'#nomeDoArquivoEnvio\').html(\'Substituir Arquivo  ' . $arquivos[0]['nomeArquivo'] . '\'); $(\'#envioTextoComuniqueSe\').val(\'excluirArquivo\');  $(\'#aquivoPraSolicitar\').val(' .   $arquivos[0]['idArquivo']  . ');        " ><h4><i class="fi-x large"></i></h4></a>
+                        </center> </td>
+
+                        <td  ' . $linhaStatusArquivos . '><center>    
+                            <a  ' . $linhaStatusArquivos . ' onclick="arquivoAssinaturaDigital(' .   $arquivos[0]['idArquivo']  . ',' . $statusArquivo . ');        " ><h4>' . $assinaturaDigital . '</h4></a>
                         </center> </td>
                     
                     

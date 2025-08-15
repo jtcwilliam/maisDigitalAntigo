@@ -89,7 +89,7 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
 
             <div class=" large reveal" id="modalManualAtendente" data-reveal style="padding: 60px   ;background-color: rgb(231, 228, 220);">
 
- 
+
                 <div id="manualDIV"></div>
 
 
@@ -128,6 +128,9 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
                                 </th>
                                 <th width="10%">
                                     <center>Alterar Arquivo</center>
+                                </th>
+                                <th width="10%">
+                                    <center>Assinado digitalmente</center>
                                 </th>
 
                             </tr>
@@ -317,6 +320,28 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
                 $('#modalManualAtendente').foundation('open');
                 $('#manualDIV').html(data);
 
+            });
+        }
+
+
+        function arquivoAssinaturaDigital(idArquivo, status) {
+
+
+            var formData = {
+                idArquivo,
+                status,
+                verificarAssinaturaDigital: '1'
+            }
+            $.ajax({
+                type: 'POST',
+                url: 'ajax/arquivosController.php',
+                data: formData,
+                dataType: 'html',
+                encode: true
+
+            }).done(function(data) {
+                    alert('Atualizado');
+                    exbirArquivosDaSolicitacao($('#idSolicitacao').val())
             });
         }
 

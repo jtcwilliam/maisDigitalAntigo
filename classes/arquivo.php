@@ -22,6 +22,7 @@ class Arquivo
     private $estiloArquivo;
     private $idTipoDocumento;
     private $codigoTrocaArquivo;
+    private $assinadoDigital;
 
     function __construct()
     {
@@ -87,7 +88,7 @@ class Arquivo
 
             $pdo = $this->getPdoConn();
 
-            $stmt = $pdo->prepare("  select  idArquivo ,nomeArquivo, tipoArquivo, idTipoDocumento, statusArquivo, st.descricaoStatus 
+            $stmt = $pdo->prepare("  select  idArquivo ,nomeArquivo, tipoArquivo, idTipoDocumento, statusArquivo, st.descricaoStatus, assinadoDigital 
              from arquivos ar inner join status st on ar.statusArquivo = st.idStatus  where idsolicitacao =" . $idSolicitacao . " 
                and  idTipoDocumento=" . $idTipoDocumento);
 
@@ -204,6 +205,26 @@ class Arquivo
     }
 
 
+
+    public function  consultarArquivoParaSolicitacaoTeste($idArquivo)
+    {
+        try {
+
+            $pdo = $this->getPdoConn();
+
+            $stmt = $pdo->prepare("  select   nomeArquivo, tipoArquivo, arquivo from arquivos where idArquivo =" . $idArquivo);
+
+            $stmt->execute();
+
+            $datasDisponiveis = $stmt->fetchAll();
+
+            return $datasDisponiveis;
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+
     public function  consultarQuantidadeArquivo($idSolicitacao)
     {
         try {
@@ -289,6 +310,41 @@ class Arquivo
 
             //corrigir isto aqui
             $stmt->bindParam(1,  $idArquivo, PDO::PARAM_LOB);
+
+
+
+            if ($stmt->execute()) {
+                return true;
+            }
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+
+    public function  informarAssinatura()
+    {
+        try {
+
+            $pdo = $this->getPdoConn();
+
+            //$pdo = new PDO("mysql:host='" . $host . "' ;dbname='" . $db . "', '" . $user, $password);
+            //    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            $idArquivo =   $this->getIdArquivo();
+            $assinadoDigital = $this->getAssinadoDigital();
+
+
+
+
+
+
+            $stmt = $pdo->prepare("  UPDATE arquivos set assinadoDigital = ?   where idArquivo = ? ");
+
+            //corrigir isto aqui
+
+            $stmt->bindParam(1,  $assinadoDigital, PDO::PARAM_INT);
+            $stmt->bindParam(2,  $idArquivo, PDO::PARAM_INT);
 
 
 
@@ -644,6 +700,26 @@ class Arquivo
     public function setCodigoTrocaArquivo($codigoTrocaArquivo)
     {
         $this->codigoTrocaArquivo = $codigoTrocaArquivo;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of assinadoDigital
+     */
+    public function getAssinadoDigital()
+    {
+        return $this->assinadoDigital;
+    }
+
+    /**
+     * Set the value of assinadoDigital
+     *
+     * @return  self
+     */
+    public function setAssinadoDigital($assinadoDigital)
+    {
+        $this->assinadoDigital = $assinadoDigital;
 
         return $this;
     }

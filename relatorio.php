@@ -1,5 +1,10 @@
 <?php
 
+
+ini_set('display_errors', 1);
+ini_set('display_startup_erros', 1);
+error_reporting(E_ALL);
+
 require('classes/fpdf186/fpdf.php');
 include_once 'classes/arquivo.php';
 require_once('classes/FPDI/src/autoload.php');
@@ -17,12 +22,8 @@ $dadosSolicitacao = $objArquivo->solicitarArquivoRelatorio($idSolicitacao);
 
 $arquivos = $objArquivo->consultarArquivoParaSolicitacao($idSolicitacao);
 
-
  
 
- 
- 
- 
 
 $mes = $dadosSolicitacao[0]['mes'];
 
@@ -101,6 +102,7 @@ $w = 0;
 foreach ($arquivos as $key => $value) {
 
     switch ($value['tipoArquivo']) {
+        
         case 'application/pdf':
             $pdf->AddPage();
             $pdf->SetXY(11, 145, $pdf->GetY());
@@ -109,7 +111,7 @@ foreach ($arquivos as $key => $value) {
             $pdf->SetFont('Arial', '', 13);
 
 
-            $pdf->WriteHTML("<p style='text-align: center'>" .iconv("UTF-8", "ISO-8859-1//TRANSLIT", $value['nomeArquivo']) . "</style> ");
+            $pdf->WriteHTML("<p style='text-align: center'>" . iconv("UTF-8", "ISO-8859-1//TRANSLIT", $value['nomeArquivo']) . "</style> ");
 
 
 
@@ -142,6 +144,7 @@ foreach ($arquivos as $key => $value) {
 
 
             break;
+        
 
         case 'image/png':
 

@@ -38,12 +38,14 @@ if (isset($_POST['criaCampoArquivo'])) {
 
 
             <div class=" small-12 large-12 cell" style="display: grid; align-items: center;">
-                <label><h5><b><i>"<?= $value['descricaoDoc'] ?>"</i></b></h5></label>
-                <input type="file" id="fileInput<?= $i ?>" name="file<?= $i ?>" class="button" style="background-color:#4c5e6a; height: 3em; " 
-                
-                 onchange="subirArquivo('file<?= $i ?>','fileInput<?= $i ?>', 'mensagem<?= $i ?>',   ' <?= $value['descricaoDoc'] ?> ', 'uploadButton<?= $i ?>', 'caixa<?= $i ?>', $('#idQuantidadeArquivoDoServico').val(),  $('#idTipoDocumento<?= $i ?>').val() )  ">
-                
-                
+                <label>
+                    <h5><b><i>"<?= $value['descricaoDoc'] ?>"</i></b></h5>
+                </label>
+                <input type="file" id="fileInput<?= $i ?>" name="file<?= $i ?>" class="button" style="background-color:#4c5e6a; height: 3em; "
+
+                    onchange="subirArquivo('file<?= $i ?>','fileInput<?= $i ?>', 'mensagem<?= $i ?>',   ' <?= $value['descricaoDoc'] ?> ', 'uploadButton<?= $i ?>', 'caixa<?= $i ?>', $('#idQuantidadeArquivoDoServico').val(),  $('#idTipoDocumento<?= $i ?>').val() )  ">
+
+
                 <p class="button success mensagemB " id="mensagem<?= $i ?>"> Arquivo Carregado com Sucesso</p>
 
             </div>
@@ -51,7 +53,7 @@ if (isset($_POST['criaCampoArquivo'])) {
                 <label>
                     <!-- campo que pega o tipo do documento para ser gravado no arquivo -->
                     <input type='hidden' id='idTipoDocumento<?= $i ?>' value='<?= $value['idDocumento']  ?>' />
-                    
+
                 </label>
             </div>
 
@@ -155,6 +157,17 @@ if (isset($_POST['apagarArquivoAtendente'])) {
     exit();
 }
 
+if (isset($_POST['verificarAssinaturaDigital'])) {
+
+    $objArquivo->setIdArquivo($_POST['idArquivo']);
+    $objArquivo->setAssinadoDigital($_POST['status']);
+
+
+    if ($objArquivo->informarAssinatura()) {
+        echo json_encode(array('retorno' => true));
+    }
+}
+
 
 if (isset($_POST['carregarArquivoApagadoPeloAtendenteSolicitante']) && $_POST['validador'] == 'Alterar') {
 
@@ -199,7 +212,7 @@ if (isset($_POST['carregarArquivoApagadoPeloAtendenteSolicitante']) && $_POST['v
 if (isset($_POST['carregarArquivoApagadoPeloAtendenteSolicitante']) && $_POST['validador'] == 'inserirArquivo') {
 
 
- 
+
 
     $tipo = $_FILES['file']['type'];
 

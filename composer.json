@@ -1,0 +1,20 @@
+{
+    "name": "dream/mais-digital",
+    "autoload": {
+        "psr-4": {
+            "Dream\\MaisDigital\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "william"
+        }
+    ],
+    "require": {
+            "setasign/fpdf": "1.8.*",
+            
+            "tecnickcom/tcpdf": "6.6.*",
+            "setasign/fpdi": "^2.5" 
+
+    }
+}
