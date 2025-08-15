@@ -20,7 +20,7 @@ $idSolicitacao = $_GET['idSolicitacao'];
 
 $dadosSolicitacao = $objArquivo->solicitarArquivoRelatorio($idSolicitacao);
 
-$arquivos = $objArquivo->consultarArquivoParaSolicitacao($idSolicitacao);
+$arquivos = $objArquivo->consultarArquivoParaSolicitacaoRelatorio($idSolicitacao);
 
  
 

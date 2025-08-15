@@ -204,6 +204,24 @@ class Arquivo
         }
     }
 
+    public function  consultarArquivoParaSolicitacaoRelatorio($idSolicitacao)
+    {
+        try {
+
+            $pdo = $this->getPdoConn();
+
+            $stmt = $pdo->prepare("  select   nomeArquivo, tipoArquivo, arquivo from arquivos where  assinadoDigital !=1 and  idsolicitacao =" . $idSolicitacao);
+
+            $stmt->execute();
+
+            $datasDisponiveis = $stmt->fetchAll();
+
+            return $datasDisponiveis;
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
 
 
     public function  consultarArquivoParaSolicitacaoTeste($idArquivo)
