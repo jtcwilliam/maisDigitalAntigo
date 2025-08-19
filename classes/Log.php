@@ -24,6 +24,7 @@ class Log
     private $nomePessoaLog;
 
     private $tipoPessoaLog;
+    private $idArquivo;
 
 
     function __construct()
@@ -94,17 +95,10 @@ class Log
     {
         try {
 
-
             $pdo = $this->getPdoConn();
 
             //$pdo = new PDO("mysql:host='" . $host . "' ;dbname='" . $db . "', '" . $user, $password);
             //    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-
-
-
-
-
 
             $usuarioLog =   $this->getNomePessoaLog();
             $nomeLog = $this->getNomeLog();
@@ -113,12 +107,9 @@ class Log
             $dataLog = $this->getDataLog();
             $tipoPessoa = $this->getTipoPessoaLog();
             $idSolicitacao = $this->getSolicitacao();
+            $idArquivo = $this->getIdArquivo();
 
-
-
-
-            $stmt = $pdo->prepare("  INSERT INTO  log (nomePessoaLog, nomeLog,textoLog , statusLog , dataLog, idSolicitacao ,tipoPessoaLog   )   values (?,?,?,?,?,?,?) ");
-
+            $stmt = $pdo->prepare("  INSERT INTO  log (nomePessoaLog, nomeLog,textoLog , statusLog , dataLog, idSolicitacao ,tipoPessoaLog, idArquivo   )   values (?,?,?,?,?,?,?,?) ");
 
             //corrigir isto aqui
             $stmt->bindParam(1,  $usuarioLog, PDO::PARAM_LOB); //
@@ -132,11 +123,10 @@ class Log
             $stmt->bindParam(5,  $dataLog, PDO::PARAM_LOB); //
 
             $stmt->bindParam(6,  $idSolicitacao, PDO::PARAM_LOB); //
+
             $stmt->bindParam(7,  $tipoPessoa, PDO::PARAM_LOB); //
 
-
-
-
+            $stmt->bindParam(8,  $idArquivo, PDO::PARAM_LOB); //
 
             if ($stmt->execute()) {
                 return true;
@@ -147,6 +137,42 @@ class Log
     }
 
 
+
+
+    public function  exibirLogs($idSolicitacao, $id)
+    {
+
+        try {
+
+            $pdo = $this->getPdoConn();
+
+            $stmt = $pdo->prepare("select * from log where statusLog != $id and  idSolicitacao = $idSolicitacao    ");
+
+            $stmt->execute();
+
+            $retorno = array();
+
+            $dados = array();
+
+            $row = $stmt->fetchAll();
+            $i = 0;
+
+            foreach ($row as $key => $value) {
+                $dados[] = $value;
+                $retorno['condicao'] = true;
+                $retorno['dados'] = $dados;
+                $i++;
+            }
+
+            if (empty($dados)) {
+                $retorno['condicao'] = false;
+            }
+
+            return $retorno;
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
 
 
 
@@ -428,6 +454,26 @@ class Log
     public function setSolicitacao($solicitacao)
     {
         $this->solicitacao = $solicitacao;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of idArquivo
+     */
+    public function getIdArquivo()
+    {
+        return $this->idArquivo;
+    }
+
+    /**
+     * Set the value of idArquivo
+     *
+     * @return  self
+     */
+    public function setIdArquivo($idArquivo)
+    {
+        $this->idArquivo = $idArquivo;
 
         return $this;
     }

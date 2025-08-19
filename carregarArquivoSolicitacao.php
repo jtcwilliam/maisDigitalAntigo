@@ -218,48 +218,12 @@ include_once 'includes/head.php';
                     <div class="small-12 large-12 cell" id="exibiAgendamento">
                         <br>
 
-                        <div id="todosContainers">
-
-                            <form id="fileUploadForm">
-                                <input class="button" style="background-color: #28536b;" type="file" id="fileInput" name="file" value="" />
-
-                                <center>
-                                    <input type="text" value="<?= $_GET['idTipoDocumento'] ?>" id="idArquivo" name="idArquivo" />
-                                </center>
-
-                                <center>
-                                    <input type="text" value="<?= $_GET['validador'] ?>" id="validador" name="validador" />
-                                </center>
-
-                                <center>
-                                    <input type="text" value="<?= $_GET['idSolicitacao'] ?>" id="idSolicitacao" name="idSolicitacao" />
-                                </center>
-                                <?php
-                                if (isset($_GET['trocaArquivo'])) {   ?>
-                                    <input type="text" value="<?= $_GET['trocaArquivo'] ?>" id="trocaArquivo" name="trocaArquivo" />
-                                <?php
-                                }   ?>
-
-                                <center>
-                                    <button class="button" type="button" id="uploadButton" style="width: 100%;" onclick="subirArquivo('file','fileInput')">Clique aqui para gravar o novo Arquivo</button>
-
-                                </center>
-
-                            </form>
+                        <div class=" grid-x grid-padding-x">
+                            <div class="small-12 large-12 cell" id="arquivosInseriveis" style="width: 100%;">
 
 
-
-
-
-
-
-
-
-
-
+                            </div>
                         </div>
-
-
 
 
 
@@ -344,8 +308,33 @@ include_once 'includes/head.php';
 
 
         })
+        criarCaixaArquivo(111);
 
-        function subirArquivo(arquivo, id) {
+        function criarCaixaArquivo(idSolicitacao) {
+
+            criaCampoArquivoComuniqueSeUnico = '1';
+
+            var formData = {
+                idSolicitacao,
+                criaCampoArquivoComuniqueSeUnico
+            };
+
+            $.ajax({
+                    type: 'POST',
+                    url: 'ajax/arquivosController.php',
+                    data: formData,
+                    dataType: 'html',
+                    encode: true
+                })
+                .done(function(data) {
+
+                    $('#arquivosInseriveis').html(data);
+
+                });
+        }
+
+
+        function subirArquivo(arquivo, id, idArquivo) {
             var formData = new FormData();
             var file = $(`#${id}`)[0].files[0];
 
@@ -357,11 +346,11 @@ include_once 'includes/head.php';
 
 
                 formData.append('carregarArquivoApagadoPeloAtendenteSolicitante', 1);
-                formData.append('idArquivo', $('#idArquivo').val());
-                formData.append('validador', $('#validador').val());
+                formData.append('idArquivo', idArquivo);
+
                 formData.append('idSolicitacao', $('#idSolicitacao').val());
-                
-                formData.append('trocaArquivo', $('#trocaArquivo').val());
+
+
 
                 $.ajax({
                     url: 'ajax/arquivosController.php', // Replace with your server endpoint
@@ -374,10 +363,11 @@ include_once 'includes/head.php';
                         console.log(response);
 
 
-                        //$(`#${id}`).attr('disabled', 'disabled');
+
 
                         if (response.retorno == true) {
-                            alert('O arquivo foi Gravado com Sucesso. Vamos dar andamento a sua solicitação');
+                            alert('O arquivo foi Gravado com Sucesso. Se você ja enviou todos os arquivos solicitados, nós vamos dar andamento a sua solicitação!');
+                            criarCaixaArquivo(111);
                         }
                     },
                     error: function(error) {

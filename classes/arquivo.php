@@ -49,7 +49,7 @@ class Arquivo
                                 assuntoSolicitacao from solicitacao sl inner join linkCartaServico lcs on sl.assuntoSolicitacao = lcs.idlinkCartaServico
                                 where idsolicitacao =  " . $idSolicitacao . ")");
 
-           $stmt->execute();
+            $stmt->execute();
 
             $datasDisponiveis = $stmt->fetchAll();
 
@@ -301,8 +301,21 @@ class Arquivo
 
 
 
+
+
             if ($stmt->execute()) {
-                return true;
+
+                $last = $pdo->prepare(" SELECT LAST_INSERT_ID()");
+
+                $last->execute();
+
+                $ultimoId = $last->fetchAll();
+
+
+                return json_encode(array('ultimoID' => $ultimoId, 'retorno' => true));
+
+
+                //return true;
             }
         } catch (PDOException $e) {
             echo 'Error: ' . $e->getMessage();
@@ -389,14 +402,20 @@ class Arquivo
             $arquivo = $this->getArquivo();
             $tipoArquivo = $this->getTipoArquivo();
 
-            $stmt = $pdo->prepare("  UPDATE arquivos set arquivo = ?, tipoArquivo=?,  statusArquivo='1' where idArquivo = ? ");
+            $stmt = $pdo->prepare("  UPDATE arquivos set arquivo = ?, tipoArquivo=?,  statusArquivo='1' where idArquivo = ?;
+             Update log set statusLog=1 where idArquivo =?  ");
+
+
 
             //corrigir isto aqui
             $stmt->bindParam(1,  $arquivo, PDO::PARAM_LOB);
             $stmt->bindParam(2,  $tipoArquivo, PDO::PARAM_STR);
             $stmt->bindParam(3,  $idArquivo, PDO::PARAM_INT);
+            $stmt->bindParam(4,  $idArquivo, PDO::PARAM_INT);
 
             if ($stmt->execute()) {
+
+
                 return true;
             }
         } catch (PDOException $e) {

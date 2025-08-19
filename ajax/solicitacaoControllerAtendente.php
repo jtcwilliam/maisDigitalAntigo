@@ -142,7 +142,8 @@ if (isset($_POST['listarArquivosAtendente'])) {
                                 </td>
                                 <td width="10%">
                                
-                                    <center><a onclick="  $(\'#acaoComuniqueSE\').val(\'solicitarArquivo\');    $(\'#aquivoPraSolicitar\').val(' .  $value['idDocumento'] . ');  $(\'#modalComunicaArquivo\').foundation(\'open\');">  <h4><i class="fi-megaphone large"></i></h4></a> </center> 
+                                    <center><a onclick="  $(\'#acaoComuniqueSE\').val(\'solicitarArquivo\');  $(\'#nomeDoArquivoEnvio\').html(\'Solicitar Arquivo  ' .$value['descricaoDoc'] . '\'); 
+                                      $(\'#aquivoPraSolicitar\').val(' .  $value['idDocumento'] . ');  $(\'#modalComunicaArquivo\').foundation(\'open\');">  <h4><i class="fi-megaphone large"></i></h4></a> </center> 
                                 </td>
                                 <td width="10%">
                                     <center> - </center>

@@ -19,13 +19,6 @@ $objLog = new Log();
 $objDocumentos = new Documentos();
 
 
-
-
-
-
-
-
-//
 if (isset($_POST['acaoComuniqueSE']) &&  $_POST['acaoComuniqueSE'] == 'solicitarArquivo') {
 
     $tipoDocumento = $objDocumentos->trazerDocumentos(' where idDoc=' . $_POST['codigoId']);
@@ -44,7 +37,11 @@ if (isset($_POST['acaoComuniqueSE']) &&  $_POST['acaoComuniqueSE'] == 'solicitar
     $objArquivo->setAssinadoDigital('0');
 
     $carregarFinalizaUP = 1;
-    if ($objArquivo->inserirArquivos()) {
+
+
+
+
+    if ($dadosDoInsert = $objArquivo->inserirArquivos()) {
 
         if (!session_start()) {
             session_start();
@@ -52,11 +49,19 @@ if (isset($_POST['acaoComuniqueSE']) &&  $_POST['acaoComuniqueSE'] == 'solicitar
 
 
 
+        $arr = json_decode($dadosDoInsert, true);
+
+
+        
+        //retorno para pegar o ultimoID
+        $idArquivoParaLog =   $arr['ultimoID'][0]['LAST_INSERT_ID()'];
+
+
 
         $usuarioLog = $_SESSION['usuarioLogado']['dados'][0]['nome'];
         $nomeLog = 'Solicitamos o Envio do Arquivo ' . $tipoDocumento[0]['descricaoDoc'];
         $textoLog = $_POST['mensagemComuniqueArquivo'];
-        $statusLog = '13';
+        $statusLog = '12';
         setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
         $dataLog = date('Y-m-d H:i:s');
@@ -69,22 +74,17 @@ if (isset($_POST['acaoComuniqueSE']) &&  $_POST['acaoComuniqueSE'] == 'solicitar
         $objLog->setDataLog($dataLog);
         $objLog->setTipoPessoaLog($_SESSION['usuarioLogado']['dados'][0]['tipoPessoa']);
         $objLog->setSolicitacao($_POST['solicitacao']);
+        $objLog->setIdArquivo($idArquivoParaLog);
 
-        $objLog->inserirLog();
-
-
-
-        echo json_encode(array('retorno' => true));
+        if ($objLog->inserirLog()) {
+               echo json_encode(array('retorno' => true));
+        }
     }
 }
 
 
 
 if (isset($_POST['acaoComuniqueSE']) &&  $_POST['acaoComuniqueSE'] == 'alterarArquivo') {
-
-
-
-
 
     $objArquivo->setIdArquivo($_POST['codigoId']);
     if ($objArquivo->apagarArquivo()) {
@@ -93,16 +93,13 @@ if (isset($_POST['acaoComuniqueSE']) &&  $_POST['acaoComuniqueSE'] == 'alterarAr
             session_start();
         }
 
-
-
-
         //solicta dados do arquivo para gravar  no log
         $dadosArquivo = $objArquivo->dadosArquivoSolicitante($_POST['codigoId']);
 
         $usuarioLog = $_SESSION['usuarioLogado']['dados'][0]['nome'];
         $nomeLog = 'Alteração do Arquivo' . $dadosArquivo[0]['nomeArquivo'];
         $textoLog = $_POST['mensagemComuniqueArquivo'];
-        $statusLog = '13';
+        $statusLog = '12';
 
         setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
@@ -117,19 +114,13 @@ if (isset($_POST['acaoComuniqueSE']) &&  $_POST['acaoComuniqueSE'] == 'alterarAr
         $objLog->setTipoPessoaLog($_SESSION['usuarioLogado']['dados'][0]['tipoPessoa']);
         $objLog->setSolicitacao($_POST['solicitacao']);
 
-        $objLog->inserirLog();
+        if ($objLog->inserirLog()) {
+            echo json_encode(array('retorno' => true));
+        }
 
 
 
 
-        echo $nomeLog . '<br>';
-        echo $textoLog . '<br>';
-
-
-
-        echo '<pre>';
-        print_r($dadosArquivo);
-        echo '</pre>';
 
 
         //criar na classe log o metodo que insere o log aqui, que vem dessa consulta de dados ai, mais o id da ação do log
@@ -154,4 +145,11 @@ if (isset($_POST['acaoComuniqueSE']) &&  $_POST['acaoComuniqueSE'] == 'alterarAr
 
 
     exit();
+}
+
+
+if(isset($_POST['enviarEmail'])){
+
+   
+
 }

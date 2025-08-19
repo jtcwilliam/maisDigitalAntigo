@@ -44,25 +44,15 @@ $objArquivo->setArquivo($file);
 $objArquivo->setIdTipoDocumento($idTipoDocumento);
 
 $carregarFinalizaUP = 1;
-if ($objArquivo->inserirArquivos()) {
+
+$dadosDoInsert = $objArquivo->inserirArquivos();
+
+$arr = json_decode($dadosDoInsert, true);
 
 
+if ($arr['retorno'] == 1) {
 
-    /*
-    $objQtdeArquivo = $objArquivo->consultarQuantidadeArquivo($_POST['idSolicitacao']);
-    $objArquivo = count($objQtdeArquivo);
 
-    $qtdeArquivosServico =  $_POST['idQuantidadeArquivoDoServico'];
-
-    if ($objArquivo == $qtdeArquivosServico) {
-        $carregarFinalizaUP = true;
-    }else{
-        $carregarFinalizaUP = false;
-    }
-
-    echo json_encode(array('retorno' => true, 'carregarBotaoFinaliza' => $carregarFinalizaUP));
-
-    */
 
     echo json_encode(array('retorno' => true));
 }

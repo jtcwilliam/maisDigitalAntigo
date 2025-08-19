@@ -41,8 +41,8 @@ class Documentos
 
             $sql = "select  * from documentos ";
 
-            if($filtro != null){
-                $sql.= $filtro;
+            if ($filtro != null) {
+                $sql .= $filtro;
             }
 
 
@@ -91,7 +91,7 @@ class Documentos
 
             $sql = "select * from servicoDocumento dc inner join linkCartaServico sv on sv.idlinkCartaServico = dc.idServico  inner join documentos dcm 
             on dcm.idDoc =  idDocumento
-            where idservico =".$filtro;
+            where idservico =" . $filtro;
 
 
             $stmt = $pdo->prepare($sql);
@@ -127,6 +127,45 @@ class Documentos
         }
     }
 
+
+    public function  montarArquivosDoComuniqueSe($idSolicitacao)
+    {
+        try {
+
+
+            $pdo = $this->getPdoConn();
+
+            $sql = "select idArquivo,nomeArquivo from arquivos where idsolicitacao =" . $idSolicitacao . "  and  statusArquivo in (12, 13) ";
+
+            $stmt = $pdo->prepare($sql);
+
+            $stmt->execute();
+
+            //$user = $stmt->fetchAll();
+
+            $retorno = array();
+
+            $dados = array();
+
+            $row = $stmt->fetchAll();
+
+            foreach ($row as $key => $value) {
+                $dados[] = $value;
+            }
+
+
+            if (!isset($dados)) {
+                $retorno['condicao'] = false;
+            }
+
+
+
+
+            return $dados;
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
 
 
 
