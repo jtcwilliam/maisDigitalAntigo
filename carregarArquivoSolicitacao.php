@@ -224,19 +224,19 @@ include_once 'includes/head.php';
                                 <input class="button" style="background-color: #28536b;" type="file" id="fileInput" name="file" value="" />
 
                                 <center>
-                                    <input type="hidden" value="<?= $_GET['idTipoDocumento'] ?>" id="idArquivo" name="idArquivo" />
+                                    <input type="text" value="<?= $_GET['idTipoDocumento'] ?>" id="idArquivo" name="idArquivo" />
                                 </center>
 
                                 <center>
-                                    <input type="hidden" value="<?= $_GET['validador'] ?>" id="validador" name="validador" />
+                                    <input type="text" value="<?= $_GET['validador'] ?>" id="validador" name="validador" />
                                 </center>
 
                                 <center>
-                                    <input type="hidden" value="<?= $_GET['idSolicitacao'] ?>" id="idSolicitacao" name="idSolicitacao" />
+                                    <input type="text" value="<?= $_GET['idSolicitacao'] ?>" id="idSolicitacao" name="idSolicitacao" />
                                 </center>
                                 <?php
                                 if (isset($_GET['trocaArquivo'])) {   ?>
-                                    <input type="hidden" value="<?= $_GET['trocaArquivo'] ?>" id="trocaArquivo" name="trocaArquivo" />
+                                    <input type="text" value="<?= $_GET['trocaArquivo'] ?>" id="trocaArquivo" name="trocaArquivo" />
                                 <?php
                                 }   ?>
 
@@ -360,6 +360,7 @@ include_once 'includes/head.php';
                 formData.append('idArquivo', $('#idArquivo').val());
                 formData.append('validador', $('#validador').val());
                 formData.append('idSolicitacao', $('#idSolicitacao').val());
+                
                 formData.append('trocaArquivo', $('#trocaArquivo').val());
 
                 $.ajax({

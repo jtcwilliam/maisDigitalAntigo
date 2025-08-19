@@ -115,7 +115,11 @@ if (isset($_POST['listarArquivosAtendente'])) {
                         <td  ' . $linhaStatusArquivos . '> <center>-</center>  </td>
 
                         <td  ' . $linhaStatusArquivos . '><center>    
-                            <a  ' . $linhaStatusArquivos . ' onclick="$(\'#modalComunicaArquivo\').foundation(\'open\');    $(\'#nomeDoArquivoEnvio\').html(\'Substituir Arquivo  ' . $arquivos[0]['nomeArquivo'] . '\'); $(\'#envioTextoComuniqueSe\').val(\'excluirArquivo\');  $(\'#aquivoPraSolicitar\').val(' .   $arquivos[0]['idArquivo']  . ');        " ><h4><i class="fi-x large"></i></h4></a>
+                            <a  ' . $linhaStatusArquivos . 
+                            ' onclick="$(\'#modalComunicaArquivo\').foundation(\'open\');  
+                              $(\'#nomeDoArquivoEnvio\').html(\'Substituir Arquivo  ' . $arquivos[0]['nomeArquivo'] . '\'); 
+                              $(\'#acaoComuniqueSE\').val(\'alterarArquivo\');  $(\'#aquivoPraSolicitar\').val(' .   $arquivos[0]['idArquivo']  . ');    
+                                  " ><h4><i class="fi-x large"></i></h4></a>
                         </center> </td>
 
                         <td  ' . $linhaStatusArquivos . '><center>    
@@ -138,7 +142,7 @@ if (isset($_POST['listarArquivosAtendente'])) {
                                 </td>
                                 <td width="10%">
                                
-                                    <center><a onclick="  $(\'#envioTextoComuniqueSe\').val(\'solicitarArquivo\');  $(\'#nomeDoArquivoEnvio\').html(\'Solicitar Arquivo  ' .  $value['descricaoDoc'] . '\');   $(\'#nomeTipoArquivoTxt\').val(\'' .  $value['descricaoDoc'] . '\')   ; $(\'#aquivoPraSolicitar\').val(' .  $value['idDocumento'] . ');  $(\'#modalComunicaArquivo\').foundation(\'open\');">  <h4><i class="fi-megaphone large"></i></h4></a> </center> 
+                                    <center><a onclick="  $(\'#acaoComuniqueSE\').val(\'solicitarArquivo\');    $(\'#aquivoPraSolicitar\').val(' .  $value['idDocumento'] . ');  $(\'#modalComunicaArquivo\').foundation(\'open\');">  <h4><i class="fi-megaphone large"></i></h4></a> </center> 
                                 </td>
                                 <td width="10%">
                                     <center> - </center>

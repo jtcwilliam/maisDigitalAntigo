@@ -71,9 +71,12 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
 
                 <h1>Comunicado ao Cidadão</h1>
                 <h4> <b><i><span id='nomeDoArquivoEnvio'></span></i></b></h4>
-                <input type="hidden" id="aquivoPraSolicitar" />
-                <input type="hidden" id="nomeTipoArquivoTxt" />
-                <input type="hidden" id="envioTextoComuniqueSe" />
+
+                <!-- id de arquivo -->
+                <input type="text" id="aquivoPraSolicitar" />
+
+                <!-- flag com ação para comunique-se -->
+                <input type="text" id="acaoComuniqueSE" />
 
 
                 <textarea rows="5" id="mensagemComuniqueArquivo"></textarea>
@@ -340,8 +343,8 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
                 encode: true
 
             }).done(function(data) {
-                    alert('Atualizado');
-                    exbirArquivosDaSolicitacao($('#idSolicitacao').val())
+                alert('Atualizado');
+                exbirArquivosDaSolicitacao($('#idSolicitacao').val())
             });
         }
 
@@ -381,23 +384,30 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
             var solicitacao = $('#idSolicitacao').val();
 
             var formData = {
-                solicitacao: solicitacao,
-                nomeTipoArquivoTxt: $('#nomeTipoArquivoTxt').val(),
-                txtEmailParaEnvioArquivo: $('#txtEmailParaEnvioArquivo').val(),
-                codigoId: $('#aquivoPraSolicitar').val(), //codigo id do arquivo
-                mensagemComuniqueArquivo: $('#mensagemComuniqueArquivo').val(),
-                comunicarSe: $('#envioTextoComuniqueSe').val()
+
+
+                //id da Solicitacao
+                solicitacao,
+
+                codigoId: $('#aquivoPraSolicitar').val(), //codigo id do arquivo para alteracao de arquivo  // ou codigo do tipo de documento para solicitação de arquivo
+
+                acaoComuniqueSE: $('#acaoComuniqueSE').val(),
+
+                mensagemComuniqueArquivo: $('#mensagemComuniqueArquivo').val()
+
             }
 
             $.ajax({
                 type: 'POST',
                 url: 'ajax/comuniqueSeController.php',
                 data: formData,
-                dataType: 'json',
+                dataType: 'html',
                 encode: true
             }).done(function(data) {
 
 
+                    console.log(data);
+                    
 
                 if (data.retorno == true) {
                     alert('Comunique-se enviado ao cidadão');

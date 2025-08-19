@@ -172,33 +172,42 @@ if (isset($_POST['verificarAssinaturaDigital'])) {
 if (isset($_POST['carregarArquivoApagadoPeloAtendenteSolicitante']) && $_POST['validador'] == 'Alterar') {
 
 
+
+
+
+
     $tipo = $_FILES['file']['type'];
 
+    $nomeArquivo = $_POST['nomeArquivo'];
+    $nomeArquivo = 'nome de arquivo';
 
+
+
+    include_once '../classes/Sanitizar.php';
 
 
     $file = file_get_contents($_FILES['file']['tmp_name']);
 
+    $arquivoTipo =  $_FILES['file']['type'];
+
+    //inserindo com tipoDocumentoErrado
+    $idTipoDocumento = '49';
 
 
+    $objArquivo->setTipoArquivo($arquivoTipo);
 
+    $objArquivo->setNomeArquivo($nomeArquivo);
 
-    $objArquivo->setTipoArquivo($tipo);
+    $objArquivo->setIdSolicitacao($_POST['idSolicitacao']);
 
-    $objArquivo->setIdArquivo($_POST['idArquivo']);
+    $objArquivo->setStatusArquivo('1');
 
     $objArquivo->setArquivo($file);
 
-
-
-
-
-
-
-
+    $objArquivo->setIdTipoDocumento($idTipoDocumento);
 
     $carregarFinalizaUP = 1;
-    if ($objArquivo->atualizarAquivoSolicitacao()) {
+    if ($objArquivo->inserirArquivos()) {
 
 
 

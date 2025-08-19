@@ -8,185 +8,146 @@ error_reporting(E_ALL);
 include '../classes/Envio.php';
 include '../classes/Solicitacao.php';
 include '../classes/arquivo.php';
+include '../classes/Documentos.php';
+include '../classes/Log.php';
 
 
 $objEnvio = new Envio();
 $objSolicitacao = new Solicitacao();
 $objArquivo  = new Arquivo();
+$objLog = new Log();
+$objDocumentos = new Documentos();
+
+
+
+
+
 
 
 
 //
-if (isset($_POST['comunicarSe']) &&  $_POST['comunicarSe'] == 'solicitarArquivo') {
+if (isset($_POST['acaoComuniqueSE']) &&  $_POST['acaoComuniqueSE'] == 'solicitarArquivo') {
 
+    $tipoDocumento = $objDocumentos->trazerDocumentos(' where idDoc=' . $_POST['codigoId']);
 
+    $objArquivo->setTipoArquivo('Indefinido');
 
+    $objArquivo->setNomeArquivo($tipoDocumento[0]['descricaoDoc']);
 
-
-    //codigo para ajudar a identificar o arquivo a ser trocado;
-    $codigoArquivoTroca = rand();
-
-
-
-    $objArquivo->setNomeArquivo($_POST['nomeTipoArquivoTxt']);
-    $objArquivo->setTipoArquivo($codigoArquivoTroca);
     $objArquivo->setIdSolicitacao($_POST['solicitacao']);
-    $objArquivo->setStatusArquivo(12);
-    $objArquivo->setIdTipoDocumento($_POST['codigoId']);  //
 
+    $objArquivo->setStatusArquivo('12');
 
+    $objArquivo->setArquivo('Arquivo vazio');
 
+    $objArquivo->setIdTipoDocumento($tipoDocumento[0]['idDoc']);
+    $objArquivo->setAssinadoDigital('0');
 
+    $carregarFinalizaUP = 1;
     if ($objArquivo->inserirArquivos()) {
 
-        $objSolicitacao->setIdSolicitacao($_POST['solicitacao']);
-        $objSolicitacao->setStatusSolicitacao('12');
-
-        $objSolicitacao->mudarStatusSolicitacao();
-    }
+        if (!session_start()) {
+            session_start();
+        }
 
 
 
 
-    $objEnvio->setAssunto('Envio do arquivo ' . $_POST['nomeTipoArquivoTxt'] . '. ');
+        $usuarioLog = $_SESSION['usuarioLogado']['dados'][0]['nome'];
+        $nomeLog = 'Solicitamos o Envio do Arquivo ' . $tipoDocumento[0]['descricaoDoc'];
+        $textoLog = $_POST['mensagemComuniqueArquivo'];
+        $statusLog = '13';
+        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+        date_default_timezone_set('America/Sao_Paulo');
+        $dataLog = date('Y-m-d H:i:s');
 
 
-    ob_start();
+        $objLog->setNomePessoaLog($usuarioLog);
+        $objLog->setNomeLog($nomeLog);
+        $objLog->setTextoLog($textoLog);
+        $objLog->setStatusLog($statusLog);
+        $objLog->setDataLog($dataLog);
+        $objLog->setTipoPessoaLog($_SESSION['usuarioLogado']['dados'][0]['tipoPessoa']);
+        $objLog->setSolicitacao($_POST['solicitacao']);
 
-?>
-    <!DOCTYPE html>
-    <html lang="en">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    </head>
-
-    <body style="font-family: Arial, Helvetica, sans-serif;">
-        <center>
-            <h2> Somos Equipe Mais Digital da Prefeitura de Guarulhos </h2>
-
-            <h3> Por Favor, envie o arquivo <b><i><?= $_POST['nomeTipoArquivoTxt'] ?></i></b> </h3>
-
-            <p style="font-size: 1.2em;"><?= $_POST['mensagemComuniqueArquivo'] ?></p>
-            <br>Clique no link que enviamos neste email para fazer a
-            alteração adequada e prosseguirmos para a conclusão de sua solicitação<br> <b>Observação:</b> Está solicitação permanecerá
-            sem prosseguimento, até que você faça esta correção.
-            </p>
+        $objLog->inserirLog();
 
 
-
-
-            <a style="color: green; text-decoration: none; font-style: italic;"
-                href="https://agendafacil.guarulhos.sp.gov.br/testeDigitalPlus_agosto/carregarArquivoSolicitacao.php?validador=inserirArquivo&trocaArquivo=<?=$codigoArquivoTroca?>&idTipoDocumento=<?= $_POST['codigoId'] ?>&idSolicitacao=<?= $_POST['solicitacao'] ?> " target="_blank">
-                <h2>Clique aqui para enviar o Arquivo Solicitado </h2>
-            </a>
-            <br>
-
-            <h4> Estamos á Disposição!<br>
-
-                <b>Equipe Mais Digital</b>
-                <h2> Prefeitura de Guarulhos</h2>
-            </h4>
-
-        </center>
-    </body>
-
-    </html>
-    <?php
-    $dados = ob_get_contents();
-    ob_end_clean();
-
-
-
-    $objEnvio->setConteudo($dados);
-    $objEnvio->setDestinatario($_POST['txtEmailParaEnvioArquivo']);
-
-    if ($objEnvio->envioEmail()) {
 
         echo json_encode(array('retorno' => true));
     }
 }
 
 
-if (isset($_POST['comunicarSe']) &&  $_POST['comunicarSe'] == 'excluirArquivo') {
+
+if (isset($_POST['acaoComuniqueSE']) &&  $_POST['acaoComuniqueSE'] == 'alterarArquivo') {
 
 
-    include_once '../classes/arquivo.php';
 
 
-    $objArquivo = new Arquivo();
 
     $objArquivo->setIdArquivo($_POST['codigoId']);
     if ($objArquivo->apagarArquivo()) {
 
+        if (!session_start()) {
+            session_start();
+        }
+
+
+
+
+        //solicta dados do arquivo para gravar  no log
         $dadosArquivo = $objArquivo->dadosArquivoSolicitante($_POST['codigoId']);
 
-        ob_start();
+        $usuarioLog = $_SESSION['usuarioLogado']['dados'][0]['nome'];
+        $nomeLog = 'Alteração do Arquivo' . $dadosArquivo[0]['nomeArquivo'];
+        $textoLog = $_POST['mensagemComuniqueArquivo'];
+        $statusLog = '13';
 
-    ?>
-        <!DOCTYPE html>
-        <html lang="en">
-
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        </head>
-
-        <body style="font-family: Arial, Helvetica, sans-serif;">
-            <center>
-                <h2>Olá <?= $dadosArquivo[0]['nomePessoa'] ?> Somos Equipe Mais Digital da Prefeitura de Guarulhos </h2>
-
-                <p style="font-size: 1.2em;">O arquivo <b><?= $dadosArquivo[0]['nomeArquivo'] ?></b>, anexo a sua solicitação precisa ser substituido!</p>
-
-                <p style="font-size: 1.2em;"><?= $_POST['mensagemComuniqueArquivo'] ?></p>
+        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+        date_default_timezone_set('America/Sao_Paulo');
+        $dataLog = date('Y-m-d H:i:s');
 
 
-                <br>Clique no link que enviamos neste email para fazer a
-                alteração adequada e prosseguirmos para a conclusão de sua solicitação<br> <b>Observação:</b> Está solicitação permanecerá
-                sem prosseguimento, até que você faça esta correção.
-                </p>
+        $objLog->setNomePessoaLog($usuarioLog);
+        $objLog->setNomeLog($nomeLog);
+        $objLog->setTextoLog($textoLog);
+        $objLog->setStatusLog($statusLog);
+        $objLog->setDataLog($dataLog);
+        $objLog->setTipoPessoaLog($_SESSION['usuarioLogado']['dados'][0]['tipoPessoa']);
+        $objLog->setSolicitacao($_POST['solicitacao']);
+
+        $objLog->inserirLog();
 
 
 
 
-                <a style="color: green; text-decoration: none; font-style: italic;"
-                    href="https://agendafacil.guarulhos.sp.gov.br//testeDigitalPlus_agosto/carregarArquivoSolicitacao.php?validador=Alterar&idTipoDocumento=<?= $_POST['codigoId'] ?>&idSolicitacao=<?= $_POST['solicitacao'] ?> " target="_blank">
-                    <h2>Clique aqui para alterar o Arquivo <?= $dadosArquivo[0]['nomeArquivo'] ?> </h2>
-                </a>
-                <br>
-
-                <h4> Estamos á Disposição!<br>
-
-                    <b>Equipe Mais Digital</b>
-                    <h2> Prefeitura de Guarulhos</h2>
-                </h4>
+        echo $nomeLog . '<br>';
+        echo $textoLog . '<br>';
 
 
 
+        echo '<pre>';
+        print_r($dadosArquivo);
+        echo '</pre>';
 
 
-            </center>
-        </body>
+        //criar na classe log o metodo que insere o log aqui, que vem dessa consulta de dados ai, mais o id da ação do log
+        // e a mensagem do comunique-se
+        //criar um status de comunique-se e arquivo pendente de atualização pelo cidadão
+        //terá um botão na tabela com arquivos, com a informação (atualizar comunique-se)
+        //nessa hora ele roda essa tabela e verifica quais estão com esse status
 
-        </html>
-<?php
-        $dados = ob_get_contents();
-        ob_end_clean();
+
+        //quando o cidadão enviar o arquivo para a tabela arquivos, atualiza aqui para status ativo (1)
+        //ou seja, grava o arquivo lá, atualiza aqui...
 
 
 
 
-        $objEnvio->setDestinatario($_POST['txtEmailParaEnvioArquivo']);
-        $objEnvio->setAssunto('Alteração de Arquivo na sua solicitação');
-        $objEnvio->setConteudo($dados);
 
-        if ($objEnvio->envioEmail()) {
 
-            echo json_encode(array('retorno' => true));
-        }
+        exit();
     }
 
 

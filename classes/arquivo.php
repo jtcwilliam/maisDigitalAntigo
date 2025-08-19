@@ -49,7 +49,7 @@ class Arquivo
                                 assuntoSolicitacao from solicitacao sl inner join linkCartaServico lcs on sl.assuntoSolicitacao = lcs.idlinkCartaServico
                                 where idsolicitacao =  " . $idSolicitacao . ")");
 
-            $stmt->execute();
+           $stmt->execute();
 
             $datasDisponiveis = $stmt->fetchAll();
 
@@ -113,7 +113,7 @@ class Arquivo
 
             $pdo = $this->getPdoConn();
 
-            $stmt = $pdo->prepare(" select  sl.solicitante, ps.nomePessoa ,  nomeArquivo from solicitacao sl inner join pessoas ps on ps.idPessoas = sl.solicitante 
+            $stmt = $pdo->prepare(" select  ar.idArquivo ,sl.solicitante, ps.nomePessoa ,  nomeArquivo from solicitacao sl inner join pessoas ps on ps.idPessoas = sl.solicitante 
  INNER join arquivos ar on ar.idSolicitacao  = sl.idsolicitacao where ar.idArquivo =" . $idArquivo);
 
 
@@ -282,10 +282,11 @@ class Arquivo
             $idSolicitacao = $this->getIdSolicitacao();
             $statusArquivo = $this->getStatusArquivo();
             $idTipoDocumento = $this->getIdTipoDocumento();
+            $assinadoDigital = $this->getAssinadoDigital();
 
 
 
-            $stmt = $pdo->prepare("  INSERT INTO  arquivos ( arquivo, tipoArquivo, nomeArquivo, idSolicitacao, statusArquivo, idTipoDocumento   )   values (?,?,?,?,?, ?) ");
+            $stmt = $pdo->prepare("  INSERT INTO  arquivos ( arquivo, tipoArquivo, nomeArquivo, idSolicitacao, statusArquivo, idTipoDocumento,assinadoDigital    )   values (?,?,?,?,?, ?,?) ");
 
 
             //corrigir isto aqui
@@ -295,6 +296,7 @@ class Arquivo
             $stmt->bindParam(4,  $idSolicitacao, PDO::PARAM_LOB);
             $stmt->bindParam(5,  $statusArquivo, PDO::PARAM_LOB);
             $stmt->bindParam(6,  $idTipoDocumento, PDO::PARAM_LOB);
+            $stmt->bindParam(7,  $assinadoDigital, PDO::PARAM_LOB);
 
 
 
@@ -323,7 +325,7 @@ class Arquivo
 
 
 
-            $stmt = $pdo->prepare("  UPDATE arquivos set arquivo = 'kl', tipoArquivo = 'kl', statusArquivo=13  where idArquivo = ? ");
+            $stmt = $pdo->prepare("  UPDATE arquivos set   statusArquivo=13  where idArquivo = ? ");
 
 
             //corrigir isto aqui
