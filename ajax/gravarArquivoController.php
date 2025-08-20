@@ -43,6 +43,8 @@ $objArquivo->setArquivo($file);
 
 $objArquivo->setIdTipoDocumento($idTipoDocumento);
 
+$objArquivo->setAssinadoDigital('0');
+
 $carregarFinalizaUP = 1;
 
 $dadosDoInsert = $objArquivo->inserirArquivos();

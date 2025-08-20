@@ -308,7 +308,7 @@ include_once 'includes/head.php';
 
 
         })
-        criarCaixaArquivo(111);
+        criarCaixaArquivo(<?= $_GET['idSolicitacao'] ?>);
 
         function criarCaixaArquivo(idSolicitacao) {
 

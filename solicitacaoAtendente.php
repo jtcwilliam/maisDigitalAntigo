@@ -110,51 +110,90 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
 
     <div class="grid-x grid-padding-x">
         <div class="small-12 large-12 cell">
-            <div class="large reveal" id="retorno" data-reveal style="background-color:ivory" data-close-on-esc="false">
-                <div style="display: grid;  justify-content: center; align-content: center;   padding-top: 0px;">
+            <div class="full reveal" id="retorno" data-reveal style="background-color: ivory;top: 0px;left: 220px;right: 40px;margin: 0px;  " data-close-on-esc="false">
+                <div style="display: grid;  justify-content: center; align-content: center;   padding-top: 30px;">
 
 
+                    <div class="grid-x grid-padding-x">
+                        <div class="small-12 large-12 cell">
+                            <fieldset class="fieldset">
+                                <legend>
+                                    <h3>Arquivos da Solicitacao</h3>
+                                </legend>
+                                <table class="table" style="width: 100%">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="6">
+                                                <center>
+                                                    <h3><b></b></h3>
+                                                </center>
+
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th width="15%">Arquivo Carregado</th>
+                                            <th width="70%">Nome do Arquivo</th>
+                                            <th width="10%">
+                                                <center>Visualizar Arquivo</center>
+                                            </th>
+                                            <th width="10%">
+                                                <center>Solicitar Arquivo</center>
+                                            </th>
+                                            <th width="10%">
+                                                <center>Alterar Arquivo</center>
+                                            </th>
+                                            <th width="10%">
+                                                <center>Assinado digitalmente</center>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabelaArquivos"></tbody>
+                                </table>
+                            </fieldset>
 
 
-                    <table class="table" style="width: 1000px">
-                        <thead>
-                            <tr>
+                        </div>
+
+                        <div class="small-12 large-12 cell">
 
 
-                                <th width="15%">Arquivo Carregado</th>
-                                <th width="70%">Nome do Arquivo</th>
-                                <th width="10%">
-                                    <center>Visualizar Arquivo</center>
-                                </th>
-                                <th width="10%">
-                                    <center>Solicitar Arquivo</center>
-                                </th>
-                                <th width="10%">
-                                    <center>Alterar Arquivo</center>
-                                </th>
-                                <th width="10%">
-                                    <center>Assinado digitalmente</center>
-                                </th>
-
-                            </tr>
-                        </thead>
-                        <tbody id="tabelaArquivos">
+                            <fieldset class="fieldset">
+                                <legend>
+                                    <h3>Ações</h3>
+                                </legend>
+                                <div class="grid-x grid-padding-x">
+                                    <div class="small-12 large-6 cell">
+                                        <a class="button" style="width: 100%; background-color: green;  border-radius: 30px;" onclick="finalizarComuniqueSe(<?= $_GET['89a2e8ef07b59a9a87135b9e2fe979d4b40a616d'] ?>)">
+                                            <h5>Clique aqui para enviar "comunique-se" ao cidadão </h5>
+                                        </a>
+                                    </div>
 
 
-                        </tbody>
-                    </table>
+                                    <div class="small-12 large-6 cell">
+                                        <a class="button" data-close aria-label="Close modal" style="width: 100%; background-color: #4e4e4eff; border-radius: 30px;">
+                                            <h5>Clique para fechar este painel</h5>
+                                        </a>
+                                    </div>
+                                </div>
 
-                    <div id="tabelaArquivos">
+
+                            </fieldset>
+                        </div>
 
                     </div>
 
 
                 </div>
 
-            </div>
-        </div>
 
-        </span></button>
+
+
+            </div>
+
+        </div>
+    </div>
+
+    </span></button>
     </div><?php
 
             ////
@@ -385,8 +424,6 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
 
             var formData = {
 
-
-                //id da Solicitacao
                 solicitacao,
 
                 codigoId: $('#aquivoPraSolicitar').val(), //codigo id do arquivo para alteracao de arquivo  // ou codigo do tipo de documento para solicitação de arquivo
@@ -406,8 +443,41 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
             }).done(function(data) {
 
 
-                    console.log(data);
-                    
+                console.log(data);
+
+
+                if (data.retorno == true) {
+                    alert('Informação Registrada com Sucesso');
+                    exbirArquivosDaSolicitacao($('#idSolicitacao').val())
+                }
+
+            });
+        }
+
+
+        function finalizarComuniqueSe(idSolicitacao) {
+
+            var formData = {
+
+                idSolicitacao,
+
+                enviarEmail: '1'
+
+
+
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: 'ajax/comuniqueSeController.php',
+                data: formData,
+                dataType: 'html',
+                encode: true
+            }).done(function(data) {
+
+
+                console.log(data);
+
 
                 if (data.retorno == true) {
                     alert('Informação Registrada com Sucesso');

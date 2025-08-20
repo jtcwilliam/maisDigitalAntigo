@@ -52,7 +52,7 @@ if (isset($_POST['acaoComuniqueSE']) &&  $_POST['acaoComuniqueSE'] == 'solicitar
         $arr = json_decode($dadosDoInsert, true);
 
 
-        
+
         //retorno para pegar o ultimoID
         $idArquivoParaLog =   $arr['ultimoID'][0]['LAST_INSERT_ID()'];
 
@@ -77,7 +77,7 @@ if (isset($_POST['acaoComuniqueSE']) &&  $_POST['acaoComuniqueSE'] == 'solicitar
         $objLog->setIdArquivo($idArquivoParaLog);
 
         if ($objLog->inserirLog()) {
-               echo json_encode(array('retorno' => true));
+            echo json_encode(array('retorno' => true));
         }
     }
 }
@@ -111,6 +111,9 @@ if (isset($_POST['acaoComuniqueSE']) &&  $_POST['acaoComuniqueSE'] == 'alterarAr
         $objLog->setTextoLog($textoLog);
         $objLog->setStatusLog($statusLog);
         $objLog->setDataLog($dataLog);
+        $objLog->setIdArquivo($_POST['codigoId']);
+        
+
         $objLog->setTipoPessoaLog($_SESSION['usuarioLogado']['dados'][0]['tipoPessoa']);
         $objLog->setSolicitacao($_POST['solicitacao']);
 
@@ -148,8 +151,133 @@ if (isset($_POST['acaoComuniqueSE']) &&  $_POST['acaoComuniqueSE'] == 'alterarAr
 }
 
 
-if(isset($_POST['enviarEmail'])){
+if (isset($_POST['enviarEmail'])) {
 
-   
 
+
+    ob_start();
+
+?>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+    </head>
+
+    <body style="font-family: Arial, Helvetica, sans-serif;">
+        <style>
+            p {
+                font-weight: 400;
+                font-size: 3em;
+                line-height: 1.3em;
+
+            }
+
+            ;
+
+
+            li {
+                font-size: 1.9em;
+                line-height: 1.3em;
+            }
+        </style>
+
+
+        <?php
+
+        $dadosSolicitacao = $objSolicitacao->consultarSolicitacaoRelatorio($_POST['idSolicitacao']);
+
+
+
+        //print_r($dadosSolicitacao);
+
+
+
+        $dadosLog = $objLog->exibirLogs($_POST['idSolicitacao'], 1);
+
+
+
+        ?>
+        <h1>Olá Somos da Equipe Mais Digital da Prefeitura de Guarulhos </h1>
+
+        <p style="font-size: 1.3em; line-height: 1.5em;">Verificamos algumas inconsistencias na Solicitação da <b> <?= $dadosSolicitacao[0]['descricaoCarta']   ?></b>
+            que você realizou! <br>Não se preocupe! Nós vamos te dizer o que aconteceu e os arquivos que você precisa enviar.
+            Abaixo, segue a lista dos documentos que você precisa enviar.<br>
+
+
+
+
+
+
+        <ul style="font-size: 1.3em; line-height: 1.5em;">
+            <?php
+
+
+
+            foreach ($dadosLog['dados'] as $key => $value) {
+                echo '<li><b>' . $value['nomeLog'] . '</b><br>' . $value['textoLog'];
+
+
+                echo '<br></li>';
+            } ?>
+        </ul>
+
+        <p style="font-size: 1.3em; line-height: 1.2em;">
+            <a style="color: blue; text-decoration: none; font-style: italic;"
+                href="https://agendafacil.guarulhos.sp.gov.br//maisDigital/carregarArquivoSolicitacao.php?idSolicitacao=<?= $_POST['idSolicitacao'] ?> " target="_blank">
+                <h2>Clique aqui para enviar os Arquivos que solicitamos! </h2>
+            </a>
+        </p>
+
+
+        <p style="font-size: 1.3em; line-height: 1.5em;">
+            <b>Lembre-se: </b> A solicitação ficará em suspensão enquanto você não resolver essas inconsistências. Clique no link que enviamos neste email para fazer a
+            alteração adequada e prosseguirmos para a conclusão de sua solicitação<br> <b>Observação:</b> Está solicitação permanecerá
+            sem prosseguimento, até que você faça esta correção.
+            </h3>
+        </p>
+
+
+
+
+
+        <br>
+
+        <h4> Estamos á Disposição!<br>
+
+            <b>Equipe Mais Digital</b>
+            <h2> Prefeitura de Guarulhos</h2>
+        </h4>
+
+
+
+
+
+
+    </body>
+
+    </html>
+<?php
+    $dados = ob_get_contents();
+    ob_end_clean();
+
+
+
+
+
+
+    $objEnvio->setDestinatario($dadosSolicitacao[0]['emailUsuario']);
+    $objEnvio->setAssunto('Alteração de Arquivo na sua solicitação');
+    $objEnvio->setConteudo($dados);
+
+    if ($objEnvio->envioEmail()) {
+
+        echo json_encode(array('retorno' => true));
+    }
+    exit();
 }

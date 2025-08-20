@@ -90,7 +90,7 @@ if (isset($_POST['listarArquivosAtendente'])) {
 
         if ($arquivos[0]['statusArquivo'] != '1') {
 
-            $linhaStatusArquivos = ' style="background-color: #614920; color: white"  ';
+            $linhaStatusArquivos = ' style="background-color: #f89d47ff; color: Black"  ';
         } else {
             $linhaStatusArquivos = ' style=""  ';
         }
@@ -148,8 +148,11 @@ if (isset($_POST['listarArquivosAtendente'])) {
                                 <td width="10%">
                                     <center> - </center>
                                 </td>
+                                 <td width="10%">
+                                    <center> - </center>
+                                </td>
 
-                            </tr>';
+                            </tr> ';
         }
 
 
@@ -159,13 +162,13 @@ if (isset($_POST['listarArquivosAtendente'])) {
         ?>
 
 
-
+     
     <?php
+
     }
 
 
-
-
+ 
 
 
 
