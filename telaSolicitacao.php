@@ -81,7 +81,7 @@ echo '</pre>';
                             </script>
                             <select class="js-example-basic-single  responsive-combobox" id="comboServicos"
                                 onchange="$('a#linkHelpServico').attr('href', $('#comboServicos').val());
-                                 $('#modalDuvidasCartas').foundation('open'); 
+                                 $('#modalDuvidasCartas').foundation('open'); $('#tudoCertoLink').show();
                                  
                                     criarCaixaArquivo($('#comboServicos').find(':selected').attr('codigo'));
 
@@ -103,15 +103,10 @@ echo '</pre>';
                 <div class="small-12 large-12 cell">
                     <br>
                     <center>
-                        <a class="button " target="_blank" style="font-weight: 300; width: 50%;" onclick="$('#iniciosSolicitacao').hide(); 
+                        <a class="button "  id="tudoCertoLink"  target="_blank" style="font-weight: 300; width: 50%;" onclick="$('#iniciosSolicitacao').hide(); 
                          $('#fieldSolicitacao').show();   
                            $('#escolha').css('color', 'rgba(8, 124, 4, 0.66)');  
-                           $('#complemento').css('color', 'rgba(0, 0, 0, 1)');  
-                         
-                           
-                           
-                           
-                           ">
+                           $('#complemento').css('color', 'rgba(0, 0, 0, 1)');  ">
                             Tudo Certo! Quero continuar!
                         </a>
                     </center>
@@ -154,7 +149,7 @@ echo '</pre>';
 
                     </div>
 
-                    <div class="small-12 large-1 cell">
+                    <div class="small-12 large-2 cell">
                         <label>CEP:
                             <input type="text" id="txtCEP" onchange="chamaCEP($('#txtCEP').val())" style="width: 100%;" />
                         </label>
@@ -195,7 +190,7 @@ echo '</pre>';
                     </div>
 
 
-                    <div class="small-12 large-1 cell">
+                    <div class="small-12 large-1 cell" style="display: none;">
                         <label>UF
                             <input type="text" id="txtEstado" style="width: 100%;" />
                         </label>
@@ -435,6 +430,7 @@ echo '</pre>';
     $('#txtCEP').mask("00000-000");
 
     $('#botaoRetorno').hide();
+    $('#tudoCertoLink').hide();
 
 
 

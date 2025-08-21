@@ -367,7 +367,7 @@ include_once 'includes/head.php';
 
                         if (response.retorno == true) {
                             alert('O arquivo foi Gravado com Sucesso. Se você ja enviou todos os arquivos solicitados, nós vamos dar andamento a sua solicitação!');
-                            criarCaixaArquivo(111);
+                            criarCaixaArquivo(<?= $_GET['idSolicitacao'] ?>);
                         }
                     },
                     error: function(error) {

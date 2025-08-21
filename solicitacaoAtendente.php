@@ -471,7 +471,7 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
                 type: 'POST',
                 url: 'ajax/comuniqueSeController.php',
                 data: formData,
-                dataType: 'html',
+                dataType: 'json',
                 encode: true
             }).done(function(data) {
 
@@ -480,7 +480,7 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
 
 
                 if (data.retorno == true) {
-                    alert('Informação Registrada com Sucesso');
+                    alert('O Comunique-se foi enviado com sucesso! ');
                     exbirArquivosDaSolicitacao($('#idSolicitacao').val())
                 }
 
