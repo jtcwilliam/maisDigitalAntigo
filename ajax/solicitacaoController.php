@@ -1,8 +1,10 @@
 <?php
 
 include '../classes/Solicitacao.php';
+include '../classes/Envio.php';
 
 $objSolicitacao = new Solicitacao();
+$objEnvio = new Envio();
 
 
 
@@ -63,7 +65,14 @@ if (isset($_POST['trazerSolicitacaoStatus'])) {
 }
 
 if (isset($_POST['inserirSolicitacao'])) {
- 
+
+
+    if (isset($_POST['representaTerceiro'])) {
+        $representaTerceiro = $_POST['representaTerceiro'];
+    } else {
+        $representaTerceiro = '0';
+    }
+
 
     $ran = rand();
     $randomico = $ran  . '/' . date('Y');
@@ -78,6 +87,20 @@ if (isset($_POST['inserirSolicitacao'])) {
     $objSolicitacao->setTipoDocumento($_POST['comboTipoInscricao']);
     $objSolicitacao->setProtocolo($randomico);
 
+
+    if ($representaTerceiro == 1) {
+        $objSolicitacao->setNomeTerceiro($_POST['nomeTerceiro']);
+        $objSolicitacao->setDocumentoTerceiro($_POST['cpfTerceiro']);
+        $objSolicitacao->setEmailTerceiro($_POST['emailTerceiro']);
+        $objSolicitacao->setTelefoneTerceiro($_POST['telefoneTerceiro']);
+        $objSolicitacao->setRepresentaTerceiro($representaTerceiro);
+    } else {
+        $objSolicitacao->setNomeTerceiro('0');
+        $objSolicitacao->setDocumentoTerceiro('0');
+        $objSolicitacao->setEmailTerceiro('0');
+        $objSolicitacao->setTelefoneTerceiro('0');
+        $objSolicitacao->setRepresentaTerceiro('0');
+    }
 
 
     $objSolicitacao->setCepSolicitacao($_POST['txtCEP']);
@@ -94,8 +117,116 @@ if (isset($_POST['inserirSolicitacao'])) {
 
     if ($objSolicitacao->gravarSolicitacao() == true) {
         $protocolo =  $objSolicitacao->trazerSolicitacao($randomico);
+
+
+        //so envia se representa terceiro for =1
+//envio do email para terceiro
+
+
+
+
+ob_start();
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        p {
+            font-size: 1.1em;
+            line-height: 1.3em;
+        }
+
+        ;
+
+
+        li {
+            font-size: 1.3em;
+            line-height: 1.3em;
+        }
+    </style>
+
+</head>
+
+<body style="font-family: Arial, Helvetica, sans-serif;">
+
+
+    <?php
+
+ 
+
+
+    ?>
+    <h2>Olá <b><?=$_POST['nomeTerceiro']   ?></b>! Somos da Equipe Mais Digital da Prefeitura de Guarulhos </h2>
+
+    <p></b> Gostariamos de informar que  <b><?php echo  $protocolo[0]['nomePessoa']  ?></b> realizou a 
+               solicitação </i><?=$protocolo[0]['descricaoCarta'] ?></i> como seu representante!<br>
+
+               <br>
+               Para os devidos encaminhamentos, precisamos que vossa senhoria assine esta solicitação através do link abaixo
+
+
+
+    </p>
+  
+
+
+
+
+    <a style="color: black; text-decoration: none; font-style: italic;"
+        href="https://agendafacil.guarulhos.sp.gov.br/maisDigital/assinatura.php?idSolicitacao=<?=$protocolo[0]['idsolicitacao']?>&112ff6666a78800f14e115ef8e7a57a5=1 " target="_blank">
+         Clique aqui para assinar
+    </a>
+    <br>
+
+    <h4> Estamos á Disposição!<br>
+
+        <b>Equipe Mais Digital</b>
+        <h2> Prefeitura de Guarulhos</h2>
+    </h4>
+
+
+
+
+
+
+</body>
+
+</html>
+<?php
+$dados = ob_get_contents();
+ob_end_clean();
+
+ 
+
+ 
+$objEnvio->setDestinatario($_POST['emailTerceiro']);
+$objEnvio->setAssunto('Assinatura da Solicitacao');
+$objEnvio->setConteudo($dados);
+
+if ($objEnvio->envioEmail()) {
+
+ 
+}
+
+
+ 
+
+
+
+
+
+//fim do envio do email para terceiro
+
+
+
+
         echo json_encode(array('retorno' => true, 'idSolicitacaoHidden' => $protocolo[0]['idsolicitacao']));
-    }else{
+    } else {
         echo 'errado';
     }
 }

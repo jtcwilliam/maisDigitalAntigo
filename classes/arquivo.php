@@ -160,12 +160,12 @@ class Arquivo
             $stmt = $pdo->prepare("  select lc.descricaoCarta,  sl.descricaoSolicitacao  ,lc.nomeSecretaria, sl.solicitante,
              sl.tipoDocumento, sl.documentoPublico,  nomeArquivo, tipoArquivo, ar.arquivo, 
  dc.descricaoDoc, ps.nomePessoa, ps.emailUsuario, sl.docSolicitacaoPessoal, sl.assuntoSolicitacao,  sl.cepSolicitacao   ,  sl.logradouroSol    ,  sl.numeroSol,
-  sl.complemento, sl.bairro ,
+  sl.complemento, sl.bairro , sl.representaTerceiro    , 
   date_format(dataSolicitacao, '%d ' ) as 'dias', 
 
   date_format(dataSolicitacao, '%M' ) as 'mes', 
 
-  date_format(dataSolicitacao, ' de %Y ' ) as 'ano', sl.assinaturaSolicitacao 
+  date_format(dataSolicitacao, ' de %Y ' ) as 'ano', sl.assinaturaSolicitacao, sl.assinaturaTerceiro, sl.nomeTerceiro  
  
  
   from solicitacao sl inner join  linkCartaServico lc on lc.idlinkCartaServico = sl.assuntoSolicitacao 

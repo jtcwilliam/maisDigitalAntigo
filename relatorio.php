@@ -22,7 +22,7 @@ $dadosSolicitacao = $objArquivo->solicitarArquivoRelatorio($idSolicitacao);
 
 $arquivos = $objArquivo->consultarArquivoParaSolicitacaoRelatorio($idSolicitacao);
 
- 
+
 
 
 $mes = $dadosSolicitacao[0]['mes'];
@@ -80,17 +80,79 @@ $data = base64_decode($base64);
 // Criar arquivo temporário
 $file = 'temp_image.png';
 file_put_contents($file, $data);
-
-
-
-// Adicionar imagem no PDF
-$pdf->Image($file, 60, 240, 130, 0, 'PNG');
-
-unlink($file);
-
 $pdf->SetXY(10, 260, $pdf->GetY());
-//
-$pdf->Cell(0, 10,  $dadosSolicitacao[0]['nomePessoa'], 0, true, 'C');
+
+
+if ($dadosSolicitacao[0]['representaTerceiro'] == '1') {
+
+    $base64Terceiro =   $dadosSolicitacao[0]['assinaturaTerceiro'];
+
+    // Remover o prefixo data:image/png;base64,
+    $base64Terceiro = str_replace('data:image/png;base64,', '', $base64Terceiro);
+    $base64Terceiro = str_replace(' ', '+', $base64Terceiro);
+
+    // Decodificar base64
+    $data = base64_decode($base64Terceiro);
+
+    // Criar arquivo temporário
+    $fileTerceiro = 'temp_imageB.png';
+    file_put_contents($fileTerceiro, $data);
+
+
+
+    // Adicionar imagem no PDF
+    $pdf->Image($fileTerceiro, 90, 240, 130, 0, 'PNG');
+
+
+
+
+    // Adicionar imagem no PDF
+    $pdf->Image($file, 0, 240, 130, 0, 'PNG');
+
+ 
+
+
+    //
+
+    $pdf->Cell(90, 7, $dadosSolicitacao[0]['nomePessoa'], 0, 0, 'C'); // 1 = borda, 0 = continua na mesma linha
+
+    // --- Segunda célula ---
+    // A posição da segunda célula é determinada pela largura da anterior
+    $pdf->Cell(90, 7, $dadosSolicitacao[0]['nomeTerceiro'], 0, 1, 'C'); // 1 = borda, 1 = vai para a próxima linha (após esta célula)
+
+
+    $pdf->SetFont('Arial', '', 11);
+    $pdf->Cell(90, 5, 'Procurador', 0, 0, 'C'); // 1 = borda, 0 = continua na mesma linha
+
+    // --- Segunda célula ---
+    // A posição da segunda célula é determinada pela largura da anterior
+    $pdf->Cell(90, 5, 'Interessado', 0, 1, 'C');
+
+    unlink($fileTerceiro);
+   unlink($file);
+} else {
+
+
+    // Adicionar imagem no PDF
+    $pdf->Image($file, 50, 240, 130, 0, 'PNG');
+
+   
+
+
+    //
+
+    $pdf->Cell(190, 7, $dadosSolicitacao[0]['nomePessoa'], 0, 0, 'C'); // 1 = borda, 0 = continua na mesma linha
+
+ unlink($file);
+
+}
+
+
+
+
+  
+
+
 
 
 
@@ -102,7 +164,7 @@ $w = 0;
 foreach ($arquivos as $key => $value) {
 
     switch ($value['tipoArquivo']) {
-        
+
         case 'application/pdf':
             $pdf->AddPage();
             $pdf->SetXY(11, 145, $pdf->GetY());
@@ -144,7 +206,7 @@ foreach ($arquivos as $key => $value) {
 
 
             break;
-        
+
 
         case 'image/png':
 

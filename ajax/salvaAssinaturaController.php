@@ -16,7 +16,7 @@ if (isset($_POST['verificarAssinatura'])  &&  $_POST['verificarAssinatura']) {
 
     $assinaturaAtiva =     $objSolicitacao->pesquisarAssinatura($_POST['idSolicitacao']);
 
-   
+
 
 
 
@@ -39,7 +39,7 @@ if (isset($_POST['verificarAssinatura'])  &&  $_POST['verificarAssinatura']) {
 if (isset($_POST['finalizaSolicitacao'])  &&  $_POST['finalizaSolicitacao']) {
 
     $assinaturaAtiva =     $objSolicitacao->pesquisarAssinatura($_POST['idSolicitacao']);
- 
+
 
 ?>
 
@@ -51,7 +51,7 @@ if (isset($_POST['finalizaSolicitacao'])  &&  $_POST['finalizaSolicitacao']) {
 
         <div class=" grid-x  grid-padding-x" style="padding-bottom: 10px;">
 
-             
+
 
             <div class="small-12 large-10 cell">
                 <label>Assunto da Solicitação
@@ -181,6 +181,15 @@ $objSolicitacao->setArquivo($_POST['assinatura']);
 $objSolicitacao->setSolicitacao($_POST['idSolicitacao']);
 
 
-if ($objSolicitacao->inserirAssinaturaSolicitacao() == true) {
+
+if ($_POST['assinaturaTerceiro'] && $_POST['assinaturaTerceiro'] == '1') {
+    if ($objSolicitacao->inserirAssinaturaSolicitacao(1) == true) {
+        echo json_encode(array('retorno' => true));
+    }
+    die();
+}
+
+
+if ($objSolicitacao->inserirAssinaturaSolicitacao(0) == true) {
     echo json_encode(array('retorno' => true));
 }

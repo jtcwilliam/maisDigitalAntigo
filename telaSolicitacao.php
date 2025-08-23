@@ -150,15 +150,15 @@ echo '</pre>';
                     </div>
 
                     <div class="small-12 large-2 cell">
-                        <label>Está Representando outra pessoa?
-                            <a class="button" onclick="$('#boxTerceiro').show(); $('#representaTerceiro').val(1)" style="width: 100%;   ">Sim Estou</a>
+                        <label>  Representa outra pessoa?
+                            <a class="button" onclick="$('#boxTerceiro').show(); $('#representaTerceiro').val(1)" style="width: 100%;   ">Sim!</a>
                         </label>
 
                     </div>
 
                     <div class="small-12 large-2 cell">
                         <label>&nbsp;
-                            <a class="button" onclick="$('#boxTerceiro').hide(); $('#representaTerceiro').val(0)" style="width: 100%; background-color: #363636ff;">Não Estou!</a>
+                            <a class="button" onclick="$('#boxTerceiro').hide(); $('#representaTerceiro').val(0)" style="width: 100%; background-color: #363636ff;">Não!</a>
                         </label>
 
                     </div>
@@ -171,8 +171,8 @@ echo '</pre>';
 
                                 <div class="small-12 large-4 cell">
                                     <label>Nome do Terceiro
-                                        <input type="hidden" readonly style="width: 100%;" id="representaTerceiro" />
-                                        <input type="text" readonly style="width: 100%;" id="nomeTerceiro" />
+                                        <input type="hidden"   style="width: 100%;" id="representaTerceiro" />
+                                        <input type="text"   style="width: 100%;" id="nomeTerceiro" />
                                     </label>
 
 
@@ -180,7 +180,7 @@ echo '</pre>';
 
                                 <div class="small-12 large-3 cell">
                                     <label>CPF ou CNPJ
-                                        <input type="text" readonly style="width: 100%;" id="cpfTerceiro" />
+                                        <input type="text"   style="width: 100%;" id="cpfTerceiro" />
                                     </label>
 
 
@@ -188,7 +188,7 @@ echo '</pre>';
 
                                 <div class="small-12 large-3 cell">
                                     <label>Email
-                                        <input type="text" readonly style="width: 100%;" id="emailTerceiro" />
+                                        <input type="text"   style="width: 100%;" id="emailTerceiro" />
                                     </label>
 
 
@@ -196,7 +196,7 @@ echo '</pre>';
 
                                 <div class="small-12 large-2 cell">
                                     <label>Telefone
-                                        <input type="text" readonly style="width: 100%;" id="telefoneTerceiro" />
+                                        <input type="text"   style="width: 100%;" id="telefoneTerceiro" />
                                     </label>
 
 
@@ -547,6 +547,12 @@ echo '</pre>';
 
 
         var formData = {
+            representaTerceiro: $('#representaTerceiro').val(),
+            nomeTerceiro: $('#nomeTerceiro').val(),
+            cpfTerceiro: $('#cpfTerceiro').val(),
+            emailTerceiro: $('#emailTerceiro').val(),
+            telefoneTerceiro: $('#telefoneTerceiro').val(),
+
             assuntoSolicitacao: $('#comboServicos').find(':selected').attr('codigo'),
             descricao: $('#txtDescricao').val(),
             documentoPublico: $('#inscDocu').val(),
@@ -560,11 +566,7 @@ echo '</pre>';
             txtNUmero: $('#txtNUmero').val(),
             txtComplemento: $('#txtComplemento').val(),
             txtBairro: $('#txtBairro').val()
-
-
-
-
-
+ 
 
         };
         $.ajax({
@@ -575,6 +577,9 @@ echo '</pre>';
                 encode: true
             })
             .done(function(data) {
+
+                console.log(data);
+                
 
                 if (data.retorno == true) {
                     $('#idSolicitacaoHidden').val(data.idSolicitacaoHidden);

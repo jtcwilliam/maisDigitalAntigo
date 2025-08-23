@@ -45,7 +45,16 @@ class Solicitacao
     private $bairro;
     private $idRequerimento;
     private $codigoRequerimento;
-    
+
+
+    private $nomeTerceiro;
+    private $documentoTerceiro;
+    private $emailTerceiro;
+    private $telefoneTerceiro;
+    private $representaTerceiro;
+
+
+
 
 
     function __construct()
@@ -161,7 +170,7 @@ class Solicitacao
 
 
 
-            $sql = "select  * from solicitacao where  protocolo='" . $protocolo . "'";
+            $sql = "select  * from solicitacao sl inner join linkCartaServico lcs  on lcs.idlinkCartaServico = sl.assuntoSolicitacao inner join pessoas ps on ps.idPessoas = sl.solicitante  where  protocolo='" . $protocolo . "'";
 
 
 
@@ -293,7 +302,7 @@ class Solicitacao
         }
     }
 
- 
+
     public function  consultarRequerimento($idRequerimento)
     {
         try {
@@ -398,7 +407,7 @@ class Solicitacao
     }
 
 
-      public function  pesquisaManualAtendente($idSolicitacao)
+    public function  pesquisaManualAtendente($idSolicitacao)
     {
         try {
 
@@ -407,7 +416,7 @@ class Solicitacao
             $sql = " select * from linkCartaServico lcs inner join servicoDocumento sd on lcs.idLinkCartaServico = sd.idServico 
             inner join documentos dc on dc.idDoc = sd.idDocumento 
             inner join solicitacao sl on sl.assuntoSolicitacao = lcs.idlinkCartaServico
-             where servicoHabilitado is not null and sl.idsolicitacao =" . $idSolicitacao ;
+             where servicoHabilitado is not null and sl.idsolicitacao =" . $idSolicitacao;
 
 
 
@@ -514,7 +523,7 @@ class Solicitacao
 
 
 
-    public function  inserirAssinaturaSolicitacao()
+    public function  inserirAssinaturaSolicitacao($assinador)
     {
         try {
 
@@ -527,9 +536,12 @@ class Solicitacao
 
 
 
-
-            $stmt = $pdo->prepare("  UPDATE solicitacao set assinaturaSolicitacao=?, statusSolicitacao=10   where idSolicitacao=?");
-
+            if ($assinador == 0) {
+                $stmt = $pdo->prepare("  UPDATE solicitacao set assinaturaSolicitacao=?, statusSolicitacao=10   where idSolicitacao=?");
+            }else{
+                $stmt = $pdo->prepare("  UPDATE solicitacao set assinaturaTerceiro=?, statusSolicitacao=10   where idSolicitacao=?");
+                 
+            }
 
             //corrigir isto aqui
             $stmt->bindParam(1,  $arquivo, PDO::PARAM_LOB);
@@ -655,7 +667,7 @@ class Solicitacao
 
 
 
-      
+
 
 
 
@@ -683,9 +695,11 @@ class Solicitacao
 
             //
             $stmt = $pdo->prepare(" INSERT INTO solicitacao (assuntoSolicitacao,descricaoSolicitacao, documentoPublico, dataSolicitacao,statusSolicitacao,
-             solicitante,tipoDocumento, protocolo, docSolicitacaoPessoal,  cepSolicitacao   ,  logradouroSol    ,  numeroSol, complemento, bairro    )
+             solicitante,tipoDocumento, protocolo, docSolicitacaoPessoal,  cepSolicitacao   ,  logradouroSol   
+              ,  numeroSol, complemento, bairro, nomeTerceiro,  documentoTerceiro,  emailTerceiro, telefoneTerceiro, representaTerceiro  )
              VALUES ( :assuntoSolicitacao,:descricaoSolicitacao, :documentoPublico, :dataSolicitacao,
-              :statusSolicitacao, :solicitante, :tipoDocumento, :protocolo, :docSolicitacaoPessoal,  :cepSolicitacao,   :logradouroSol, :numeroSol,  :complemento,   :bairro   )");
+              :statusSolicitacao, :solicitante, :tipoDocumento, :protocolo, :docSolicitacaoPessoal,  :cepSolicitacao, 
+                :logradouroSol, :numeroSol,  :complemento,   :bairro, :nomeTerceiro,  :documentoTerceiro,  :emailTerceiro,  :telefoneTerceiro, :representaTerceiro )");
 
 
             $stmt->bindValue(':assuntoSolicitacao',  $this->getAssuntoSolicitacao(), PDO::PARAM_STR);
@@ -705,8 +719,6 @@ class Solicitacao
             $stmt->bindValue(':protocolo',  $this->getProtocolo(), PDO::PARAM_STR);
 
             $stmt->bindValue(':docSolicitacaoPessoal',  $this->getDocumentoSolicitante(), PDO::PARAM_STR);
-
-
             //            //
             $stmt->bindValue(':cepSolicitacao',  $this->getCepSolicitacao(), PDO::PARAM_STR);
 
@@ -717,7 +729,27 @@ class Solicitacao
             $stmt->bindValue(':complemento',  $this->getComplemento(), PDO::PARAM_STR);
 
             $stmt->bindValue(':bairro',  $this->getBairro(), PDO::PARAM_STR);
+
+            $stmt->bindValue(':nomeTerceiro',  $this->getNomeTerceiro(), PDO::PARAM_STR);
+
+            $stmt->bindValue(':documentoTerceiro',  $this->getDocumentoTerceiro(), PDO::PARAM_STR);
+
+            $stmt->bindValue(':emailTerceiro',  $this->getEmailTerceiro(), PDO::PARAM_STR);
+
+            $stmt->bindValue(':telefoneTerceiro',  $this->getTelefoneTerceiro(), PDO::PARAM_STR);
+
+            $stmt->bindValue(':representaTerceiro',  $this->getRepresentaTerceiro(), PDO::PARAM_STR);
+
+
+
+
+
+
+
             //            \\
+
+
+
 
 
 
@@ -1279,7 +1311,7 @@ class Solicitacao
 
     /**
      * Get the value of idRequerimento
-     */ 
+     */
     public function getIdRequerimento()
     {
         return $this->idRequerimento;
@@ -1289,7 +1321,7 @@ class Solicitacao
      * Set the value of idRequerimento
      *
      * @return  self
-     */ 
+     */
     public function setIdRequerimento($idRequerimento)
     {
         $this->idRequerimento = $idRequerimento;
@@ -1299,7 +1331,7 @@ class Solicitacao
 
     /**
      * Get the value of codigoRequerimento
-     */ 
+     */
     public function getCodigoRequerimento()
     {
         return $this->codigoRequerimento;
@@ -1309,10 +1341,110 @@ class Solicitacao
      * Set the value of codigoRequerimento
      *
      * @return  self
-     */ 
+     */
     public function setCodigoRequerimento($codigoRequerimento)
     {
         $this->codigoRequerimento = $codigoRequerimento;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of nomeTerceiro
+     */
+    public function getNomeTerceiro()
+    {
+        return $this->nomeTerceiro;
+    }
+
+    /**
+     * Set the value of nomeTerceiro
+     *
+     * @return  self
+     */
+    public function setNomeTerceiro($nomeTerceiro)
+    {
+        $this->nomeTerceiro = $nomeTerceiro;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of documentoTerceiro
+     */
+    public function getDocumentoTerceiro()
+    {
+        return $this->documentoTerceiro;
+    }
+
+    /**
+     * Set the value of documentoTerceiro
+     *
+     * @return  self
+     */
+    public function setDocumentoTerceiro($documentoTerceiro)
+    {
+        $this->documentoTerceiro = $documentoTerceiro;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of emailTerceiro
+     */
+    public function getEmailTerceiro()
+    {
+        return $this->emailTerceiro;
+    }
+
+    /**
+     * Set the value of emailTerceiro
+     *
+     * @return  self
+     */
+    public function setEmailTerceiro($emailTerceiro)
+    {
+        $this->emailTerceiro = $emailTerceiro;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of telefoneTerceiro
+     */
+    public function getTelefoneTerceiro()
+    {
+        return $this->telefoneTerceiro;
+    }
+
+    /**
+     * Set the value of telefoneTerceiro
+     *
+     * @return  self
+     */
+    public function setTelefoneTerceiro($telefoneTerceiro)
+    {
+        $this->telefoneTerceiro = $telefoneTerceiro;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of representaTerceiro
+     */
+    public function getRepresentaTerceiro()
+    {
+        return $this->representaTerceiro;
+    }
+
+    /**
+     * Set the value of representaTerceiro
+     *
+     * @return  self
+     */
+    public function setRepresentaTerceiro($representaTerceiro)
+    {
+        $this->representaTerceiro = $representaTerceiro;
 
         return $this;
     }

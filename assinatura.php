@@ -78,7 +78,11 @@
     <img id="savedImage" style="display: none;" alt="Assinatura aparecerá aqui" />
 
 
+    <?php
 
+
+
+    ?>
     <button type="submit" style="display: none;" onclick="inserirAssinaturaDoUsuario()">Enviar Imagem</button>
 
   </div>
@@ -198,12 +202,15 @@
     }
 
 
-    function inserirAssinaturaDoUsuario() {
+    function inserirAssinaturaDoUsuario(assinaturaTerceiro) {
 
+ 
+     
       var assinatura = $("#savedImage").attr("src");
 
       var formData = {
         assinatura,
+        assinaturaTerceiro,
         idSolicitacao: $('#idSolicitacao').val()
       };
       var condicao;
@@ -211,10 +218,12 @@
           type: 'POST',
           url: 'ajax/salvaAssinaturaController.php',
           data: formData,
-          dataType: 'json',
+          dataType: 'html',
           encode: true
         })
         .done(function(data) {
+          console.log(data);
+          
           if (data.retorno == true) {
             $('#colherAssinatura').hide();
             $('#infoSucesso').show();
@@ -301,7 +310,15 @@
       document.getElementById('savedImage').src = imageData;
 
 
-      inserirAssinaturaDoUsuario();
+      <?php
+
+      if (isset($_GET['112ff6666a78800f14e115ef8e7a57a5'])) {
+
+        echo 'inserirAssinaturaDoUsuario(1)';
+      } else {
+        echo 'inserirAssinaturaDoUsuario(0)';
+      }
+      ?>
 
 
 
