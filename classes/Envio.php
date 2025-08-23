@@ -41,8 +41,8 @@ class Envio
             $mail->isSMTP();                                            //Send using SMTP
             $mail->Host       = 'smtp.guarulhos.sp.gov.br';                     //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'williamferreira@guarulhos.sp.gov.br';                     //SMTP username
-            $mail->Password   = '175415@Bc';                               //SMTP password
+            $mail->Username   = 'no-reply@guarulhos.sp.gov.br';                     //SMTP username
+            $mail->Password   = 'Sup0rT3*N0R3p';                               //SMTP password
             $mail->SMTPSecure = 'ssl';
             //$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
             $mail->Port       = 465;
@@ -52,10 +52,10 @@ class Envio
             //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
             //Recipients
-            $mail->setFrom('williamferreira@guarulhos.sp.gov.br', 'Equipe Fácil Digital');
+            $mail->setFrom('no-reply@guarulhos.sp.gov.br', 'Prefeitura de Guarulhos');
             $mail->addAddress($this->getDestinatario(), '');     //Add a recipient
 
-            $mail->addReplyTo('sosfacildigital@gmail.com', 'Equipe Fácil Digital');
+           // $mail->addReplyTo('sosfacildigital@gmail.com', 'Equipe Fácil Digital');
 
 
 

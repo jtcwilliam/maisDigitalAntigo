@@ -50,7 +50,7 @@ ob_start();
 
     <?php
 
-    $dadosSolicitacao = $objSolicitacao->consultarSolicitacaoRelatorio(110);
+    $dadosSolicitacao = $objSolicitacao->consultarSolicitacaoRelatorio(124);
 
 
 
@@ -58,7 +58,7 @@ ob_start();
 
 
 
-    $dadosLog = $objLog->exibirLogs(111, 1);
+    $dadosLog = $objLog->exibirLogs(124, 1);
 
 
 
@@ -106,7 +106,7 @@ ob_start();
 
 
     <a style="color: black; text-decoration: none; font-style: italic;"
-        href="https://agendafacil.guarulhos.sp.gov.br//testeDigitalPlus_agosto/carregarArquivoSolicitacao.php?idSolicitacao=111 " target="_blank">
+        href="https://agendafacil.guarulhos.sp.gov.br//testeDigitalPlus_agosto/carregarArquivoSolicitacao.php?idSolicitacao=124 " target="_blank">
         <h2>Clique aqui para enviar os Arquivos Necessários </h2>
     </a>
     <br>
@@ -134,7 +134,7 @@ echo $dados;
 
 
 
-/*
+ 
 $objEnvio->setDestinatario($dadosSolicitacao[0]['emailUsuario']);
 $objEnvio->setAssunto('Alteração de Arquivo na sua solicitação');
 $objEnvio->setConteudo($dados);
@@ -145,7 +145,7 @@ if ($objEnvio->envioEmail()) {
 }
 
 
-*/
+ 
 
 
 

@@ -103,7 +103,7 @@ echo '</pre>';
                 <div class="small-12 large-12 cell">
                     <br>
                     <center>
-                        <a class="button "  id="tudoCertoLink"  target="_blank" style="font-weight: 300; width: 50%;" onclick="$('#iniciosSolicitacao').hide(); 
+                        <a class="button " id="tudoCertoLink" target="_blank" style="font-weight: 300; width: 50%;" onclick="$('#iniciosSolicitacao').hide(); 
                          $('#fieldSolicitacao').show();   
                            $('#escolha').css('color', 'rgba(8, 124, 4, 0.66)');  
                            $('#complemento').css('color', 'rgba(0, 0, 0, 1)');  ">
@@ -125,18 +125,18 @@ echo '</pre>';
 
                 <div class=" grid-x  grid-padding-x" style="padding-bottom: 10px;">
 
-                    <div class="small-12 large-3 cell">
+                    <div class="small-12 large-2 cell">
                         <label>Nome do Solicitante
                             <input type="text" readonly style="width: 100%;" id="nomeSolicitante" value="<?= $_SESSION['usuariosLogados']['dados'][0]['nomePessoa'] ?>" />
                         </label>
                     </div>
-                    <div class="small-12 large-3 cell">
+                    <div class="small-12 large-2 cell">
                         <label>CPF do Solicitante
                             <input type="text" readonly style="width: 100%;" id="cpfSolicitante" value="<?= $_SESSION['usuariosLogados']['cpfDoUsuario'] ?>" />
                         </label>
                     </div>
 
-                    <div class="small-12 large-4 cell">
+                    <div class="small-12 large-2 cell">
                         <label>Email do Solicitante
                             <input type="text" readonly style="width: 100%;" id="emailSolicitante" value="<?= $_SESSION['usuariosLogados']['dados'][0]['emailUsuario'] ?>" />
                         </label>
@@ -150,109 +150,175 @@ echo '</pre>';
                     </div>
 
                     <div class="small-12 large-2 cell">
-                        <label>CEP:
-                            <input type="text" id="txtCEP" onchange="chamaCEP($('#txtCEP').val())" style="width: 100%;" />
-                        </label>
-
-                    </div>
-
-                    <div class="small-12 large-3 cell">
-                        <label>Logradouro
-                            <input type="text" id="txtRua" style="width: 100%;" />
-                        </label>
-
-                    </div>
-                    <div class="small-12 large-1 cell">
-                        <label>Nº
-                            <input type="text" id="txtNUmero" style="width: 100%;" />
-                        </label>
-
-                    </div>
-                    <div class="small-12 large-2 cell">
-                        <label>Complemento
-                            <input type="text" id="txtComplemento" style="width: 100%;" />
+                        <label>Está Representando outra pessoa?
+                            <a class="button" onclick="$('#boxTerceiro').show(); $('#representaTerceiro').val(1)" style="width: 100%;   ">Sim Estou</a>
                         </label>
 
                     </div>
 
                     <div class="small-12 large-2 cell">
-                        <label>Bairro
-                            <input type="text" id="txtBairro" style="width: 100%;" />
+                        <label>&nbsp;
+                            <a class="button" onclick="$('#boxTerceiro').hide(); $('#representaTerceiro').val(0)" style="width: 100%; background-color: #363636ff;">Não Estou!</a>
                         </label>
 
                     </div>
 
-                    <div class="small-12 large-2 cell">
-                        <label>Cidade / Estado
-                            <input type="text" id="txtCidade" style="width: 100%;" />
-                        </label>
+                    <div class="small-12 large-12 cell" id="boxTerceiro">
+                        <fieldset class="fieldset" style="background-color: #1779ba1c; border-radius: 15px;">
+                            <h5><b>Dados do Terceiro</b></h5>
+
+                            <div class=" grid-x  grid-padding-x"  >
+
+                                <div class="small-12 large-4 cell">
+                                    <label>Nome do Terceiro
+                                        <input type="hidden" readonly style="width: 100%;" id="representaTerceiro" />
+                                        <input type="text" readonly style="width: 100%;" id="nomeTerceiro" />
+                                    </label>
+
+
+                                </div>
+
+                                <div class="small-12 large-3 cell">
+                                    <label>CPF ou CNPJ
+                                        <input type="text" readonly style="width: 100%;" id="cpfTerceiro" />
+                                    </label>
+
+
+                                </div>
+
+                                <div class="small-12 large-3 cell">
+                                    <label>Email
+                                        <input type="text" readonly style="width: 100%;" id="emailTerceiro" />
+                                    </label>
+
+
+                                </div>
+
+                                <div class="small-12 large-2 cell">
+                                    <label>Telefone
+                                        <input type="text" readonly style="width: 100%;" id="telefoneTerceiro" />
+                                    </label>
+
+
+                                </div>
+
+
+
+                            </div>
+
+
+                        </fieldset>
+
 
                     </div>
 
 
-                    <div class="small-12 large-1 cell" style="display: none;">
-                        <label>UF
-                            <input type="text" id="txtEstado" style="width: 100%;" />
-                        </label>
+                    <div class="small-12 large-12 cell" id=" ">
+                        <fieldset class="fieldset">
+                            <legend>Informação da Solicitação</legend>
 
-                    </div>
+                            <div class=" grid-x  grid-padding-x">
+
+                                <div class="small-12 large-2 cell">
+                                    <label>CEP:
+                                        <input type="text" id="txtCEP" onchange="chamaCEP($('#txtCEP').val())" style="width: 100%;" />
+                                    </label>
+
+                                </div>
+
+                                <div class="small-12 large-3 cell">
+                                    <label>Logradouro
+                                        <input type="text" id="txtRua" style="width: 100%;" />
+                                    </label>
+
+                                </div>
+
+                                <div class="small-12 large-1 cell">
+                                    <label>Nº
+                                        <input type="text" id="txtNUmero" style="width: 100%;" />
+                                    </label>
+
+                                </div>
+
+                                <div class="small-12 large-2 cell">
+                                    <label>Complemento
+                                        <input type="text" id="txtComplemento" style="width: 100%;" />
+                                    </label>
+
+                                </div>
+
+                                <div class="small-12 large-2 cell">
+                                    <label>Bairro
+                                        <input type="text" id="txtBairro" style="width: 100%;" />
+                                    </label>
+
+                                </div>
+
+                                <div class="small-12 large-2 cell">
+                                    <label>Cidade / Estado
+                                        <input type="text" id="txtCidade" style="width: 100%;" />
+                                    </label>
+
+                                </div>
 
 
+                                <div class="small-12 large-1 cell" style="display: none;">
+                                    <label>UF
+                                        <input type="text" id="txtEstado" style="width: 100%;" />
+                                    </label>
+
+                                </div>
 
 
+                                <div class="small-12 large-12 cell">
+                                    <label>Assunto da Solicitação
+                                        <input type="text" readonly style="width: 100%;" id="assuntoSolicitacao" />
+                                    </label>
+                                </div>
+
+                                <div class="small-12 large-12 cell">
+                                    <label>Descrição da Sua Solicitação <i>(Campo Obrigatório)</i>
+                                        <textarea id='txtDescricao' rows="5" style="width: 100%;"></textarea>
+                                    </label>
+                                </div>
+
+                                <div class="small-12 large-3 cell">
+                                    <label>Escolha qual tipo de Inscrição
+
+                                        <script>
+                                            criaCombo('comboTipoInscricao');
+                                        </script>
+                                        <select id="comboTipoInscricao"
+                                            onchange="trocaCampo($(this).val())" name="state" style="width: 100%; ">
+
+                                        </select>
+                                    </label>
+                                </div>
+
+                                <div class="small-12 large-2 cell" id="boxInsc">
+                                    <label id="tipoInscricaoLbl">Inscrição Mobiliária </label>
+                                    <input id="inscDocu" type="text" style="width: 100%;" />
+
+                                </div>
+
+                                <div class="small-12 large-2 cell">
+                                    <label>Status da Solicitação
+                                        <input type="text" readonly style="width: 100%;" value="Abertura" />
+                                    </label>
+
+                                </div>
+
+                                <div class="small-12 large-5 cell">
+                                    <label><br>
+                                        <center><a class="button success" style="width: 100%;"
+                                                onclick=" inserirSolicitacao('<?= $_SESSION['usuariosLogados']['dados'][0]['idPessoas'] ?>');">Avançar para a documentação </a>
+                                        </center>
+                                    </label>
+                                </div>
+                            </div>
+                        </fieldset>
 
 
-
-
-
-
-                    <div class="small-12 large-12 cell">
-                        <label>Assunto da Solicitação
-                            <input type="text" readonly style="width: 100%;" id="assuntoSolicitacao" />
-                        </label>
-                    </div>
-
-
-
-                    <div class="small-12 large-12 cell">
-                        <label>Descrição da Sua Solicitação <i>(Campo Obrigatório)</i>
-                            <textarea id='txtDescricao' rows="5" style="width: 100%;"></textarea>
-                        </label>
-                    </div>
-
-                    <div class="small-12 large-3 cell">
-                        <label>Escolha qual tipo de Inscrição
-
-                            <script>
-                                criaCombo('comboTipoInscricao');
-                            </script>
-                            <select id="comboTipoInscricao"
-                                onchange="trocaCampo($(this).val())" name="state" style="width: 100%; ">
-
-                            </select>
-                        </label>
-                    </div>
-
-                    <div class="small-12 large-2 cell" id="boxInsc">
-                        <label id="tipoInscricaoLbl">Inscrição Mobiliária </label>
-                        <input id="inscDocu" type="text" style="width: 100%;" />
-
-                    </div>
-
-                    <div class="small-12 large-2 cell">
-                        <label>Status da Solicitação
-                            <input type="text" readonly style="width: 100%;" value="Abertura" />
-                        </label>
-
-                    </div>
-
-                    <div class="small-12 large-5 cell">
-                        <label><br>
-                            <center><a class="button success" style="width: 100%;"
-                                    onclick=" inserirSolicitacao('<?= $_SESSION['usuariosLogados']['dados'][0]['idPessoas'] ?>');">Avançar para a documentação </a>
-                            </center>
-                        </label>
-                    </div>
             </fieldset>
 
             <fieldset class="fieldset" id="documentacao">
@@ -422,6 +488,7 @@ echo '</pre>';
     $('#linkHelpServico').hide();
     $('#iniciosSolicitacao').hide();
     $('#fieldSolicitacao').hide();
+    $('#boxTerceiro').hide();
     $('#documentacao').hide();
     $('.mensagemB').hide();
     $('#arquivosAnexosSucesso').hide();

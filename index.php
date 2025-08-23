@@ -21,6 +21,15 @@ include_once 'includes/head.php';
 ?>
 
 <body style="background-image: url('imgs/fundoSistema.png') ;         background-size: cover " id="telaMaior">
+    <style>
+            .button{
+                border-radius: 10px;
+            }
+            .fieldset{
+                border-radius: 10px;
+            }
+
+        </style>
 
     <!-- modais de informação sucesso cadastrado -->
 
