@@ -505,13 +505,7 @@ echo '</pre>';
 
 
 
-
-
-
-    //aqui que traz os arquivos pertinentes a esse servico;
-    //criarCaixaArquivo($('#comboServicos').find(':selected').attr('codigo'));
-
-
+ 
 
     function trocaCampo(valor) {
 
