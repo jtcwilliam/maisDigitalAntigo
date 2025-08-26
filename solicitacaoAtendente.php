@@ -73,10 +73,10 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
                 <h4> <b><i><span id='nomeDoArquivoEnvio'></span></i></b></h4>
 
                 <!-- id de arquivo -->
-                <input type="text" id="aquivoPraSolicitar" />
+                <input type="hidden" id="aquivoPraSolicitar" />
 
                 <!-- flag com ação para comunique-se -->
-                <input type="text" id="acaoComuniqueSE" />
+                <input type="hidden" id="acaoComuniqueSE" />
 
 
                 <textarea rows="5" id="mensagemComuniqueArquivo"></textarea>
@@ -245,7 +245,7 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
 
 
 
-                <div class="grid-x  grid-padding-x">
+                <div class="grid-x  grid-padding-x" style="display: none;">
                     <div class="small-1 cell" style="   display: inline; align-content: center; text-align: justify;color: #56658E">
                         <h2><i class="fi-megaphone large"></i></h2>
                     </div>
@@ -253,15 +253,20 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
                         <h4>Comunicar ao Cidadão </h4>
                     </div>
                 </div>
-                <div class="grid-x  grid-padding-x" style="color: #56658E">
+
+
+                <div class="grid-x  grid-padding-x" style="color: #56658E; display: none;" >
                     <div class="small-1 cell" style="   display: inline; align-content: center; text-align: justify;color: #56658E">
                         <h2><i class="fi-archive large"></i></h2>
                     </div>
-                    <div class="small-11 cell" style="display: inline; align-content: center; text-align: justify; color: #56658E">
+                    <div class="small-11 cell" style="display: inline; align-content: center; text-align: justify; color: #56658E;  ">
                         <h4>Arquivar Solicitação </h4>
                     </div>
                 </div>
-                <div class="grid-x  grid-padding-x">
+
+
+
+                <div class="grid-x  grid-padding-x" style="display: none;"> 
                     <div class="small-1 cell" style="   display: inline; align-content: center; text-align: justify;color: #56658E">
                         <h2><i class="fi-check large"></i></h2>
                     </div>
@@ -270,7 +275,7 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
                     </div>
                 </div>
 
-                <div class="grid-x  grid-padding-x">
+                <div class="grid-x  grid-padding-x" >
                     <div class="small-1 cell" style="   display: inline; align-content: center; text-align: justify;color: #56658E">
                         <h2><i class="fi-page-multiple large"></i></h2>
                     </div>
@@ -281,7 +286,7 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
                     </div>
                 </div>
 
-                <div class="grid-x  grid-padding-x">
+                <div class="grid-x  grid-padding-x" style="display: none;">
                     <div class="small-1 cell" style="   display: inline; align-content: center; text-align: justify;color: #56658E">
                         <h2><i class="fi-page-copy large"></i></h2>
                     </div>
@@ -421,6 +426,8 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
         function enviarEmailComuniqueSe() {
 
             var solicitacao = $('#idSolicitacao').val();
+
+             $('#mensagemComuniqueArquivo').val('');
 
             var formData = {
 
