@@ -536,7 +536,7 @@ echo '</pre>';
 
     }
 
-    function inserirSolicitacao(solicitante) {
+    function  inserirSolicitacao(solicitante) {
 
 
 
@@ -552,7 +552,7 @@ echo '</pre>';
             documentoPublico: $('#inscDocu').val(),
             comboTipoInscricao: $('#comboTipoInscricao').val(),
             idUsuario: solicitante,
-            statusSolicitacao: 9,
+            statusSolicitacao: 9, 
             inserirSolicitacao: 0,
             cpfSolicitante: $('#cpfSolicitante').val(),
             txtCEP: $('#txtCEP').val(),

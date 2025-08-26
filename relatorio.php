@@ -109,7 +109,7 @@ if ($dadosSolicitacao[0]['representaTerceiro'] == '1') {
     // Adicionar imagem no PDF
     $pdf->Image($file, 0, 240, 130, 0, 'PNG');
 
- 
+
 
 
     //
@@ -129,28 +129,137 @@ if ($dadosSolicitacao[0]['representaTerceiro'] == '1') {
     $pdf->Cell(90, 5, 'Interessado', 0, 1, 'C');
 
     unlink($fileTerceiro);
-   unlink($file);
+    unlink($file);
 } else {
 
 
     // Adicionar imagem no PDF
     $pdf->Image($file, 50, 240, 130, 0, 'PNG');
 
-   
+
 
 
     //
 
     $pdf->Cell(190, 7, $dadosSolicitacao[0]['nomePessoa'], 0, 0, 'C'); // 1 = borda, 0 = continua na mesma linha
 
- unlink($file);
-
+    unlink($file);
 }
 
 
+//inicio procurador
+if ($dadosSolicitacao[0]['representaTerceiro'] == '1') {
 
 
-  
+
+    $mes = $dadosSolicitacao[0]['mes'];
+
+    setlocale(LC_TIME, 'pt_BR.utf8');
+    $mes = $mes;
+
+    $dataDaSol = 'Guarulhos, ' . $dadosSolicitacao[0]['dias'] . $mes . $dadosSolicitacao[0]['ano'];
+
+
+
+    $pdf->AddPage();
+
+    $pdf->Image('logoPrefeitura.png', 5, 10, 60);
+    $pdf->SetFont('Arial', 'B', 30);
+
+
+    $pdf->Text(65, 31, iconv("UTF-8", "ISO-8859-1//TRANSLIT", 'Requerimento Padrão'));
+
+    $pdf->SetFont('Arial', '', 13);
+    $pdf->Text(10, 43, iconv("UTF-8", "ISO-8859-1//TRANSLIT", 'Ao Excelentíssimo Senhor Prefeito do Município de Guarulhos'));
+    $pdf->Cell(190, 35, '', 0, 1, 'C');
+
+
+    $pdf->SetFont('Arial', 'B', 13);
+    $pdf->Cell(190, 6, 'Dados Pessoais', 1, 1, 'C');
+
+    // Texto com negrito e normal + alinhamento justificado
+    $pdf->SetFont('Arial', '', 13);
+    $pdf->SetX(10);
+    $pdf->MultiCell(0, 6, '', 0, 'J'); // Reservar área
+    $pdf->SetXY(10, 53, $pdf->GetY());
+    $pdf->WriteHTML(iconv("UTF-8", "ISO-8859-1//TRANSLIT", "<b>Nome do Solicitante:</b> " . $dadosSolicitacao[0]['nomePessoa'] . "<br><br><b>CPF ou CNPJ:</b> " . $dadosSolicitacao[0]['docSolicitacaoPessoal'] . " 
+<br><br><b>Email:</b> " . $dadosSolicitacao[0]['emailUsuario'] . " <br> <br><b>Endereço: </b>" . $dadosSolicitacao[0]['logradouroSol'] .
+        ", " . $dadosSolicitacao[0]['numeroSol'] . ". " . $dadosSolicitacao[0]['complemento'] . "  " . $dadosSolicitacao[0]['bairro'] . " <br><br><b>" . $dadosSolicitacao[0]['descricaoDoc'] . ":</b> " . $dadosSolicitacao[0]['documentoPublico'] . "<b><br><br>Venho, respeitosamente, solicitar</b><br><i><center>"
+        . $dadosSolicitacao[0]['descricaoCarta'] . "<center></i>.<br><br><b>Complemento da Solicitação</b>:  <br>" . $dadosSolicitacao[0]['descricaoSolicitacao'] . " <br>  "));
+
+
+
+    $pdf->SetXY(10, 230, $pdf->GetY());
+
+    $pdf->SetFont('Arial', 'B', 13);
+    $pdf->Cell(190, 8, $dataDaSol, 0, 0, 'j');
+
+    $base64 =   $dadosSolicitacao[0]['assinaturaSolicitacao'];
+
+    // Remover o prefixo data:image/png;base64,
+    $base64 = str_replace('data:image/png;base64,', '', $base64);
+    $base64 = str_replace(' ', '+', $base64);
+
+    // Decodificar base64
+    $data = base64_decode($base64);
+
+    // Criar arquivo temporário
+    $file = 'temp_image.png';
+    file_put_contents($file, $data);
+    $pdf->SetXY(10, 260, $pdf->GetY());
+
+
+    if ($dadosSolicitacao[0]['representaTerceiro'] == '1') {
+
+        $base64Terceiro =   $dadosSolicitacao[0]['assinaturaTerceiro'];
+
+        // Remover o prefixo data:image/png;base64,
+        $base64Terceiro = str_replace('data:image/png;base64,', '', $base64Terceiro);
+        $base64Terceiro = str_replace(' ', '+', $base64Terceiro);
+
+        // Decodificar base64
+        $data = base64_decode($base64Terceiro);
+
+        // Criar arquivo temporário
+        $fileTerceiro = 'temp_imageB.png';
+        file_put_contents($fileTerceiro, $data);
+
+
+
+        // Adicionar imagem no PDF
+        $pdf->Image($fileTerceiro, 40, 240, 130, 0, 'PNG');
+
+
+ 
+
+
+
+
+        //
+
+ 
+        // A posição da segunda célula é determinada pela largura da anterior
+        $pdf->Cell(200, 7, $dadosSolicitacao[0]['nomeTerceiro'], 0, 1, 'C'); // 1 = borda, 1 = vai para a próxima linha (após esta célula)
+        $pdf->SetFont('Arial', '', 11);
+           $pdf->Cell(200, 5, 'Interessado', 0, 1, 'C');
+
+
+   
+
+        unlink($fileTerceiro);
+        unlink($file);
+    } else {
+
+
+     
+ 
+    }
+}
+
+//fim procurador
+
+
+
 
 
 

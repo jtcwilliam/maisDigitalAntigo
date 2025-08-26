@@ -60,7 +60,7 @@ if (isset($_POST['trazerSolicitacaoStatus'])) {
 
 
 
-<?php
+    <?php
     exit();
 }
 
@@ -119,108 +119,103 @@ if (isset($_POST['inserirSolicitacao'])) {
         $protocolo =  $objSolicitacao->trazerSolicitacao($randomico);
 
 
-        //so envia se representa terceiro for =1
-//envio do email para terceiro
+
+
+
+        if ($representaTerceiro == 1) {
+            //so envia se representa terceiro for =1
+            //envio do email para terceiro
 
 
 
 
-ob_start();
-
-?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <style>
-        p {
-            font-size: 1.1em;
-            line-height: 1.3em;
-        }
-
-        ;
-
-
-        li {
-            font-size: 1.3em;
-            line-height: 1.3em;
-        }
-    </style>
-
-</head>
-
-<body style="font-family: Arial, Helvetica, sans-serif;">
-
-
-    <?php
-
- 
-
+            ob_start();
 
     ?>
-    <h2>Olá <b><?=$_POST['nomeTerceiro']   ?></b>! Somos da Equipe Mais Digital da Prefeitura de Guarulhos </h2>
+            <!DOCTYPE html>
+            <html lang="en">
 
-    <p></b> Gostariamos de informar que  <b><?php echo  $protocolo[0]['nomePessoa']  ?></b> realizou a 
-               solicitação </i><?=$protocolo[0]['descricaoCarta'] ?></i> como seu representante!<br>
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-               <br>
-               Para os devidos encaminhamentos, precisamos que vossa senhoria assine esta solicitação através do link abaixo
+                <style>
+                    p {
+                        font-size: 1.1em;
+                        line-height: 1.3em;
+                    }
 
-
-
-    </p>
-  
-
-
-
-
-    <a style="color: black; text-decoration: none; font-style: italic;"
-        href="https://agendafacil.guarulhos.sp.gov.br/maisDigital/assinatura.php?idSolicitacao=<?=$protocolo[0]['idsolicitacao']?>&112ff6666a78800f14e115ef8e7a57a5=1 " target="_blank">
-         Clique aqui para assinar
-    </a>
-    <br>
-
-    <h4> Estamos á Disposição!<br>
-
-        <b>Equipe Mais Digital</b>
-        <h2> Prefeitura de Guarulhos</h2>
-    </h4>
+                    ;
 
 
+                    li {
+                        font-size: 1.3em;
+                        line-height: 1.3em;
+                    }
+                </style>
 
+            </head>
+
+            <body style="font-family: Arial, Helvetica, sans-serif;">
+
+
+                <?php
 
 
 
-</body>
 
-</html>
-<?php
-$dados = ob_get_contents();
-ob_end_clean();
+                ?>
+                <h2>Olá <b><?= $_POST['nomeTerceiro']   ?></b>! Somos da Equipe Mais Digital da Prefeitura de Guarulhos </h2>
 
- 
+                <p></b> Gostariamos de informar que <b><?php echo  $protocolo[0]['nomePessoa']  ?></b> realizou a
+                    solicitação </i><?= $protocolo[0]['descricaoCarta'] ?></i> como seu representante!<br>
 
- 
-$objEnvio->setDestinatario($_POST['emailTerceiro']);
-$objEnvio->setAssunto('Assinatura da Solicitacao');
-$objEnvio->setConteudo($dados);
-
-if ($objEnvio->envioEmail()) {
-
- 
-}
+                    <br>
+                    Para os devidos encaminhamentos, precisamos que vossa senhoria assine esta solicitação através do link abaixo
 
 
- 
+
+                </p>
 
 
 
 
 
-//fim do envio do email para terceiro
+                <a style="color: black; text-decoration: none; font-style: italic;"
+                    href="https://agendafacil.guarulhos.sp.gov.br/maisDigital/assinatura.php?idSolicitacao=<?= $protocolo[0]['idsolicitacao'] ?>&112ff6666a78800f14e115ef8e7a57a5=1 " target="_blank">
+                    Clique aqui para assinar
+                </a>
+                <br>
+
+                <h4> Estamos á Disposição!<br>
+
+                    <b>Equipe Mais Digital</b>
+                    <h2> Prefeitura de Guarulhos</h2>
+                </h4>
+
+
+
+
+
+
+            </body>
+
+            </html>
+    <?php
+            $dados = ob_get_contents();
+            ob_end_clean();
+
+
+
+
+            $objEnvio->setDestinatario($_POST['emailTerceiro']);
+            $objEnvio->setAssunto('Assinatura da Solicitacao');
+            $objEnvio->setConteudo($dados);
+
+            if ($objEnvio->envioEmail()) {
+            }
+        }
+        //fim do envio do email para terceiro
 
 
 
@@ -238,7 +233,7 @@ if (isset($_POST['solicitacaoAtendente'])  &&  $_POST['solicitacaoAtendente']) {
 
     $assinaturaAtiva =     $objSolicitacao->pesquisarAssinatura($_POST['idSolicitacao']);
 
-?>
+    ?>
 
     <fieldset class="fieldset" id="fieldSolicitacao" style="display: block;">
         <legend>
