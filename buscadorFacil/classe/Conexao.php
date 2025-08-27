@@ -8,20 +8,37 @@ class Conexao
     {
         try {
 
-         
 
-//desenvolvimento local
-  /* 
+ 
+
+            //desenvolvimento local
+
+
+                $user = 'root';
+                $password = 'root';
+                $db = 'agendaf';
+                $host = 'localhost:8889';
+
+
+
+
+ /*   
+       
+
+   
+
+//desenvolvimento web
+
 
                 $user = 'root';
                 $password = '';
                 $db = 'gramulhabanc';
                 $host = '127.0.0.1';
 
-     */  
+         
    
   
-            //Produção
+//Desenvolvimento Produção
 
             $user = 'gramulhabanc';
             $password = 'M@r1@He1en@';
@@ -29,9 +46,11 @@ class Conexao
             $host = 'gramulhabanc.mysql.dbaas.com.br';
 
 
+         */ 
 
 
-            //desenvolvimento online
+
+ 
 
 
 

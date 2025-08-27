@@ -29,15 +29,22 @@ class Conexao
         try {
 
 
-        
-   /*
+            $user = 'root';
+            $pwd = 'root';
+            $db = 'agendaf';
+            $host = 'localhost';
+
+
+
+
+            /*
             //  servidor desenvolvimento
 
             $user = 'dbagenddev';
             $pwd = 'Sge@4@5';
             $db = 'dbagenddev';
             $host = 'dbagenddev.mysql.dbaas.com.br';
- */
+
 
 
 
@@ -46,8 +53,9 @@ class Conexao
             $pwd = 'agendaf';
             $db = 'agendaf';
             $host = 'akuma.guarulhos.sp.gov.br';
+             */
 
- 
+
 
 
 

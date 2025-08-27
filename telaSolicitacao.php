@@ -150,7 +150,7 @@ echo '</pre>';
                     </div>
 
                     <div class="small-12 large-2 cell">
-                        <label>  Representa outra pessoa?
+                        <label> Representa outra pessoa?
                             <a class="button" onclick="$('#boxTerceiro').show(); $('#representaTerceiro').val(1)" style="width: 100%;   ">Sim!</a>
                         </label>
 
@@ -167,12 +167,12 @@ echo '</pre>';
                         <fieldset class="fieldset" style="background-color: #1779ba1c; border-radius: 15px;">
                             <h5><b>Dados do Terceiro</b></h5>
 
-                            <div class=" grid-x  grid-padding-x"  >
+                            <div class=" grid-x  grid-padding-x">
 
                                 <div class="small-12 large-4 cell">
                                     <label>Nome do Terceiro
-                                        <input type="hidden"   style="width: 100%;" id="representaTerceiro" />
-                                        <input type="text"   style="width: 100%;" id="nomeTerceiro" />
+                                        <input type="hidden" style="width: 100%;" id="representaTerceiro" />
+                                        <input type="text" style="width: 100%;" id="nomeTerceiro" />
                                     </label>
 
 
@@ -180,7 +180,7 @@ echo '</pre>';
 
                                 <div class="small-12 large-3 cell">
                                     <label>CPF ou CNPJ
-                                        <input type="text"   style="width: 100%;" id="cpfTerceiro" />
+                                        <input type="text" style="width: 100%;" id="cpfTerceiro" />
                                     </label>
 
 
@@ -188,7 +188,7 @@ echo '</pre>';
 
                                 <div class="small-12 large-3 cell">
                                     <label>Email
-                                        <input type="text"   style="width: 100%;" id="emailTerceiro" />
+                                        <input type="text" style="width: 100%;" id="emailTerceiro" />
                                     </label>
 
 
@@ -196,7 +196,68 @@ echo '</pre>';
 
                                 <div class="small-12 large-2 cell">
                                     <label>Telefone
-                                        <input type="text"   style="width: 100%;" id="telefoneTerceiro" />
+                                        <input type="text" style="width: 100%;" id="telefoneTerceiro" />
+                                    </label>
+
+
+                                </div>
+
+
+                                <div class="small-12 large-12 cell" style="padding-top: 10px;">
+                                    <h6><b>Autorizo para todos os atos desse processo, os(as) senhores(as) </b></h6>
+
+                                    <div class=" grid-x  grid-padding-x atuarPessoa" id="boxPessoas">
+
+                                        <div class="small-12 large-3 cell">
+                                            <label>Nome
+                                                <input type="text" class="nomeAtuar">
+                                            </label>
+
+
+                                        </div>
+
+                                        <div class="small-12 large-2 cell">
+                                            <label>RG
+                                                <input type="text" style="width: 100%;" class="rgAtuar" />
+                                            </label>
+
+
+                                        </div>
+
+                                        <div class="small-12 large-3 cell">
+                                            <label>Email
+                                                <input type="text" style="width: 100%;" class="emailAtuar" />
+                                            </label>
+
+
+                                        </div>
+
+                                        <div class="small-12 large-2 cell">
+                                            <label>Celular
+                                                <input type="text" style="width: 100%;" class="celularAtuar" />
+                                            </label>
+
+
+                                        </div>
+
+                                        <div class="small-12 large-2 cell">
+                                            <label>Adicionar outra Pessoa
+                                                <a class="button" onclick="clonarClasse()" style="width: 100%;"> + </a>
+                                            </label>
+
+
+                                        </div>
+
+
+
+
+
+                                    </div>
+
+                                    <div id="containerClone">
+
+                                    </div>
+
                                     </label>
 
 
@@ -505,7 +566,17 @@ echo '</pre>';
 
 
 
- 
+
+    function clonarClasse() {
+        var elementoParaClonar = $('#boxPessoas');
+
+        // 2. Clona o elemento, incluindo seus descendentes e nós de texto (cópia profunda)
+        var elementoClonado = elementoParaClonar.clone(false, false); // O 'true, true' garante a cópia de eventos e descendentes
+
+        // 3. Adiciona o elemento clonado ao final da div com a classe "container"
+        elementoClonado.appendTo('#containerClone');
+    }
+
 
     function trocaCampo(valor) {
 
@@ -536,7 +607,34 @@ echo '</pre>';
 
     }
 
-    function  inserirSolicitacao(solicitante) {
+    function inserirSolicitacao(solicitante) {
+
+        /*nomeAtuar
+rgAtuar
+emailAtuar
+celularAtuar*/
+
+
+        $('.atuarPessoa').each(function() {
+
+            emailAtuar = $(this).find('.emailAtuar').val();
+            nomeAtuar = $(this).find('.nomeAtuar').val();
+            celularAtuar = $(this).find('.celularAtuar').val();
+
+
+            pessoa = `Nome: ${nomeAtuar}. Email ${emailAtuar}. Celular  ${celularAtuar } `;
+
+            console.log(pessoa);
+            
+            
+        })
+
+ 
+
+ 
+
+
+        return false;
 
 
 
@@ -552,7 +650,7 @@ echo '</pre>';
             documentoPublico: $('#inscDocu').val(),
             comboTipoInscricao: $('#comboTipoInscricao').val(),
             idUsuario: solicitante,
-            statusSolicitacao: 9, 
+            statusSolicitacao: 9,
             inserirSolicitacao: 0,
             cpfSolicitante: $('#cpfSolicitante').val(),
             txtCEP: $('#txtCEP').val(),
@@ -560,7 +658,7 @@ echo '</pre>';
             txtNUmero: $('#txtNUmero').val(),
             txtComplemento: $('#txtComplemento').val(),
             txtBairro: $('#txtBairro').val()
- 
+
 
         };
         $.ajax({
@@ -573,7 +671,7 @@ echo '</pre>';
             .done(function(data) {
 
                 console.log(data);
-                
+
 
                 if (data.retorno == true) {
                     $('#idSolicitacaoHidden').val(data.idSolicitacaoHidden);
