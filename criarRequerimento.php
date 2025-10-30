@@ -161,7 +161,7 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
 
                     $('#img').html(data);
 
-                    qrCodeAssinatura('https:\/\/agendafacil.guarulhos.sp.gov.br\/testeDigitalPlus_agosto\/preencheReq.php?idRequerimento=' + data.codigo);
+                    qrCodeAssinatura('https:\/\/agendafacil.guarulhos.sp.gov.br\/maisDigital\/preencheReq.php?idRequerimento=' + data.codigo);
 
                     $('#verReq').html('<a  href="requerimentoPresencial.php?codigoRequerimento='+data.codigo+'"   style="background-color: green;"   class="button">Clique Aqui para Acessar Requerimento</a>');
 

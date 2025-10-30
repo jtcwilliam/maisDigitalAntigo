@@ -6,6 +6,7 @@ if (!session_start()) {
 
 
 
+   
 ?>
 
 <!doctype html>
@@ -312,7 +313,7 @@ include_once 'includes/head.php';
                                     <form action="#">
                                         <label style="font-weight: bold;"> Digite o CPF para Iniciar a Sua Solicitação
                                             <input type="text" placeholder="Digite aqui seu CPF" class="cpf" id="cpf"
-                                                onkeydown="mudarMascara(this.value)" value="326.890.658-35" required />
+                                                onkeydown="mudarMascara(this.value)" value="" required />
                                         </label>
 
                                         <input type="submit" class="button succes" href="#" onclick="consultarCPF($('#cpf').val(),0 )"

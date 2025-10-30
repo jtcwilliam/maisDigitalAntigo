@@ -218,7 +218,7 @@
           type: 'POST',
           url: 'ajax/salvaAssinaturaController.php',
           data: formData,
-          dataType: 'html',
+          dataType: 'json',
           encode: true
         })
         .done(function(data) {
@@ -228,6 +228,7 @@
             $('#colherAssinatura').hide();
             $('#infoSucesso').show();
             screen.orientation.unlock();
+            document.exitFullscreen();
 
           }
         });

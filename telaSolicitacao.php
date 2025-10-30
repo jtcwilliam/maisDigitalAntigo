@@ -73,7 +73,7 @@ echo '</pre>';
                 <legend>
                     <h3>Olá. Vamos fazer sua solicitação no +Digital</h3>
                 </legend>
-                <label>No que podemos te ajudar? Digite abaixo alguma palavra do que deseja e vamos encontrar o serviço mais adequado
+                <label>Informe abaixo uma palavra-chave relacionada à sua necessidade e indicaremos o serviço correspondente    
                     <div class=" grid-x  grid-padding-x" style="padding-bottom: 10px;">
                         <div class="small-12 large-12 cell">
                             <script>
@@ -337,7 +337,7 @@ echo '</pre>';
                 <div class=" grid-x grid-padding-x" id="arquivosAnexosSucesso">
                     <div class="small-12 large-12 cell" style="width: 100%; padding-top: 30px;">
                         <center><a class="button success " onclick=" $('#envioAssinatura').show();  
-                         verificarAssinatura($('#idSolicitacaoHidden').val())  ;
+                         verificarAssinatura($('#idSolicitacaoHidden').val())  ;    
                          qrCodeAssinatura('https:\/\/agendafacil.guarulhos.sp.gov.br\/maisDigital\/assinatura.php?idSolicitacao='+$('#idSolicitacaoHidden').val());
                           $('#documentacao').hide(); $('#fieldSolicitacao').hide();
                            $('#escolha').css('color', 'rgba(8, 124, 4, 0.66)' );
@@ -524,11 +524,25 @@ echo '</pre>';
 
             $('#inscDocu').mask("000.000.000.000");
 
-        } else {
+        }
+
+        else if (valor === '37') {
+
+            $('#boxInsc').show();   
             $('#tipoInscricaoLbl').html('Cadastro');
 
 
             $('#inscDocu').mask("0000000000000000");
+
+        }
+        
+        
+        
+        else {
+            $('#tipoInscricaoLbl').html('Outros');
+
+
+            $('#inscDocu').mask("000000000000000    00000000");
 
         }
 
@@ -536,7 +550,7 @@ echo '</pre>';
 
     }
 
-    function inserirSolicitacao(solicitante) {
+    function  inserirSolicitacao(solicitante) {
 
 
 
@@ -552,7 +566,7 @@ echo '</pre>';
             documentoPublico: $('#inscDocu').val(),
             comboTipoInscricao: $('#comboTipoInscricao').val(),
             idUsuario: solicitante,
-            statusSolicitacao: 9,
+            statusSolicitacao: 9, 
             inserirSolicitacao: 0,
             cpfSolicitante: $('#cpfSolicitante').val(),
             txtCEP: $('#txtCEP').val(),

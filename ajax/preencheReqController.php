@@ -50,9 +50,13 @@ $objSolicitacao->setSolicitacao($_POST['txtSolicitacao']);
 
 $objSolicitacao->setBairro($_POST['txtBairro']);
 
+$objSolicitacao->setAutorizadosRequerimento($_POST['pessoa']);
 
- 
+
+
 
 $objSolicitacao->setCodigoRequerimento($_POST['idRequerimento']);
 
-$objSolicitacao->gravarRequerimento();
+if ($objSolicitacao->gravarRequerimento()) {
+    echo json_encode(array('retorno' => true));
+}

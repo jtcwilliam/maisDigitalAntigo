@@ -1,5 +1,9 @@
 <?php
 
+ 
+ 
+
+
 include_once '../classes/arquivo.php';
 
 
@@ -23,10 +27,26 @@ if (strlen($nomeArquivoSize) >= 180) {
 $nomeArquivo =  $nomeArquivo;
 
 
+$nomeArquivoSalvar = md5($_POST['idSolicitacao'].date("Y-m-d H:i:s"));
+
+
+
 
 $file = file_get_contents($_FILES['file']['tmp_name']);
 
+
+
 $arquivoTipo =  $_FILES['file']['type'];
+
+$tipoDeArquivo = explode('/', $arquivoTipo);
+
+$tipoArquivo = $tipoDeArquivo[count($tipoDeArquivo)-1];
+
+
+
+
+
+move_uploaded_file($_FILES['file']['tmp_name'], '../files/'.$nomeArquivoSalvar.'.'.$tipoArquivo);
 
 $idTipoDocumento = $_POST['idTipoDocumento'];
 
@@ -38,8 +58,9 @@ $objArquivo->setNomeArquivo($nomeArquivo);
 $objArquivo->setIdSolicitacao($_POST['idSolicitacao']);
 
 $objArquivo->setStatusArquivo('1');
+ 
 
-$objArquivo->setArquivo($file);
+$objArquivo->setArquivo('files/'.$nomeArquivoSalvar.'.'.$tipoArquivo);
 
 $objArquivo->setIdTipoDocumento($idTipoDocumento);
 

@@ -18,10 +18,10 @@ $objSolicitacao = new Solicitacao();
 $dadosSolicitacao = $objSolicitacao->consultarRequerimento($_GET['codigoRequerimento']);
 
 
- 
- 
 
- 
+
+
+
 
 
 
@@ -81,7 +81,7 @@ switch (date('m')) {
         $mes = "Dezembro";
         break;
 
- 
+
 
     default:
         # code...
@@ -127,7 +127,7 @@ $pdf->MultiCell(0, 6, '', 0, 'J'); // Reservar área
 $pdf->SetXY(10, 53, $pdf->GetY());
 $pdf->WriteHTML(iconv("UTF-8", "ISO-8859-1//TRANSLIT", "<b>Nome do Solicitante:</b> " . $dadosSolicitacao[0]['nome'] . "<br><br><b>CPF ou CNPJ:</b> " .  $dadosSolicitacao[0]['cpfCnpj']  . " 
 <br><br><b>Email:</b> " .  $dadosSolicitacao[0]['email']  . " <br> <br><b>Endereço: </b>" . $dadosSolicitacao[0]['logradouro'] .
-    ", " . $dadosSolicitacao[0]['numero'] . ". " . $dadosSolicitacao[0]['complemento'] . "  " . $dadosSolicitacao[0]['bairro'] . " <br><br><b> Inscricao: </b>  12332.232 <b><br><br>Venho, respeitosamente, solicitar</b> <br>" . $dadosSolicitacao[0]['solicitacao'] . " <br>  "));
+    ", " . $dadosSolicitacao[0]['numero'] . ". " . $dadosSolicitacao[0]['complemento'] . "  " . $dadosSolicitacao[0]['bairro'] . " <br><br><b> Inscricao: </b>  12332.232 <b><br><br>Venho, respeitosamente, solicitar</b> <br>" . $dadosSolicitacao[0]['solicitacao'] . "<br><br><br><b>Autorizo para todos os atos deste processo os(as) senhores(as):</b>".$dadosSolicitacao[0]['autorizadosRequerimento']));
 
 
 

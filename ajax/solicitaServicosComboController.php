@@ -104,7 +104,7 @@ if (isset($_POST['containner']) && $_POST['containner'] == 'comboDocumentos') {
 if (isset($_POST['containner']) && $_POST['containner'] == 'comboTipoInscricao') {
     include_once '../classes/Documentos.php';
 
-    $objservico = new Documentos();
+    $objservico = new Documentos(); 
 
     $dados = $objservico->trazerDocumentos(' where status = 9 ');
 

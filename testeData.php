@@ -19,6 +19,15 @@ var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 <?php
 
 
+ 
+
+  $rootDir = realpath($_SERVER["DOCUMENT_ROOT"]);
+
+if($rootDir == "/var/www/html/php83" ){
+  echo 'servidor funcionando blz';
+}
+
+
 /*
 setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
 date_default_timezone_set('America/Sao_Paulo');

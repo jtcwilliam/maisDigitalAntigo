@@ -37,6 +37,8 @@ class Solicitacao
     private $documentoSolicitante;
     private $idAtendente;
     private $cidade;
+    private $autorizadosRequerimento;
+
 
     private $cepSolicitacao;
     private $logradouroSol;
@@ -313,7 +315,7 @@ class Solicitacao
 
 
             $sql = " select nome,cpfCnpj,telefone,email,cep,logradouro,numero,complemento, assinatura, statusRequerimento,
-             cidade, solicitacao, bairro from requerimentoAutomatico where codigoRequerimento = '" . $idRequerimento . "'";
+             cidade, solicitacao, bairro , autorizadosRequerimento from requerimentoAutomatico where codigoRequerimento = '" . $idRequerimento . "'";
 
 
 
@@ -614,7 +616,7 @@ class Solicitacao
             //
             $stmt = $pdo->prepare(" UPDATE requerimentoAutomatico set 
             nome=? ,cpfCnpj=? ,telefone=? ,email=? ,cep=? ,logradouro=?  ,numero=?  
-            ,complemento=? , assinatura=? , statusRequerimento=? , cidade=? , solicitacao=? , bairro=?  where codigoRequerimento=?");
+            ,complemento=? , assinatura=? , statusRequerimento=? , cidade=? , solicitacao=? , bairro=?, autorizadosRequerimento=?  where codigoRequerimento=?");
 
 
 
@@ -646,6 +648,8 @@ class Solicitacao
 
             $nomeRandomico = $this->getCodigoRequerimento();
 
+            $autorizadosRequerimento = $this->getAutorizadosRequerimento();
+
 
             $stmt->bindParam(1,  $nome, PDO::PARAM_LOB);
             $stmt->bindParam(2,  $cpfCnpj, PDO::PARAM_STR);
@@ -660,7 +664,9 @@ class Solicitacao
             $stmt->bindParam(11, $cidade, PDO::PARAM_STR);
             $stmt->bindParam(12, $solicitacao, PDO::PARAM_STR);
             $stmt->bindParam(13, $bairroMorador, PDO::PARAM_STR);
-            $stmt->bindParam(14, $nomeRandomico, PDO::PARAM_STR);
+            $stmt->bindParam(14, $autorizadosRequerimento, PDO::PARAM_STR);
+            $stmt->bindParam(15, $nomeRandomico, PDO::PARAM_STR);
+
 
 
 
@@ -1445,6 +1451,26 @@ class Solicitacao
     public function setRepresentaTerceiro($representaTerceiro)
     {
         $this->representaTerceiro = $representaTerceiro;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of autorizadosRequerimento
+     */ 
+    public function getAutorizadosRequerimento()
+    {
+        return $this->autorizadosRequerimento;
+    }
+
+    /**
+     * Set the value of autorizadosRequerimento
+     *
+     * @return  self
+     */ 
+    public function setAutorizadosRequerimento($autorizadosRequerimento)
+    {
+        $this->autorizadosRequerimento = $autorizadosRequerimento;
 
         return $this;
     }
