@@ -669,11 +669,16 @@ include_once 'includes/head.php';
                 })
                 .done(function(data) {
 
+                
+
 
                     console.log(data);
 
 
                     condicao = data.retornoCondicao.condicao;
+
+                    console.log(condicao);
+                    
                     if (condicao == false) {
                         //condição retornou false, a pessoa não ta cadastrada, abre o nome para gravar
                         $('#loginCPF').hide();
@@ -690,13 +695,11 @@ include_once 'includes/head.php';
 
                     } else {
                         //condição retornou true, então pode seguir para o agendamento. ta fa
-
-
-
+ 
 
 
                         //verificou se o cara é um usuario cadastrao para o completo e ai abre pra vir a senha
-                        if (data.retornoCondicao.dados[0].validaTipoCadastro == 1) {
+                        if (data.retornoCondicao.dados[0].validatipocadastro == 1) {
 
 
 
