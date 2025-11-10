@@ -1,7 +1,7 @@
 <?php
-
-/*echo '<pre>';
-print_r($_SESSION['usuariosLogados']['cpfDoUsuario']);
+/*
+echo '<pre>';
+print_r($_SESSION['usuariosLogados']);
 echo '</pre>';
 */
 
@@ -69,51 +69,14 @@ echo '</pre>';
 
 
             <!-- combo com a carta de serviço.. inicial  . -->
-            <fieldset class="fieldset" id="iniciosSolicitacao">
-                <legend>
-                    <h3>Olá. Vamos fazer sua solicitação no +Digital</h3>
-                </legend>
-                <label>Informe abaixo uma palavra-chave relacionada à sua necessidade e indicaremos o serviço correspondente    
-                    <div class=" grid-x  grid-padding-x" style="padding-bottom: 10px;">
-                        <div class="small-12 large-12 cell">
-                            <script>
-                                criaCombo('comboServicos');
-                            </script>
-                            <select class="js-example-basic-single  responsive-combobox" id="comboServicos"
-                                onchange="$('a#linkHelpServico').attr('href', $('#comboServicos').val());
-                                 $('#modalDuvidasCartas').foundation('open'); $('#tudoCertoLink').show();
-                                 
-                                    criarCaixaArquivo($('#comboServicos').find(':selected').attr('codigo'));
-
-                                 $('#codigoSolicitacao').html( $('#comboServicos option:selected').text()) ;
-                                 $('#assuntoSolicitacao').val( $('#comboServicos option:selected').text()) ;" name="state" style="width: 100%;">
-
-                            </select>
-
-                        </div>
-                </label>
-                <div class="small-12 large-12 cell">
-                    <br>
-                    <a class="button " target="_blank" id="linkHelpServico" style="font-weight: 300; width: 100%;">
-                        Se você tem alguma dúvida sobre procedimentos ou documentação desta solicitação, <b>clique aqui</b>.
-                        Você será redirecionado para o portal da prefeitura para saber tudo o que precisa. Após isto, feche o Site da Prefeitura e continue sua solicitação aqui! </a>
-                </div>
 
 
-                <div class="small-12 large-12 cell">
-                    <br>
-                    <center>
-                        <a class="button " id="tudoCertoLink" target="_blank" style="font-weight: 300; width: 50%;" onclick="$('#iniciosSolicitacao').hide(); 
-                         $('#fieldSolicitacao').show();   
-                           $('#escolha').css('color', 'rgba(8, 124, 4, 0.66)');  
-                           $('#complemento').css('color', 'rgba(0, 0, 0, 1)');  ">
-                            Tudo Certo! Quero continuar!
-                        </a>
-                    </center>
-                </div>
+            <?
+
+            include './comps/comboSelecaoServico.php';
 
 
-            </fieldset>
+            ?>
 
 
 
@@ -595,21 +558,15 @@ echo '</pre>';
 
             $('#inscDocu').mask("000.000.000.000");
 
-        }
+        } else if (valor === '37') {
 
-        else if (valor === '37') {
-
-            $('#boxInsc').show();   
+            $('#boxInsc').show();
             $('#tipoInscricaoLbl').html('Cadastro');
 
 
             $('#inscDocu').mask("0000000000000000");
 
-        }
-        
-        
-        
-        else {
+        } else {
             $('#tipoInscricaoLbl').html('Outros');
 
 
@@ -621,7 +578,7 @@ echo '</pre>';
 
     }
 
-    function  inserirSolicitacao(solicitante) {
+    function inserirSolicitacao(solicitante) {
 
         /*nomeAtuar
 rgAtuar
@@ -639,13 +596,13 @@ celularAtuar*/
             pessoa = `Nome: ${nomeAtuar}. Email ${emailAtuar}. Celular  ${celularAtuar } `;
 
             console.log(pessoa);
-            
-            
+
+
         })
 
- 
 
- 
+
+
 
 
         return false;
@@ -659,12 +616,13 @@ celularAtuar*/
             emailTerceiro: $('#emailTerceiro').val(),
             telefoneTerceiro: $('#telefoneTerceiro').val(),
 
-            assuntoSolicitacao: $('#comboServicos').find(':selected').attr('codigo'),
+            //alterar o nome para idServicos
+            assuntoSolicitacao: $('#txtServicoSolicitar').val(),
             descricao: $('#txtDescricao').val(),
             documentoPublico: $('#inscDocu').val(),
             comboTipoInscricao: $('#comboTipoInscricao').val(),
             idUsuario: solicitante,
-            statusSolicitacao: 9, 
+            statusSolicitacao: 9,
             inserirSolicitacao: 0,
             cpfSolicitante: $('#cpfSolicitante').val(),
             txtCEP: $('#txtCEP').val(),
@@ -774,17 +732,7 @@ celularAtuar*/
                 encode: true
             })
             .done(function(data) {
-
-
-
-
                 $('#solicitacaoStatusContainer').html(data);
-
-
-
-
-
-
             });
     }
 

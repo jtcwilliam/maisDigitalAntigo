@@ -17,6 +17,7 @@ class Servicos
     private $servicoHabilitado;
     private $idCartaServico;
     private $categoria;
+    private $tags;
 
     function __construct()
     {
@@ -39,7 +40,9 @@ class Servicos
 
 
 
-            $sql = "select  * from linkCartaServico  where servicoHabilitado=1";
+            $sql = 'select c."idCartaServico", n."nomeServico" as "nomeServico"  from nomescartaservicos n inner join cartaservico c on c."idNomeCartaServico" = n."idNomeCartaServico"
+                        where lower(c.tags)  like  lower(\'%' . $filtro . '%\') and servicoHabilitado=1';
+
 
 
 
@@ -76,6 +79,58 @@ class Servicos
             echo 'Error: ' . $e->getMessage();
         }
     }
+
+    public function  trazerServicosParaHabilitar($filtro = null)
+    {
+        try {
+
+
+            $pdo = $this->getPdoConn();
+
+
+
+            $sql = " select  * from nomescartaservicos n inner join cartaservico c on c.\"idNomeCartaServico\" = n.\"idNomeCartaServico\"
+              where c.servicohabilitado is null";
+
+            if ($filtro != null) {
+                $sql .= " where idUnidade= " . $filtro;
+            }
+
+
+            $stmt = $pdo->prepare($sql);
+
+
+            $stmt->execute();
+
+            //$user = $stmt->fetchAll();
+
+
+
+            $retorno = array();
+
+            $dados = array();
+
+            $row = $stmt->fetchAll();
+
+            foreach ($row as $key => $value) {
+                $dados[] = $value;
+            }
+
+
+            if (!isset($dados)) {
+                $retorno['condicao'] = false;
+            }
+
+
+
+
+            return $dados;
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+
     public function  trazerServicos($filtro = null)
     {
         try {
@@ -85,7 +140,7 @@ class Servicos
 
 
 
-            $sql = "select  * from linkCartaServico ";
+            $sql = "select  * from nomescartaservicos  ";
 
             if ($filtro != null) {
                 $sql .= " where idUnidade= " . $filtro;
@@ -132,19 +187,30 @@ class Servicos
             $pdo = $this->getPdoConn();
 
 
+            /*
+
+
+            UPDATE \"nomescartaservicos\"  SET \"statusServico\"=1, "tags" = 'testes, james, funciona, belezinha, lindeza' 
+ WHERE "idNomeCartaServico" = 223
+ 
+
+            */
+
             //
-            $stmt = $pdo->prepare(" UPDATE `linkCartaServico` SET `servicoHabilitado` = :habilitado,    `categoria` = :categoria,
-                `infoAtendente` = :infoAtendente 
-           WHERE `idlinkCartaServico` = :idCarta");
+            $stmt = $pdo->prepare("   UPDATE \"cartaservico\"  SET \"servicohabilitado\"='1',   \"categoriaAtendimento\" = :categoria, \"tags\"= :tags, 
+                \"infoAtendente\" = :infoAtendente 
+           WHERE \"idCartaServico\" = :idCarta");
 
 
-            $stmt->bindValue(':habilitado',  $this->getServicoHabilitado(), PDO::PARAM_STR);
+            //$stmt->bindValue(':habilitado',  $this->getServicoHabilitado(), PDO::PARAM_STR);
 
             $stmt->bindValue(':infoAtendente',  $this->getInfoAtendente(), PDO::PARAM_STR);
 
             $stmt->bindValue(':idCarta', $this->getIdCartaServico(), PDO::PARAM_STR);
 
             $stmt->bindValue(':categoria', $this->getCategoria(), PDO::PARAM_STR);
+
+            $stmt->bindValue(':tags', $this->getTags(), PDO::PARAM_STR);
 
             if ($stmt->execute()) {
 
@@ -320,7 +386,7 @@ class Servicos
 
     /**
      * Get the value of categoria
-     */ 
+     */
     public function getCategoria()
     {
         return $this->categoria;
@@ -330,10 +396,30 @@ class Servicos
      * Set the value of categoria
      *
      * @return  self
-     */ 
+     */
     public function setCategoria($categoria)
     {
         $this->categoria = $categoria;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of tags
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * Set the value of tags
+     *
+     * @return  self
+     */
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
 
         return $this;
     }

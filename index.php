@@ -699,7 +699,7 @@ include_once 'includes/head.php';
 
 
                         //verificou se o cara é um usuario cadastrao para o completo e ai abre pra vir a senha
-                        if (data.retornoCondicao.dados[0].validatipocadastro == 1) {
+                        if (data.retornoCondicao.dados[0].validaTipoCadastro == 1) {
 
 
 

@@ -178,7 +178,7 @@ class Documentos
             $pdo = $this->getPdoConn();
 
             //
-            $stmt = $pdo->prepare("INSERT INTO servicoDocumento(idServico,idDocumento, status) VALUES (:idservico,:idDocumento,:idstatus)");
+            $stmt = $pdo->prepare("INSERT INTO \"servicoDocumento\"(\"idServico\",\"idDocumento\", status) VALUES (:idservico,:idDocumento,:idstatus)");
 
             // $stmt = $pdo->prepare("  UPDATE  pessoas SET pwd =  :senha  WHERE idPessoas = :idPessoa   ");
 

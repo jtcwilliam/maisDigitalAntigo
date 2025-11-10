@@ -16,7 +16,7 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-
+/*
 
 if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
     echo '<center><h1>Acesso Negado</h1> <h4>Você será redirecionado para a pagina inicial</h4></center>';
@@ -38,7 +38,7 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
 }
 
 
-
+*/
 //include_once 'includes/verificadorADM.php';
 
 
@@ -96,7 +96,7 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
                                     <select class="js-example-basic-single  responsive-combobox" id="comboServicosDocumentos" name="comboServicos"
                                         style="width: 100%;">
                                     </select>
-                                </label>                                
+                                </label>
                             </div>
 
                             <div class="small-12 large-12 cell">
@@ -104,7 +104,7 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
                                     <select class="js-example-basic-single  responsive-combobox" id="comboServicosCategoria" name="comboCategoria"
                                         style="width: 100%;">
                                     </select>
-                                </label>                                
+                                </label>
                             </div>
 
 
@@ -119,6 +119,13 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
                                     <textarea rows="12" style="width: 100%;" name="infoAtendimentos">Digite aqui as informações para o Atendente</textarea>
                                 </label>
 
+                            </div>
+
+
+                            <div class="small-12 large-12 cell">
+                                <label for="qtdeMesas">Digite Tags para tornar fácil encontrar esse serviço?<br>
+                                    <textarea rows="12" style="width: 100%;" name="tagsAtendimento">Digite aqui as Tags</textarea>
+                                </label>
                             </div>
 
                             <div class="small-12 large-12 cell">

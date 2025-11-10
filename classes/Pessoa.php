@@ -64,7 +64,7 @@ class Pessoa
 
             $pdo = $this->getPdoConn();
 
-            $stmt = $pdo->prepare("select * from pessoas where documentoPessoa =:cpf  and pwd= :pwd  ");
+            $stmt = $pdo->prepare("select * from \"pessoas\" where \"documentoPessoa\" =:cpf  and pwd= :pwd  ");
 
             $stmt->execute(array(':cpf' => $cpf, ':pwd' => $senha));
 
@@ -109,7 +109,7 @@ class Pessoa
 
             $pdo = $this->getPdoConn();
 
-            $stmt = $pdo->prepare("select *, UPPER(nomePessoa) as nomePessoa from pessoas where documentoPessoa =:cpf   ");
+            $stmt = $pdo->prepare("select *, UPPER(\"nomePessoa\") as \"nomePessoa\" from pessoas where \"documentoPessoa\" =:cpf   ");
 
             $stmt->execute(array(':cpf' => $cpf));
 

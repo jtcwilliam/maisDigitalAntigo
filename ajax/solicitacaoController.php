@@ -33,18 +33,11 @@ if (isset($_POST['trazerSolicitacaoStatus'])) {
                 <tbody>
                     <?php
                     foreach ($solicitacaoStatus as $key => $value) {
-
-
-
                     ?>
-
                         <tr style="font-weight: 300;">
                             <td> <a onclick="exibirSolicitacao( <?= $value['idsolicitacao'] ?>)"> <?= $value['descricaoStatus'] ?> </a> </td>
                             <td><?= $value['descricaoCarta'] ?></td>
                             <td><?= $value['dias'] ?></td>
-
-
-
                         </tr>
 
 

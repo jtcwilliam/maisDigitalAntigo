@@ -2,6 +2,12 @@
 
 
 
+
+
+
+
+
+
 //combo Categorias da da pagina Habilitacao
 if (isset($_POST['containner']) && $_POST['containner'] == 'comboServicosCategoria') {
     include_once '../classes/Categoria.php';
@@ -24,27 +30,43 @@ if (isset($_POST['containner']) && $_POST['containner'] == 'comboServicosCategor
 //combo serviços da pagina index (criado para trazer o link)
 if (isset($_POST['containner']) && $_POST['containner'] == 'comboServicos') {
     include_once '../classes/servicos.php';
-
+    $strings = preg_replace(array("/(á|à|ã|â|ä)/", "/(Á|À|Ã|Â|Ä)/", "/(é|è|ê|ë)/", "/(É|È|Ê|Ë)/", "/(í|ì|î|ï)/", "/(Í|Ì|Î|Ï)/", "/(ó|ò|õ|ô|ö)/", "/(Ó|Ò|Õ|Ô|Ö)/", "/(ú|ù|û|ü)/", "/(Ú|Ù|Û|Ü)/", "/(ñ)/", "/(Ñ)/", "/(ç)/", "/(Ç)/"), explode(" ", "a A e E i I o O u U n N c C"), $_POST['dadosServico']);
+    $strings;
     $objservico = new Servicos();
+    $retornoTabelaServico = $objservico->servicosHabilitados($strings);
 
-    $dados = $objservico->servicosHabilitados();
+   
+?>
+    <table>
+        <thead>
+            <tr>
+                <th width="400">Serviço</th>
+
+                <th width="50"></th>
+                <th width="50">Solicitar</th>
+            </tr>
+        </thead>
+        <tbody style="font-weight: 300;">
+            <?php
+            foreach ($retornoTabelaServico as $key => $value) {
+            ?>
+                <tr>
+                    <td><?= $value['nomeServico'] ?></td>
+                    <td><a onclick="  $('#modalDuvidasCartas').foundation('open');"> Me ajude</a></td>
+                    <td><a onclick="  $('#tudoCertoLink').show();  
+                    $('#assuntoSolicitacao').val( '<?=$value['nomeServico'] ?>' ) ;   
+                    $('#txtServicoSolicitar').val('<?=$value['idCartaServico'] ?>' ) ;   
+                    
+                    "> Quero Solicitar</td>
 
 
-
-    echo  '<option    >     </option>';
-
-
-    foreach ($dados as $key => $value) {
-
-        $descricao = $value['descricaoCarta'];
-        if (strlen($descricao) > 200) {
-
-            $descricao = substr($descricao, 0, 200) . '...';
-        }
-
-
-        echo '<option    codigo='    . $value['idlinkCartaServico'] . '     value=' . $value['linkCarta'] . '  >' . $descricao . '</option>';
-    }
+                </tr>
+            <?php
+            }
+            ?>
+        </tbody>
+    </table>
+<?php
 }
 
 
@@ -54,7 +76,7 @@ if (isset($_POST['containner']) && $_POST['containner'] == 'comboServicosDocumen
 
     $objservico = new Servicos();
 
-    $dados = $objservico->trazerServicos();
+    $dados = $objservico->trazerServicosParaHabilitar();
 
 
 
@@ -63,14 +85,14 @@ if (isset($_POST['containner']) && $_POST['containner'] == 'comboServicosDocumen
 
     foreach ($dados as $key => $value) {
 
-        $descricao = $value['descricaoCarta'];
+        $descricao = $value['nomeServico'];
         if (strlen($descricao) > 200) {
 
             $descricao = substr($descricao, 0, 200) . '...';
         }
 
 
-        echo '<option value=' . $value['idlinkCartaServico'] . '>' . $descricao . '</option>';
+        echo '<option value=' . $value['idCartaServico'] . '>' . $descricao . '</option>';
     }
 }
 
@@ -104,7 +126,7 @@ if (isset($_POST['containner']) && $_POST['containner'] == 'comboDocumentos') {
 if (isset($_POST['containner']) && $_POST['containner'] == 'comboTipoInscricao') {
     include_once '../classes/Documentos.php';
 
-    $objservico = new Documentos(); 
+    $objservico = new Documentos();
 
     $dados = $objservico->trazerDocumentos(' where status = 9 ');
 

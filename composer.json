@@ -14,7 +14,8 @@
             "setasign/fpdf": "1.8.*",
             
             "tecnickcom/tcpdf": "6.6.*",
-            "setasign/fpdi": "^2.5" 
+            "setasign/fpdi": "^2.5",
+        "vlucas/phpdotenv": "^5.6" 
 
     }
 }
