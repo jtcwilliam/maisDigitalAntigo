@@ -81,7 +81,8 @@ class Solicitacao
 
             $pdo = $this->getPdoConn();
 
-            $sql = "select        sl.assuntoSolicitacao,  descricaoCarta, date_format(dataSolicitacao, '%d/%m/%Y  ás  %H:%i') as dias, nomeSecretaria,  stt.descricaoStatus , 
+            $sql = "select        sl.assuntoSolicitacao,  descricaoCarta, date_format(dataSolicitacao, '%d/%m/%Y  ás  %H:%i') as dias, nomeSecretaria,  
+            stt.descricaoStatus , 
             sl.idsolicitacao, statusSolicitacao   from solicitacao sl 
              inner join status stt on sl.statusSolicitacao = stt.idStatus inner join linkCartaServico lcs on lcs.idlinkCartaServico = sl.assuntoSolicitacao 
              where   idAtendente=" . $idAtendente;
@@ -172,7 +173,7 @@ class Solicitacao
 
 
 
-            $sql = "select  * from solicitacao sl inner join linkCartaServico lcs  on lcs.idlinkCartaServico = sl.assuntoSolicitacao inner join pessoas ps on ps.idPessoas = sl.solicitante  where  protocolo='" . $protocolo . "'";
+            $sql = "select  * from solicitacao sl inner join cartaServico cs  on cs.\"idCartaServico\" = sl.\"idCartaServico\" inner join pessoas ps on ps.\"idPessoas\" = sl.\"solicitante\"  where  protocolo='" . $protocolo . "'";
 
 
 
@@ -700,9 +701,10 @@ class Solicitacao
 
 
             //
-            $stmt = $pdo->prepare(" INSERT INTO solicitacao (assuntoSolicitacao,descricaoSolicitacao, documentoPublico, dataSolicitacao,statusSolicitacao,
-             solicitante,tipoDocumento, protocolo, docSolicitacaoPessoal,  cepSolicitacao   ,  logradouroSol   
-              ,  numeroSol, complemento, bairro, nomeTerceiro,  documentoTerceiro,  emailTerceiro, telefoneTerceiro, representaTerceiro  )
+            $stmt = $pdo->prepare(" INSERT INTO solicitacao (\"idCartaServico\",\"descricaoSolicitacao\", \"documentoPublico\",\"dataSolicitacao\",
+            \"statusSolicitacao\",
+             \"solicitante\",\"tipoDocumento\", \"protocolo\", \"docSolicitacaoPessoal\",  \"cepSolicitacao\"   ,  \"logradouroSol\"   
+              ,  \"numeroSol\", \"complemento\", \"bairro\", \"nomeTerceiro\",  \"documentoTerceiro\",  \"emailTerceiro\", \"telefoneTerceiro\", \"representaTerceiro\"  )
              VALUES ( :assuntoSolicitacao,:descricaoSolicitacao, :documentoPublico, :dataSolicitacao,
               :statusSolicitacao, :solicitante, :tipoDocumento, :protocolo, :docSolicitacaoPessoal,  :cepSolicitacao, 
                 :logradouroSol, :numeroSol,  :complemento,   :bairro, :nomeTerceiro,  :documentoTerceiro,  :emailTerceiro,  :telefoneTerceiro, :representaTerceiro )");

@@ -35,7 +35,7 @@ if (isset($_POST['containner']) && $_POST['containner'] == 'comboServicos') {
     $objservico = new Servicos();
     $retornoTabelaServico = $objservico->servicosHabilitados($strings);
 
-   
+
 ?>
     <table>
         <thead>
@@ -54,8 +54,9 @@ if (isset($_POST['containner']) && $_POST['containner'] == 'comboServicos') {
                     <td><?= $value['nomeServico'] ?></td>
                     <td><a onclick="  $('#modalDuvidasCartas').foundation('open');"> Me ajude</a></td>
                     <td><a onclick="  $('#tudoCertoLink').show();  
-                    $('#assuntoSolicitacao').val( '<?=$value['nomeServico'] ?>' ) ;   
-                    $('#txtServicoSolicitar').val('<?=$value['idCartaServico'] ?>' ) ;   
+                    $('#assuntoSolicitacao').val( '<?= $value['nomeServico'] ?>' ) ;   
+                    $('#txtServicoSolicitar').val('<?= $value['idCartaServico'] ?>' ) ;  
+                    criarCaixaArquivo(<?= $value['idCartaServico'] ?>) 
                     
                     "> Quero Solicitar</td>
 

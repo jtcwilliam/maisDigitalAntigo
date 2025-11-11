@@ -22,6 +22,7 @@ $diretorio = scandir($path);
 
 <body>
 
+    <a href=""></a>
     <?php
 
 
@@ -30,7 +31,13 @@ $diretorio = scandir($path);
     $textoHorizontalEncurtado = [];
     $textoHorizontalSimples = [];
 
+
+    echo '<pre>';
+    print_r($diretorio);
+
+
     foreach ($diretorio as  $value) {
+
         $logos = explode('.', $value);
 
         if (end($logos) == 'png') {
@@ -42,54 +49,54 @@ $diretorio = scandir($path);
 
             switch ($value) {
                 case  str_contains($value, 'CONTORNO') && str_contains($value, 'VERTICAL'):
-                    array_push($textoPNGVERTICAL, '<h1>Contorno - Vertical</h1>');
+                    array_push($textoPNGVERTICAL, '<h3>Vertical  - Contorno</h3><a href="logosPrefs/'.$value.'" ><img src="logosPrefs/'.$value.'" style="width: 20%"  /></a>');
                     break;
                 case     str_contains($value, 'COR')  && str_contains($value, 'VERTICAL'):
-                    array_push($textoPNGVERTICAL, '<h1>COLORIDO - Verticalizado</h1>');
+                    array_push($textoPNGVERTICAL, '<h3>COLORIDO - Verticalizado</h3><a href="logosPrefs/'.$value.'" ><img src="logosPrefs/'.$value.'" style="width: 20%"  /></a>');
                     break;
 
                 case     str_contains($value, 'OUTLINE') && str_contains($value, 'VERTICAL'):
-                    array_push($textoPNGVERTICAL, '<h1>OUTLINE - Verticalizado</h1>');
+                    array_push($textoPNGVERTICAL, '<h4>OUTLINE - Verticalizado</h4><a href="logosPrefs/'.$value.'" ><img src="logosPrefs/'.$value.'" style="width: 20%"  /></a>');
                     break;
                 case     str_contains($value, 'POSITIVO')  && str_contains($value, 'VERTICAL'):
 
-                    array_push($textoPNGVERTICAL, '<h1>POSITIVO - Verticalizado</h1>');
+                    array_push($textoPNGVERTICAL, '<h4>POSITIVO - Verticalizado</h4><a href="logosPrefs/'.$value.'" ><img src="logosPrefs/'.$value.'" style="width: 20%"  /></a>');
                     break;
 
 
                 //horizontal encurtaodo (prefixo b)
 
                 case  str_contains($value, 'CONTORNO') && str_contains($value, 'HORIZONTAL_B'):
-                    array_push($textoHorizontalEncurtado, '<h1>Contorno - Horizontal</h1>');
+                    array_push($textoHorizontalEncurtado, '<h4>Contorno - Horizontal</h4><a href="logosPrefs/'.$value.'" ><img src="logosPrefs/'.$value.'" style="width: 20%"  /></a>');
                     break;
                 case     str_contains($value, 'COR')  && str_contains($value, 'HORIZONTAL_B'):
-                    array_push($textoHorizontalEncurtado, '<h1>COLORIDO - Horizontal</h1>');
+                    array_push($textoHorizontalEncurtado, '<h4>COLORIDO - Horizontal</h4><a href="logosPrefs/'.$value.'" ><img src="logosPrefs/'.$value.'" style="width: 20%"  /></a>');
                     break;
 
                 case     str_contains($value, 'OUTLINE') && str_contains($value, 'HORIZONTAL_B'):
-                    array_push($textoHorizontalEncurtado, '<h1>OUTLINE - Horizontal</h1>');
+                    array_push($textoHorizontalEncurtado, '<h4>OUTLINE - Horizontal</h4><a href="logosPrefs/'.$value.'" ><img src="logosPrefs/'.$value.'" style="width: 20%"  /></a>');
                     break;
                 case     str_contains($value, 'POSITIVO')  && str_contains($value, 'HORIZONTAL_B'):
 
-                    array_push($textoHorizontalEncurtado, '<h1>POSITIVO - Horizontal</h1>');
+                    array_push($textoHorizontalEncurtado, '<h4>POSITIVO - Horizontal</h4><a href="logosPrefs/'.$value.'" ><img src="logosPrefs/'.$value.'" style="width: 20%"  /></a>');
                     break;
 
 
                 //horizontal normalprefixo b)
 
                 case  str_contains($value, 'CONTORNO') && str_contains($value, 'HORIZONTAL')  && !str_contains($value, 'HORIZONTAL_B'):
-                    array_push($textoHorizontalSimples, '<h1>Contorno - Horizontal normal</h1>');
+                    array_push($textoHorizontalSimples, '<h4>Contorno - Horizontal normal</h4><a href="logosPrefs/'.$value.'" ><img src="logosPrefs/'.$value.'" style="width: 20%"  /></a>');
                     break;
                 case     str_contains($value, 'COR')  && str_contains($value, 'HORIZONTAL')  && !str_contains($value, 'HORIZONTAL_B'):
-                    array_push($textoHorizontalSimples, '<h1>COLORIDO - Horizontal</h1>');
+                    array_push($textoHorizontalSimples, '<h4>COLORIDO - Horizontal</h4><a href="logosPrefs/'.$value.'" ><img src="logosPrefs/'.$value.'" style="width: 20%"  /></a>');
                     break;
 
                 case     str_contains($value, 'OUTLINE') && str_contains($value, 'HORIZONTAL')  && !str_contains($value, 'HORIZONTAL_B'):
-                    array_push($textoHorizontalSimples, '<h1>OUTLINE - Horizontal</h1>');
+                    array_push($textoHorizontalSimples, '<h4>OUTLINE - Horizontal</h4><a href="logosPrefs/'.$value.'" ><img src="logosPrefs/'.$value.'" style="width: 20%"  /></a>');
                     break;
                 case     str_contains($value, 'POSITIVO')  && str_contains($value, 'HORIZONTAL')  && !str_contains($value, 'HORIZONTAL_B'):
 
-                    array_push($textoHorizontalSimples, '<h1>POSITIVO - Horizontal</h1>');
+                    array_push($textoHorizontalSimples, '<h4>POSITIVO - Horizontal</h4><a href="logosPrefs/'.$value.'" ><img src="logosPrefs/'.$value.'" style="width: 20%"  /></a>');
                     break;
 
 
@@ -99,7 +106,7 @@ $diretorio = scandir($path);
 
 
                 default:
-                    echo '<h1>deu merda</h1>';
+                    echo '<h4>deu merda</h4>';
                     break;
             }
 
@@ -134,11 +141,11 @@ $diretorio = scandir($path);
     }
     print_r($textoPNGVERTICAL);
 
-    echo '<h1>HOrizontal</h1>';
+    echo '<h4>HOrizontal</h4>';
 
     print_r($textoHorizontalEncurtado);
 
-    echo '<h1>HOrizontal numa boa</h1>';
+    echo '<h4>HOrizontal numa boa</h4>';
 
     print_r($textoHorizontalSimples);
 

@@ -35,7 +35,7 @@ if (isset($_POST['trazerSolicitacaoStatus'])) {
                     foreach ($solicitacaoStatus as $key => $value) {
                     ?>
                         <tr style="font-weight: 300;">
-                            <td> <a onclick="exibirSolicitacao( <?= $value['idsolicitacao'] ?>)"> <?= $value['descricaoStatus'] ?> </a> </td>
+                            <td> <a onclick="exibirSolicitacao( <?= $value['idSolicitacao'] ?>)"> <?= $value['descricaoStatus'] ?> </a> </td>
                             <td><?= $value['descricaoCarta'] ?></td>
                             <td><?= $value['dias'] ?></td>
                         </tr>
@@ -58,6 +58,8 @@ if (isset($_POST['trazerSolicitacaoStatus'])) {
 }
 
 if (isset($_POST['inserirSolicitacao'])) {
+
+ 
 
 
     if (isset($_POST['representaTerceiro'])) {
@@ -175,7 +177,7 @@ if (isset($_POST['inserirSolicitacao'])) {
 
 
                 <a style="color: black; text-decoration: none; font-style: italic;"
-                    href="https://agendafacil.guarulhos.sp.gov.br/maisDigital/assinatura.php?idSolicitacao=<?= $protocolo[0]['idsolicitacao'] ?>&112ff6666a78800f14e115ef8e7a57a5=1 " target="_blank">
+                    href="https://agendafacil.guarulhos.sp.gov.br/maisDigital/assinatura.php?idSolicitacao=<?= $protocolo[0]['idSolicitacao'] ?>&112ff6666a78800f14e115ef8e7a57a5=1 " target="_blank">
                     Clique aqui para assinar
                 </a>
                 <br>
@@ -213,7 +215,7 @@ if (isset($_POST['inserirSolicitacao'])) {
 
 
 
-        echo json_encode(array('retorno' => true, 'idSolicitacaoHidden' => $protocolo[0]['idsolicitacao']));
+        echo json_encode(array('retorno' => true, 'idSolicitacaoHidden' => $protocolo[0]['idSolicitacao']));
     } else {
         echo 'errado';
     }

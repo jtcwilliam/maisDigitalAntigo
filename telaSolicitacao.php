@@ -68,12 +68,13 @@ echo '</pre>';
 
 
 
+          
             <!-- combo com a carta de serviço.. inicial  . -->
 
 
-            <?
+            <?php
 
-            include './comps/comboSelecaoServico.php';
+            include_once 'comps/comboSelecaoServico.php';
 
 
             ?>
@@ -601,11 +602,7 @@ celularAtuar*/
         })
 
 
-
-
-
-
-        return false;
+ 
 
 
 
