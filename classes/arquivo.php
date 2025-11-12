@@ -285,7 +285,7 @@ class Arquivo
             $assinado_digital = $this->getAssinadoDigital();
 
 
-
+ 
             $stmt = $pdo->prepare("  INSERT INTO  arquivo ( arquivo, tipo_arquivo, nome_arquivo, id_solicitacao, status_arquivo, id_tipo_documento,assinado_digital    )   values (?,?,?,?,?, ?,?) ");
 
 
@@ -293,10 +293,10 @@ class Arquivo
             $stmt->bindParam(1,  $arquivo, PDO::PARAM_LOB);
             $stmt->bindParam(2,  $arquivoTipo, PDO::PARAM_LOB);
             $stmt->bindParam(3,  $nome_arquivo, PDO::PARAM_LOB);
-            $stmt->bindParam(4,  $id_solicitacao, PDO::PARAM_LOB);
-            $stmt->bindParam(5,  $status_arquivo, PDO::PARAM_LOB);
-            $stmt->bindParam(6,  $id_tipo_documento, PDO::PARAM_LOB);
-            $stmt->bindParam(7,  $assinado_digital, PDO::PARAM_LOB);
+            $stmt->bindParam(4,  $id_solicitacao, PDO::PARAM_INT);
+            $stmt->bindParam(5,  $status_arquivo, PDO::PARAM_INT);
+            $stmt->bindParam(6,  $id_tipo_documento, PDO::PARAM_INT);
+            $stmt->bindParam(7,  $assinado_digital, PDO::PARAM_INT);
 
 
 
@@ -305,7 +305,7 @@ class Arquivo
 
             if ($stmt->execute()) {
 
-                $last = $pdo->prepare(" SELECT LAST_INSERT_ID()");
+                $last = $pdo->prepare(" SELECT (currval('arquivos_idarquivo_seq'))");
 
                 $last->execute();
 

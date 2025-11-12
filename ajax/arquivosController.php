@@ -39,11 +39,11 @@ if (isset($_POST['criaCampoArquivo'])) {
 
             <div class=" small-12 large-12 cell" style="display: grid; align-items: center;">
                 <label>
-                    <h5><b><i>"<?= $value['descricaoDoc'] ?>"</i></b></h5>
+                    <h5><b><i>"<?= $value['descricao_doc'] ?>"</i></b></h5>
                 </label>
                 <input type="file" id="fileInput<?= $i ?>" name="file<?= $i ?>" class="button" style="background-color:#4c5e6a; height: 3em; "
 
-                    onchange="subirArquivo('file<?= $i ?>','fileInput<?= $i ?>', 'mensagem<?= $i ?>',   ' <?= $value['descricaoDoc'] ?> ', 'uploadButton<?= $i ?>', 'caixa<?= $i ?>', $('#idQuantidadeArquivoDoServico').val(),  $('#idTipoDocumento<?= $i ?>').val() )  ">
+                    onchange="subirArquivo('file<?= $i ?>','fileInput<?= $i ?>', 'mensagem<?= $i ?>',   ' <?= $value['descricao_doc'] ?> ', 'uploadButton<?= $i ?>', 'caixa<?= $i ?>', $('#idQuantidadeArquivoDoServico').val(),  $('#idTipoDocumento<?= $i ?>').val() )  ">
 
 
                 <p class="button success mensagemB " id="mensagem<?= $i ?>"> Arquivo Carregado com Sucesso</p>
@@ -52,7 +52,7 @@ if (isset($_POST['criaCampoArquivo'])) {
             <div class="small-12 large-9 cell">
                 <label>
                     <!-- campo que pega o tipo do documento para ser gravado no arquivo -->
-                    <input type='hidden' id='idTipoDocumento<?= $i ?>' value='<?= $value['idDocumento']  ?>' />
+                    <input type='hidden' id='idTipoDocumento<?= $i ?>' value='<?= $value['id_documento']  ?>' />
 
                 </label>
             </div>

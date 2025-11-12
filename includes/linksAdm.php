@@ -15,6 +15,10 @@ switch ($tipo_pessoa) {
             <div class="expanded button-group">
                 <a class="button fundoBotoesTopo"><?php echo 'Usuario: ' . $_SESSION['usuarioLogado']['dados'][0]['nome']     ?></a>
 
+                <a class="button fundoBotoesTopo" href="managerMais.php">Solicitações em Aberto </b></a>
+                <a class="button fundoBotoesTopo" href="habilitarServicos.php"> Habilitar Serviços </b></a>
+                <a class="button fundoBotoesTopo" href="consultaUsuario.php">Alterar Dados Usuário</a>
+
 
                 <a class="button fundoBotoesTopo" href="logout.php">Sair</a>
 

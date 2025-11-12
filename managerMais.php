@@ -7,6 +7,7 @@ include_once 'includes/head.php';
 
 session_start();
 
+
 $dadotipo_pessoa =     $_SESSION['usuarioLogado']['dados'][0]['idtipo_pessoa'];
 $responsavelPessoa =   $_SESSION['usuarioLogado']['dados'][0]['id_unidade'];
 
@@ -16,21 +17,24 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
+echo '<pre>';
+print_r($_SESSION);
+echo '</pre>';
 
 
 
 
-if ($_SESSION['usuarioLogado']['dados'][0]['idtipo_pessoa'] != 4 && $_SESSION['usuarioLogado']['dados'][0]['idtipo_pessoa'] != 5) {
+if ($_SESSION['usuarioLogado']['dados'][0]['tipo_pessoa'] != 4 && $_SESSION['usuarioLogado']['dados'][0]['tipo_pessoa'] != 5) {
     echo '<center><h1>Acesso Negado</h1> <h4>Você será redirecionado para a pagina inicial</h4></center>';
 
 
 ?>
 
-    <script>
+    <script>/*
         window.setTimeout(() => {
             window.location =
                 "logar.php";
-        }, 4600);
+        }, 4600);*/
     </script>
 
 <?php
@@ -90,7 +94,7 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idtipo_pessoa'] != 4 && $_SESSION['u
 
 
 
-            <input type="hidden" id='txtCategoriaServico' value="<?= $_SESSION['usuarioLogado']['dados'][0]['categoriaPessoas'] ?>" />
+            <input type="hidden" id='txtCategoriaServico' value="<?= $_SESSION['usuarioLogado']['dados'][0]['categoria_pessoas'] ?>" />
             <input type="hidden" id='txtAtendente' value="<?= $_SESSION['usuarioLogado']['dados'][0]['id_pessoa'] ?>" />
 
 

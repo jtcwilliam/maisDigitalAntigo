@@ -17,7 +17,7 @@ if (!isset($_SESSION)) {
 }
 
 
-
+/*
 if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
     echo '<center><h1>Acesso Negado</h1> <h4>Você será redirecionado para a pagina inicial</h4></center>';
 
@@ -35,7 +35,7 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
 
 
     exit();
-}
+}*/
 
 
 
@@ -54,73 +54,63 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
     <?php
 
     ////
-    include_once 'includes/linksAdm.php';
+    // include_once 'includes/linksAdm.php';
 
     ?>
 
 
-    <div class="grid-x grid-padding-x">
 
 
 
-        <div class="small-12 large-12 cell">
+    <!-- liberação de datas para agendamento -->
+    <fieldset class="fieldset">
+        <legend> <label></label></legend>
+
+
+        <div class="grid-x grid-padding-x">
+            <div class="small-12 large-12 cell">
+
+                <input type="text" id="txtEndereco" name="txtEndereco" />
+            </div>
+
+            <div class="small-12 large-12 cell">
 
 
 
-            <input type="hidden" id='txtCategoriaServico' value="<?= $_SESSION['usuarioLogado']['dados'][0]['categoriaPessoas'] ?>" />
-            <input type="hidden" id='txtAtendente' value="<?= $_SESSION['usuarioLogado']['dados'][0]['idPessoas'] ?>" />
+                <center>
+                    <a id="linkCriarReq" onclick="qrCodeAssinatura() " class="button">Clique Aqui gerar QR Code</a>
+
+                </center>
 
 
-
-
-            <!-- liberação de datas para agendamento -->
-            <fieldset class="fieldset">
-                <legend> <label></label></legend>
-
-
-                <div class="grid-x grid-padding-x">
-                    <div class="small-12 large-12 cell">
-
-                        <center>
-                            <a id="linkCriarReq" onclick="criarRequerimento(); $('#linkCriarReq').hide();   $('#verReq').show(); " class="button">Clique Aqui para Criar Requerimento</a>
-                            <div id="verReq"></div>
-
-                        </center>
-
-
-                    </div>
-                </div>
-
-                <div class="grid-x grid-padding-x">
-                    <div class="small-12 large-12 cell">
-
-                        <center>
-                            <div id="img"></div>
-                        </center>
-
-
-                    </div>
-                </div>
-
-
-
-
-
-
-
-
-
-
-
-
-            </fieldset>
-
-
-
-
+            </div>
         </div>
 
-    </div>
+        <div class="grid-x grid-padding-x">
+            <div class="small-12 large-12 cell">
+
+                <center>
+                    <div id="img"></div>
+                </center>
+
+
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    </fieldset>
+
+
 
 
 
@@ -163,16 +153,18 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
 
                     qrCodeAssinatura('https:\/\/agendafacil.guarulhos.sp.gov.br\/maisDigital\/preencheReq.php?idRequerimento=' + data.codigo);
 
-                    $('#verReq').html('<a  href="requerimentoPresencial.php?codigoRequerimento='+data.codigo+'"   style="background-color: green;"   class="button">Clique Aqui para Acessar Requerimento</a>');
+                    $('#verReq').html('<a  href="requerimentoPresencial.php?codigoRequerimento=' + data.codigo + '"   style="background-color: green;"   class="button">Clique Aqui para Acessar Requerimento</a>');
 
 
- 
+
                 });
 
         }
 
 
-        function qrCodeAssinatura(link) {
+        function qrCodeAssinatura() {
+
+            var link = $('#txtEndereco').val();
 
             var formData = {
                 link

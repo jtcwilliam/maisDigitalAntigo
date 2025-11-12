@@ -346,8 +346,10 @@ echo '</pre>';
 
             </fieldset>
 
+            <!-- campo documentacao -->
+
             <fieldset class="fieldset" id="documentacao">
-                <input type="hidden" id='idSolicitacaoHidden' />
+                <input type="text" id='idSolicitacaoHidden' />
 
                 <legend>
                     <h4 id="">Documentação Necessária para Solicitação</h4>
@@ -372,6 +374,9 @@ echo '</pre>';
                     </div>
                 </div>
             </fieldset>
+
+
+            <!-- fim campo documentacao -->
 
 
             <fieldset class="fieldset" id="envioAssinatura">

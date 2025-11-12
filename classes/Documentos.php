@@ -89,7 +89,7 @@ class Documentos
 
 
 
-            $sql = "select * from servico_documento dc inner join carta_servico c  on c.id_carta_servico = dc.id_servico  inner join documento dcm    on dcm.\"id_doc\" =  id_documento    where id_servico=" . $filtro;
+            $sql = "select * from servico_documento dc inner join carta_servico c  on c.id_carta_servico = dc.id_servico  inner join documento dcm    on dcm.id_doc =  id_documento    where id_servico=" . $filtro;
 
 
             $stmt = $pdo->prepare($sql);
