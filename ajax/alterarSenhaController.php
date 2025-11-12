@@ -6,7 +6,7 @@ $objPessoa = new Pessoa();
  
 $objPessoa->setSenha(md5($_POST['senha']));
  
-$objPessoa->setIdPessoas($_POST['dwp']);
+$objPessoa->setid_pessoa($_POST['dwp']);
  
 if($objPessoa->alterarSenha()==true){
 

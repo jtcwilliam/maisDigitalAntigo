@@ -51,12 +51,13 @@ if (isset($_POST['containner']) && $_POST['containner'] == 'comboServicos') {
             foreach ($retornoTabelaServico as $key => $value) {
             ?>
                 <tr>
-                    <td><?= $value['nomeServico'] ?></td>
+                    <td><?= $value['nome_servico'] ?></td>
                     <td><a onclick="  $('#modalDuvidasCartas').foundation('open');"> Me ajude</a></td>
                     <td><a onclick="  $('#tudoCertoLink').show();  
-                    $('#assuntoSolicitacao').val( '<?= $value['nomeServico'] ?>' ) ;   
-                    $('#txtServicoSolicitar').val('<?= $value['idCartaServico'] ?>' ) ;  
-                    criarCaixaArquivo(<?= $value['idCartaServico'] ?>) 
+                    $('#nomeDoServicoLabel').val( '<?= $value['nome_servico'] ?>' ) ;   
+                    
+                    $('#txtServicoSolicitar').val('<?= $value['id_carta_servico'] ?>' ) ;  
+                    criarCaixaArquivo(<?= $value['id_carta_servico'] ?>) 
                     
                     "> Quero Solicitar</td>
 
@@ -138,13 +139,13 @@ if (isset($_POST['containner']) && $_POST['containner'] == 'comboTipoInscricao')
 
     foreach ($dados as $key => $value) {
 
-        $descricao = $value['descricaoDoc'];
+        $descricao = $value['descricao_doc'];
         if (strlen($descricao) > 200) {
 
             $descricao = substr($descricao, 0, 200) . '...';
         }
 
 
-        echo '<option value=' . $value['idDoc'] . '  >' . $descricao . '</option>';
+        echo '<option value=' . $value['id_doc'] . '  >' . $descricao . '</option>';
     }
 }

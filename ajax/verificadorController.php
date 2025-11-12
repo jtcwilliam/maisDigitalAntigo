@@ -26,7 +26,7 @@ if (isset($_POST['esqueciSenha'])) {
     $dataVerificadora=  md5($dataVerificadora);
 
 
-      $nome = explode(' ', $dadoUsuario['dados']['0']['nomePessoa']);
+      $nome = explode(' ', $dadoUsuario['dados']['0']['nome_pessoa']);
 
             $nome = $nome[0];
 
@@ -55,7 +55,7 @@ if (isset($_POST['esqueciSenha'])) {
 
 
                 <a style="color: green; text-decoration: none; font-style: italic;"
-                    href="https://agendafacil.guarulhos.sp.gov.br/redefinirSenha.php?verifyT=<?=$dataVerificadora ?>&dwp=<?=$dadoUsuario['dados']['0']['idPessoas'] ?>&slash=<?=md5($dadoUsuario['dados']['0']['idPessoas']) ?>  " target="_blank">
+                    href="https://agendafacil.guarulhos.sp.gov.br/redefinirSenha.php?verifyT=<?=$dataVerificadora ?>&dwp=<?=$dadoUsuario['dados']['0']['id_pessoa'] ?>&slash=<?=md5($dadoUsuario['dados']['0']['id_pessoa']) ?>  " target="_blank">
                     <h2  >Clique aqui para alterar sua senha com segurança</h2>
                 </a>
                 <br>
@@ -83,7 +83,7 @@ if (isset($_POST['esqueciSenha'])) {
 
         $objEnvio = new Envio();
 
-        $objEnvio->setDestinatario($dadoUsuario['dados']['0']['emailUsuario']);
+        $objEnvio->setDestinatario($dadoUsuario['dados']['0']['email_usuario']);
         $objEnvio->setAssunto('Recuperação de Senha');
         $objEnvio->setConteudo($dados);
 

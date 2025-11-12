@@ -9,12 +9,12 @@ $ldap = new LDAP();
 
 //esse script apenas grava a pessoa
 
-$emailUsuario = $_POST['usuario'];
+$email_usuario = $_POST['usuario'];
 $senha = $_POST['pwd'];
 
  
 
-$usuario = $ldap->logar($emailUsuario, $senha);
+$usuario = $ldap->logar($email_usuario, $senha);
 
 
  
@@ -25,7 +25,7 @@ $usuario = $ldap->logar($emailUsuario, $senha);
  if (isset($usuario['count'])  && $usuario['count'] == 1) {
 
 
-    $objPessoaMovimentar->setEmailUsuario($emailUsuario);
+    $objPessoaMovimentar->setemail_usuario($email_usuario);
 
     if ($dadosPessoa = $objPessoaMovimentar->logarPessoa()) {
 

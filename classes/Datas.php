@@ -37,9 +37,9 @@ class DatasAgendamento
             $pdo = $this->getPdoConn();
 
             $stmt = $pdo->prepare("SELECT date_format(dia, '%d/%m/%Y')   as dia,   dia as dias   FROM agendamento 
-            where idStatus in (7 , 3)  and dia >= CURDATE()   and idUnidade= :idUnidade 
+            where idStatus in (7 , 3)  and dia >= CURDATE()   and id_unidade= :id_unidade 
             group by date_format(dia, '%d/%m/%Y') order by dias asc  ");
-            $stmt->execute(array('idUnidade' => $data));
+            $stmt->execute(array('id_unidade' => $data));
 
  
 
@@ -56,7 +56,7 @@ class DatasAgendamento
 
 
 
-    public function  trazerHorarios($data, $idUnidade)
+    public function  trazerHorarios($data, $id_unidade)
     {
         try {
 
@@ -70,12 +70,12 @@ class DatasAgendamento
 
                 //date('H')
                 $stmt = $pdo->prepare("SELECT distinct(date_format(dia, '%H:%i do dia %d/%m/%Y'))   as dia  FROM agendamento WHERE date_format(dia, '%d/%m/%Y') = :diaAgendamento    
-                and idStatus in (7)   and idUnidade= :idUnidade   and  date_format(dia, '%H')>= ".date('H')."           
+                and idStatus in (7)   and id_unidade= :id_unidade   and  date_format(dia, '%H')>= ".date('H')."           
                     order by  date_format(dia, '%H:%i do dia %d/%m/%Y') asc ");
             }else
             {
                 $stmt = $pdo->prepare("SELECT distinct(date_format(dia, '%H:%i do dia %d/%m/%Y'))   as dia  FROM agendamento WHERE date_format(dia, '%d/%m/%Y') = :diaAgendamento    
-                and idStatus in (7)   and idUnidade= :idUnidade   
+                and idStatus in (7)   and id_unidade= :id_unidade   
                     order by  date_format(dia, '%H:%i do dia %d/%m/%Y') asc ");
 
             }
@@ -83,7 +83,7 @@ class DatasAgendamento
 
 
 
-            $stmt->execute(array('diaAgendamento' => $data, 'idUnidade' => $idUnidade));
+            $stmt->execute(array('diaAgendamento' => $data, 'id_unidade' => $id_unidade));
 
             $user = $stmt->fetchAll();
 
@@ -99,7 +99,7 @@ class DatasAgendamento
 
 
 
-    public function  retornarIdAgendamento($data, $idUnidade)
+    public function  retornarIdAgendamento($data, $id_unidade)
     {
         try {
 
@@ -109,8 +109,8 @@ class DatasAgendamento
             $pdo = $this->getPdoConn();
 
             $stmt = $pdo->prepare("SELECT idagendamento, date_format(dia, '%H:%i do dia %d/%m/%Y')  FROM agendamento
-                         WHERE date_format(dia, '%H:%i do dia %d/%m/%Y') = :diaAgendamento and  idUnidade = :idUnidade  and idStatus = 7 limit 1 ");
-            $stmt->execute(array('diaAgendamento' => $data, 'idUnidade' => $idUnidade));
+                         WHERE date_format(dia, '%H:%i do dia %d/%m/%Y') = :diaAgendamento and  id_unidade = :id_unidade  and idStatus = 7 limit 1 ");
+            $stmt->execute(array('diaAgendamento' => $data, 'id_unidade' => $id_unidade));
 
             $user = $stmt->fetchAll();
 
@@ -122,7 +122,7 @@ class DatasAgendamento
 
 
 
-    public function  verificarDatasNaUnidade($idUnidade)
+    public function  verificarDatasNaUnidade($id_unidade)
     {
         try {
             setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
@@ -133,9 +133,9 @@ class DatasAgendamento
 
 
 
-            $stmt = $pdo->prepare("SELECT DATE_FORMAT(dia , '%d/%m/%Y') as dia,   idunidade  FROM agendamento where  dia  >= '".date('Y-m-d 00:00:00')."' 
-                and  idunidade = :idunidade and idPessoa is null  group by (DATE_FORMAT(dia , '%d/%m/%Y')) ");
-            $stmt->execute(array('idunidade' => $idUnidade));
+            $stmt = $pdo->prepare("SELECT DATE_FORMAT(dia , '%d/%m/%Y') as dia,   id_unidade  FROM agendamento where  dia  >= '".date('Y-m-d 00:00:00')."' 
+                and  id_unidade = :id_unidade and idPessoa is null  group by (DATE_FORMAT(dia , '%d/%m/%Y')) ");
+            $stmt->execute(array('id_unidade' => $id_unidade));
             $datasDisponiveis = $stmt->fetchAll();
 
 
@@ -176,7 +176,7 @@ class DatasAgendamento
     }
 
     //consultas da area administrativa
-    public function  verificarDatasNaUnidadeADM($idUnidade)
+    public function  verificarDatasNaUnidadeADM($id_unidade)
     {
         try {
 
@@ -186,8 +186,8 @@ class DatasAgendamento
             $pdo = $this->getPdoConn();
 
 
-            $stmt = $pdo->prepare("SELECT dia,   idunidade  FROM agendamento where idunidade = :idunidade   group by (dia) ");
-            $stmt->execute(array('idunidade' => $idUnidade));
+            $stmt = $pdo->prepare("SELECT dia,   id_unidade  FROM agendamento where id_unidade = :id_unidade   group by (dia) ");
+            $stmt->execute(array('id_unidade' => $id_unidade));
             $datasDisponiveis = $stmt->fetchAll();
 
 

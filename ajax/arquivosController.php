@@ -176,7 +176,7 @@ if (isset($_POST['apagarArquivoAtendente'])) {
 
         <body style="font-family: Arial, Helvetica, sans-serif;">
             <center>
-                <h2>Olá <?= $_POST['txtNomePessoaParaEnvioArquivo'] ?> . Somos Equie Mais Digital da Prefeitura de Guarulhos </h2>
+                <h2>Olá <?= $_POST['txtnome_pessoaParaEnvioArquivo'] ?> . Somos Equie Mais Digital da Prefeitura de Guarulhos </h2>
 
                 <p style="font-size: 1.2em;">O arquivo <b><?= $_POST['nomeArquivo'] ?> </b> que foi anexo a sua solicitação está errado.
                     <br>Clique no link que enviamos neste email para fazer a

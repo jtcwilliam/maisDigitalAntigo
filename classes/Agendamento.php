@@ -11,11 +11,11 @@ class Agendamento
     private $dns;
     private $user;
     private $pwd;
-    private $idPessoas;
-    private $idStatus;
-    private $idAgendamento;
-    private $idUnidade;
-    private $idTipoAgendamento;
+    private $id_pessoa;
+    private $id_status;
+    private $id_agendamento;
+    private $id_unidade;
+    private $id_tipo_agendamento;
     private $PdoConn;
 
 
@@ -75,18 +75,19 @@ class Agendamento
 
 
     //metodo que retorna o agendamento da pessoa a partir do clique dela no agendamento clicado
-    public function  verificarAgendamentoParaBaixaADM_pesquisa($docPessoa, $idAgendamento)
+    public function  verificarAgendamentoParaBaixaADM_pesquisa($docPessoa, $id_agendamento)
     {
         try {
             
 
             $pdo = $this->getPdoConn();
 
-            $stmt = $pdo->prepare(" SELECT  *, date_format(dia, '%H:00') as hora ,date_format(dia, '%d/%m/%Y') as dia from agendamento ag left join pessoas ps on ps.idPessoas = ag.idPessoa left join unidade un on ag.idUnidade = un.idUnidade
-                                    inner join tipoAgendamento ta on ag.idTipoAgendamento = ta.idTipoAgendamento
-                                     where   ps.documentoPessoa = :docPessoa  and ag.idAgendamento=:idAgendamento          and idstatus in(3,8)  order by  date_format(dia, '%d/%m/%Y') asc ");
+            $stmt = $pdo->prepare(" SELECT  *, date_format(dia, '%H:00') as hora ,date_format(dia, '%d/%m/%Y') as dia from agendamento ag 
+            left join pessoa ps on ps.id_pessoa = ag.idPessoa left join unidade un on ag.id_unidade = un.id_unidade
+                                    inner join tipo_agendamento ta on ag.id_tipo_agendamento = ta.id_tipo_agendamento
+                                     where   ps.documento_pessoa = :docPessoa  and ag.id_agendamento=:id_agendamento          and id_status in(3,8)  order by  date_format(dia, '%d/%m/%Y') asc ");
 
-            $stmt->execute(array(':docPessoa' => $docPessoa, ':idAgendamento' => $idAgendamento ));
+            $stmt->execute(array(':docPessoa' => $docPessoa, ':id_agendamento' => $id_agendamento ));
 
 
 
@@ -108,8 +109,9 @@ class Agendamento
             
             $pdo = $this->getPdoConn();
 
-            $stmt = $pdo->prepare(" SELECT  *,  date_format(dia, '%H:00') as hora  ,date_format(dia, '%d/%m/%Y') as dia from agendamento ag left join pessoas ps on ps.idPessoas = ag.idPessoa left join unidade un on ag.idUnidade = un.idUnidade
-                                        where  ( ps.documentoPessoa = :docPessoa )  and idstatus in(3,8)  order by  date_format(dia, '%d/%m/%Y') asc ");
+            $stmt = $pdo->prepare(" SELECT  *,  date_format(dia, '%H:00') as hora  ,date_format(dia, '%d/%m/%Y') as dia from agendamento ag left join pessoa ps on ps.id_pessoa = ag.id_pessoa 
+            left join unidade un on ag.id_unidade = un.id_unidade
+                                        where  ( ps.documento_pessoa = :docPessoa )  and id_status in(3,8)  order by  date_format(dia, '%d/%m/%Y') asc ");
 
             $stmt->execute(array(':docPessoa' => md5($dado)));
 
@@ -132,8 +134,8 @@ class Agendamento
             
             $pdo = $this->getPdoConn();
 
-            $stmt = $pdo->prepare(" SELECT  *,  date_format(dia, '%H:00') as hora  ,date_format(dia, '%d/%m/%Y') as dia from agendamento ag left join pessoas ps on ps.idPessoas = ag.idPessoa left join unidade un on ag.idUnidade = un.idUnidade
-                                        where  ( ps.documentoPessoa = :docPessoa || idAgendamento = :docPessoa )   and idstatus in(3,8)  order by  date_format(dia, '%d/%m/%Y') asc ");
+            $stmt = $pdo->prepare(" SELECT  *,  date_format(dia, '%H:00') as hora  ,date_format(dia, '%d/%m/%Y') as dia from agendamento ag left join pessoa ps on ps.id_pessoa = ag.idPessoa left join unidade un on ag.id_unidade = un.id_unidade
+                                        where  ( ps.documento_pessoa = :docPessoa || id_agendamento = :docPessoa )   and id_status in(3,8)  order by  date_format(dia, '%d/%m/%Y') asc ");
 
             $stmt->execute(array(':docPessoa' => md5($dado)));
 
@@ -149,18 +151,18 @@ class Agendamento
     }
 
     //metodo que retorna os agendamentos de cada dia em 1 unidade (visivel para responsavel da unidade e o gestor da rede (super usuaario))
-    public function  verificarTodosAgendamentosUnidadeAdmDeUnidade($idUnidade, $datas)
+    public function  verificarTodosAgendamentosUnidadeAdmDeUnidade($id_unidade, $datas)
     {
         try {
           
           
             $pdo = $this->getPdoConn();
 
-            $stmt = $pdo->prepare(" SELECT  *,  date_format(dia, '%H:%i') as 'horas' from agendamento ag left join pessoas ps on ps.idPessoas = ag.idPessoa left join unidade un on ag.idUnidade = un.idUnidade 
-            inner join tipoAgendamento ta on ta.idtipoagendamento = ag.idtipoAgendamento inner join status st on st.idstatus = ag.idstatus 
-                                    where date_format(dia, '%d/%m/%Y') =  :diaAgendamento  and ag.idUnidade = :idUnidade  and ag.idStatus in(3,6,7, 8) order  by  ag.idstatus asc,  date_format(dia, '%H:%i  %d/%m/%Y')  asc  ");
+            $stmt = $pdo->prepare(" SELECT  *,  date_format(dia, '%H:%i') as 'horas' from agendamento ag left join pessoa ps on ps.id_pessoa = ag.idPessoa left join unidade un on ag.id_unidade = un.id_unidade 
+            inner join tipo_agendamento ta on ta.id_tipo_agendamento = ag.id_tipo_agendamento inner join status st on st.id_status = ag.id_status 
+                                    where date_format(dia, '%d/%m/%Y') =  :diaAgendamento  and ag.id_unidade = :id_unidade  and ag.id_status in(3,6,7, 8) order  by  ag.id_status asc,  date_format(dia, '%H:%i  %d/%m/%Y')  asc  ");
 
-            $stmt->execute(array('idUnidade' => $idUnidade, ':diaAgendamento' => $datas));
+            $stmt->execute(array('id_unidade' => $id_unidade, ':diaAgendamento' => $datas));
 
 
             $datasDisponiveis = $stmt->fetchAll();
@@ -178,7 +180,7 @@ class Agendamento
 
 
 
-    public function  verificarAgendamentosUnidadeData($idUnidade, $datas)
+    public function  verificarAgendamentosUnidadeData($id_unidade, $datas)
     {
         try {
             
@@ -186,10 +188,10 @@ class Agendamento
 
             
 
-            $stmt = $pdo->prepare(" SELECT  count(ag.idstatus) as qtde, ag.idstatus, st.descricaoStatus from agendamento  ag inner join status st on ag.idstatus = st.idstatus  
-            where   date_format(dia, '%d/%m/%Y')  = :diaAgendamento  and  idunidade = :idUnidade  and ag.idstatus in(7,3)  group by idstatus order by ag.idstatus asc  ");
+            $stmt = $pdo->prepare(" SELECT  count(ag.id_status) as qtde, ag.id_status, st.descricaoStatus from agendamento  ag inner join status st on ag.id_status = st.id_status  
+            where   date_format(dia, '%d/%m/%Y')  = :diaAgendamento  and  id_unidade = :id_unidade  and ag.id_status in(7,3)  group by id_status order by ag.id_status asc  ");
 
-            $stmt->execute(array('idUnidade' => $idUnidade, ':diaAgendamento' => $datas));
+            $stmt->execute(array('id_unidade' => $id_unidade, ':diaAgendamento' => $datas));
 
 
             $datasDisponiveis = $stmt->fetchAll();
@@ -207,7 +209,7 @@ class Agendamento
 
 
 
-    public function  verificarAgendamentosAtivos($idPessoa, $idStatus)
+    public function  verificarAgendamentosAtivos($idPessoa, $id_status)
     {
         try {
 
@@ -215,9 +217,10 @@ class Agendamento
 
             //2025-04-23
 
-            $stmt = $pdo->prepare(" SELECT *,  date_format(dia, '%Y-%m-%d') as diaComparar ,  date_format(dia, '%H:%i do dia  %d/%m/%Y')   as dia from agendamento ag inner join pessoas ps on ps.idpessoas = ag.idpessoa inner join
-             unidade un on un.idUnidade = ag.idUnidade  where idpessoa = :idPessoa and ag.idStatus = :idStatus order by ag.dia asc  ");
-            $stmt->execute(array('idPessoa' => $idPessoa, 'idStatus' => $idStatus));
+            $stmt = $pdo->prepare(" SELECT *,  date_format(dia, '%Y-%m-%d') as diaComparar ,  date_format(dia, '%H:%i do dia  %d/%m/%Y')   as dia from agendamento ag 
+            inner join pessoa ps on ps.id_pessoa = ag.idpessoa inner join
+             unidade un on un.id_unidade = ag.id_unidade  where id_pessoa = :id_pessoa and ag.id_status = :id_status order by ag.dia asc  ");
+            $stmt->execute(array('id_pessoa' => $idPessoa, 'id_status' => $id_status));
             $datasDisponiveis = $stmt->fetchAll();
             return $datasDisponiveis;
         } catch (PDOException $e) {
@@ -234,15 +237,16 @@ class Agendamento
             //$pdo = new PDO("mysql:host='" . $host . "' ;dbname='" . $db . "', '" . $user, $password);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $sql = "UPDATE agendamento SET idPessoa = :idPessoa , idStatus = :idStatus ,  idUnidade= :idUnidade, idTipoAgendamento= :idTipoAgendamento    where idAgendamento= :idAgendamento  ";
+            $sql = "UPDATE agendamento SET id_pessoa = :idPessoa , id_status = :id_status ,  id_unidade= :id_unidade, id_tipo_agendamento= :id_tipo_agendamento  
+              where id_agendamento= :id_agendamento  ";
 
 
             $data = [
-                ':idPessoa' =>      $this->getIdPessoas(),
-                ':idStatus' =>       $this->getIdStatus(),
-                ':idAgendamento' =>  $this->getIdAgendamento(),
-                ':idUnidade' => $this->getIdUnidade(),
-                ':idTipoAgendamento' => $this->getIdTipoAgendamento()
+                ':idPessoa' =>      $this->getid_pessoa(),
+                ':id_status' =>       $this->getIdStatus(),
+                ':id_agendamento' =>  $this->getIdAgendamento(),
+                ':id_unidade' => $this->getid_unidade(),
+                ':id_tipo_agendamento' => $this->getIdTipoAgendamento()
 
             ];
 
@@ -267,13 +271,13 @@ class Agendamento
             //$pdo = new PDO("mysql:host='" . $host . "' ;dbname='" . $db . "', '" . $user, $password);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $sql = "UPDATE agendamento SET  idStatus = :idStatus     where idAgendamento= :idAgendamento  ";
+            $sql = "UPDATE agendamento SET  id_status = :id_status     where id_agendamento= :id_agendamento  ";
 
 
             $data = [
 
-                ':idStatus' =>       $this->getIdStatus(),
-                ':idAgendamento' =>  $this->getIdAgendamento(),
+                ':id_status' =>       $this->getIdStatus(),
+                ':id_agendamento' =>  $this->getIdAgendamento(),
 
 
             ];
@@ -372,61 +376,61 @@ class Agendamento
     }
 
     /**
-     * Get the value of idPessoas
+     * Get the value of id_pessoa
      */
-    public function getIdPessoas()
+    public function getid_pessoa()
     {
-        return $this->idPessoas;
+        return $this->id_pessoa;
     }
 
     /**
-     * Set the value of idPessoas
+     * Set the value of id_pessoa
      *
      * @return  self
      */
-    public function setIdPessoas($idPessoas)
+    public function setid_pessoa($id_pessoa)
     {
-        $this->idPessoas = $idPessoas;
+        $this->id_pessoa = $id_pessoa;
 
         return $this;
     }
 
     /**
-     * Get the value of idStatus
+     * Get the value of id_status
      */
     public function getIdStatus()
     {
-        return $this->idStatus;
+        return $this->id_status;
     }
 
     /**
-     * Set the value of idStatus
+     * Set the value of id_status
      *
      * @return  self
      */
-    public function setIdStatus($idStatus)
+    public function setIdStatus($id_status)
     {
-        $this->idStatus = $idStatus;
+        $this->id_status = $id_status;
 
         return $this;
     }
 
     /**
-     * Get the value of idAgendamento
+     * Get the value of id_agendamento
      */
     public function getIdAgendamento()
     {
-        return $this->idAgendamento;
+        return $this->id_agendamento;
     }
 
     /**
-     * Set the value of idAgendamento
+     * Set the value of id_agendamento
      *
      * @return  self
      */
-    public function setIdAgendamento($idAgendamento)
+    public function setIdAgendamento($id_agendamento)
     {
-        $this->idAgendamento = $idAgendamento;
+        $this->id_agendamento = $id_agendamento;
 
         return $this;
     }
@@ -437,41 +441,41 @@ class Agendamento
 
 
     /**
-     * Get the value of idUnidade
+     * Get the value of id_unidade
      */
-    public function getIdUnidade()
+    public function getid_unidade()
     {
-        return $this->idUnidade;
+        return $this->id_unidade;
     }
 
     /**
-     * Set the value of idUnidade
+     * Set the value of id_unidade
      *
      * @return  self
      */
-    public function setIdUnidade($idUnidade)
+    public function setid_unidade($id_unidade)
     {
-        $this->idUnidade = $idUnidade;
+        $this->id_unidade = $id_unidade;
 
         return $this;
     }
 
     /**
-     * Get the value of idTipoAgendamento
+     * Get the value of id_tipo_agendamento
      */
     public function getIdTipoAgendamento()
     {
-        return $this->idTipoAgendamento;
+        return $this->id_tipo_agendamento;
     }
 
     /**
-     * Set the value of idTipoAgendamento
+     * Set the value of id_tipo_agendamento
      *
      * @return  self
      */
-    public function setIdTipoAgendamento($idTipoAgendamento)
+    public function setIdTipoAgendamento($id_tipo_agendamento)
     {
-        $this->idTipoAgendamento = $idTipoAgendamento;
+        $this->id_tipo_agendamento = $id_tipo_agendamento;
 
         return $this;
     }

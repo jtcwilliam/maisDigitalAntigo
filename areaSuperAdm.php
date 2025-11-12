@@ -7,8 +7,8 @@ include_once 'includes/head.php';
 
 session_start();
 
-$dadoTipoPessoa =     $_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'];
-$responsavelPessoa =   $_SESSION['usuarioLogado']['dados'][0]['idUnidade'];
+$dadotipo_pessoa =     $_SESSION['usuarioLogado']['dados'][0]['idtipo_pessoa'];
+$responsavelPessoa =   $_SESSION['usuarioLogado']['dados'][0]['id_unidade'];
 
 
 
@@ -18,7 +18,7 @@ if (!isset($_SESSION)) {
 
 
 
-if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
+if ($_SESSION['usuarioLogado']['dados'][0]['idtipo_pessoa'] != 4) {
     echo '<center><h1>Acesso Negado</h1> <h4>Você será redirecionado para a pagina inicial</h4></center>';
 
 
@@ -182,7 +182,7 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
             datasNaUnidadeAdm(1, <?= $responsavelPessoa ?>);
 
             
-            listasDataUnidadeADM(<?= $_SESSION['usuarioLogado']['dados']['0']['idUnidade']   ?>)
+            listasDataUnidadeADM(<?= $_SESSION['usuarioLogado']['dados']['0']['id_unidade']   ?>)
         })
 
 
@@ -275,7 +275,7 @@ if ($_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] != 4) {
 
             var formData = {
                 unidadesComum: 1,
-                idUnidade: <?= $_SESSION['usuarioLogado']['dados']['0']['idUnidade']   ?>
+                id_unidade: <?= $_SESSION['usuarioLogado']['dados']['0']['id_unidade']   ?>
             };
 
             $.ajax({

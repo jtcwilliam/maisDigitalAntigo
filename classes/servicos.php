@@ -14,7 +14,7 @@ class Servicos
     private $pdoConn;
 
     private $infoAtendente;
-    private $servicoHabilitado;
+    private $servico_habilitado;
     private $idCartaServico;
     private $categoria;
     private $tags;
@@ -40,8 +40,8 @@ class Servicos
 
 
 
-            $sql = 'select c."idCartaServico", n."nomeServico" as "nomeServico"  from nomescartaservicos n inner join cartaservico c on c."idNomeCartaServico" = n."idNomeCartaServico"
-                        where lower(c.tags)  like  lower(\'%' . $filtro . '%\') and servicoHabilitado=1';
+            $sql = 'select id_carta_servico, nome_servico as "nome_servico"  from nome_carta_servico n inner join carta_servico c on c.id_nome_carta_servico = n.id_nome_carta_servico
+                        where lower(c.tags)  like  lower(\'%' . $filtro . '%\') and servico_habilitado=1';
 
 
 
@@ -89,11 +89,11 @@ class Servicos
 
 
 
-            $sql = " select  * from nomescartaservicos n inner join cartaservico c on c.\"idNomeCartaServico\" = n.\"idNomeCartaServico\"
-              where c.servicohabilitado is null";
+            $sql = " select  * from nome_carta_servico n inner join carta_servico c on c.id_nome_carta_servico = n.id_nome_carta_servico
+              where c.servico_habilitado is null";
 
             if ($filtro != null) {
-                $sql .= " where idUnidade= " . $filtro;
+                $sql .= " where id_unidade= " . $filtro;
             }
 
 
@@ -140,10 +140,10 @@ class Servicos
 
 
 
-            $sql = "select  * from nomescartaservicos  ";
+            $sql = "select  * from nome_carta_servico  ";
 
             if ($filtro != null) {
-                $sql .= " where idUnidade= " . $filtro;
+                $sql .= " where id_unidade= " . $filtro;
             }
 
 
@@ -190,16 +190,16 @@ class Servicos
             /*
 
 
-            UPDATE \"nomescartaservicos\"  SET \"statusServico\"=1, "tags" = 'testes, james, funciona, belezinha, lindeza' 
+            UPDATE \"nome_carta_servico\"  SET \"statusServico\"=1, "tags" = 'testes, james, funciona, belezinha, lindeza' 
  WHERE "idNomeCartaServico" = 223
  
 
             */
 
             //
-            $stmt = $pdo->prepare("   UPDATE \"cartaservico\"  SET \"servicohabilitado\"='1',   \"categoriaAtendimento\" = :categoria, \"tags\"= :tags, 
-                \"infoAtendente\" = :infoAtendente 
-           WHERE \"idCartaServico\" = :idCarta");
+            $stmt = $pdo->prepare("   UPDATE carta_servico  SET servico_habilitado='1',   categoria_atendimento = :categoria, tags= :tags, 
+                info_atendente = :infoAtendente 
+           WHERE id_carta_servico = :idCarta");
 
 
             //$stmt->bindValue(':habilitado',  $this->getServicoHabilitado(), PDO::PARAM_STR);
@@ -345,21 +345,21 @@ class Servicos
     }
 
     /**
-     * Get the value of servicoHabilitado
+     * Get the value of servico_habilitado
      */
     public function getServicoHabilitado()
     {
-        return $this->servicoHabilitado;
+        return $this->servico_habilitado;
     }
 
     /**
-     * Set the value of servicoHabilitado
+     * Set the value of servico_habilitado
      *
      * @return  self
      */
-    public function setServicoHabilitado($servicoHabilitado)
+    public function setServicoHabilitado($servico_habilitado)
     {
-        $this->servicoHabilitado = $servicoHabilitado;
+        $this->servico_habilitado = $servico_habilitado;
 
         return $this;
     }

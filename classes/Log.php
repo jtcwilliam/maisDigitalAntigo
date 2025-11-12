@@ -21,9 +21,9 @@ class Log
     private $dataLog;
     private $solicitacao;
     private $idPessoaLog;
-    private $nomePessoaLog;
+    private $nome_pessoaLog;
 
-    private $tipoPessoaLog;
+    private $tipo_pessoaLog;
     private $idArquivo;
 
 
@@ -100,16 +100,16 @@ class Log
             //$pdo = new PDO("mysql:host='" . $host . "' ;dbname='" . $db . "', '" . $user, $password);
             //    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $usuarioLog =   $this->getNomePessoaLog();
+            $usuarioLog =   $this->getnome_pessoaLog();
             $nomeLog = $this->getNomeLog();
             $textoLog = $this->getTextoLog();
             $statusLog = $this->getStatusLog();
             $dataLog = $this->getDataLog();
-            $tipoPessoa = $this->getTipoPessoaLog();
+            $tipo_pessoa = $this->gettipo_pessoaLog();
             $idSolicitacao = $this->getSolicitacao();
             $idArquivo = $this->getIdArquivo();
 
-            $stmt = $pdo->prepare("  INSERT INTO  log (nomePessoaLog, nomeLog,textoLog , statusLog , dataLog, idSolicitacao ,tipoPessoaLog, idArquivo   )   values (?,?,?,?,?,?,?,?) ");
+            $stmt = $pdo->prepare("  INSERT INTO  log (nome_pessoaLog, nomeLog,textoLog , statusLog , dataLog, idSolicitacao ,tipo_pessoaLog, idArquivo   )   values (?,?,?,?,?,?,?,?) ");
 
             //corrigir isto aqui
             $stmt->bindParam(1,  $usuarioLog, PDO::PARAM_LOB); //
@@ -124,7 +124,7 @@ class Log
 
             $stmt->bindParam(6,  $idSolicitacao, PDO::PARAM_LOB); //
 
-            $stmt->bindParam(7,  $tipoPessoa, PDO::PARAM_LOB); //
+            $stmt->bindParam(7,  $tipo_pessoa, PDO::PARAM_LOB); //
 
             $stmt->bindParam(8,  $idArquivo, PDO::PARAM_LOB); //
 
@@ -399,41 +399,41 @@ class Log
     }
 
     /**
-     * Get the value of nomePessoaLog
+     * Get the value of nome_pessoaLog
      */
-    public function getNomePessoaLog()
+    public function getnome_pessoaLog()
     {
-        return $this->nomePessoaLog;
+        return $this->nome_pessoaLog;
     }
 
     /**
-     * Set the value of nomePessoaLog
+     * Set the value of nome_pessoaLog
      *
      * @return  self
      */
-    public function setNomePessoaLog($nomePessoaLog)
+    public function setnome_pessoaLog($nome_pessoaLog)
     {
-        $this->nomePessoaLog = $nomePessoaLog;
+        $this->nome_pessoaLog = $nome_pessoaLog;
 
         return $this;
     }
 
     /**
-     * Get the value of tipoPessoaLog
+     * Get the value of tipo_pessoaLog
      */
-    public function getTipoPessoaLog()
+    public function gettipo_pessoaLog()
     {
-        return $this->tipoPessoaLog;
+        return $this->tipo_pessoaLog;
     }
 
     /**
-     * Set the value of tipoPessoaLog
+     * Set the value of tipo_pessoaLog
      *
      * @return  self
      */
-    public function setTipoPessoaLog($tipoPessoaLog)
+    public function settipo_pessoaLog($tipo_pessoaLog)
     {
-        $this->tipoPessoaLog = $tipoPessoaLog;
+        $this->tipo_pessoaLog = $tipo_pessoaLog;
 
         return $this;
     }

@@ -10,9 +10,9 @@ $validadorSenha = $_POST['atualizarUsuario'];
 
 if (isset($_POST['atualizarUsuario'])) {
 
-    $objPessoaMovimentar->setNomePessoa($_POST['nomeUsuario']);
-    $objPessoaMovimentar->setEmailUsuario($_POST['emailUsuario']);
-    $objPessoaMovimentar->setIdPessoas($_POST['idUsuario']);
+    $objPessoaMovimentar->setnome_pessoa($_POST['nomeUsuario']);
+    $objPessoaMovimentar->setemail_usuario($_POST['email_usuario']);
+    $objPessoaMovimentar->setid_pessoa($_POST['idUsuario']);
 
 
 

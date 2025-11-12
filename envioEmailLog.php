@@ -135,7 +135,7 @@ echo $dados;
 
 
  
-$objEnvio->setDestinatario($dadosSolicitacao[0]['emailUsuario']);
+$objEnvio->setDestinatario($dadosSolicitacao[0]['email_usuario']);
 $objEnvio->setAssunto('Alteração de Arquivo na sua solicitação');
 $objEnvio->setConteudo($dados);
 

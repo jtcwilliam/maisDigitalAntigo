@@ -32,7 +32,7 @@ class Solicitacao
     private $tipoDocumento;
     private $protocolo;
     private $arquivo;
-    private $idSolicitacao;
+    private $id_solicitacao;
     private $solicitacao;
     private $documentoSolicitante;
     private $idAtendente;
@@ -83,7 +83,7 @@ class Solicitacao
 
             $sql = "select        sl.assuntoSolicitacao,  descricaoCarta, date_format(dataSolicitacao, '%d/%m/%Y  ás  %H:%i') as dias, nomeSecretaria,  
             stt.descricaoStatus , 
-            sl.idsolicitacao, statusSolicitacao   from solicitacao sl 
+            sl.id_solicitacao, statusSolicitacao   from solicitacao sl 
              inner join status stt on sl.statusSolicitacao = stt.idStatus inner join linkCartaServico lcs on lcs.idlinkCartaServico = sl.assuntoSolicitacao 
              where   idAtendente=" . $idAtendente;
 
@@ -126,7 +126,7 @@ class Solicitacao
 
 
 
-            $sql = "select        sl.assuntoSolicitacao,  descricaoCarta, date_format(dataSolicitacao, '%d/%m/%Y  ás  %H:%i') as dias, nomeSecretaria,  stt.descricaoStatus , sl.idsolicitacao      from solicitacao sl 
+            $sql = "select        sl.assuntoSolicitacao,  descricaoCarta, date_format(dataSolicitacao, '%d/%m/%Y  ás  %H:%i') as dias, nomeSecretaria,  stt.descricaoStatus , sl.id_solicitacao      from solicitacao sl 
              inner join status stt on sl.statusSolicitacao = stt.idStatus inner join linkCartaServico lcs on lcs.idlinkCartaServico = sl.assuntoSolicitacao 
              where sl.statussolicitacao in(" . $status . ")";
 
@@ -173,7 +173,7 @@ class Solicitacao
 
 
 
-            $sql = "select  * from solicitacao sl inner join cartaServico cs  on cs.\"idCartaServico\" = sl.\"idCartaServico\" inner join pessoas ps on ps.\"idPessoas\" = sl.\"solicitante\"  where  protocolo='" . $protocolo . "'";
+            $sql = "select  * from solicitacao sl inner join carta_servico cs  on cs.id_carta_servico = sl.id_carta_servico inner join pessoa ps on ps.id_pessoa = sl.solicitante  where  protocolo='" . $protocolo . "'";
 
 
 
@@ -208,6 +208,7 @@ class Solicitacao
         }
     }
 
+    //voltar aqui
     public function  pesquisarSolicitacoesPorCategoria($idCategoria)
     {
         try {
@@ -215,9 +216,9 @@ class Solicitacao
 
             $pdo = $this->getPdoConn();
 
-            $sql = "select  idSolicitacao     ,lc.descricaoCarta,  sl.descricaoSolicitacao  ,lc.nomeSecretaria, sl.solicitante,
+            $sql = "select  id_solicitacao     ,lc.descricaoCarta,  sl.descricaoSolicitacao  ,lc.nomeSecretaria, sl.solicitante,
                     sl.tipoDocumento, sl.documentoPublico,
-                    dc.descricaoDoc, ps.nomePessoa, ps.emailUsuario, sl.docSolicitacaoPessoal, sl.assuntoSolicitacao,  sl.cepSolicitacao,  
+                    dc.descricaoDoc, ps.nome_pessoa, ps.email_usuario, sl.docSolicitacaoPessoal, sl.assuntoSolicitacao,  sl.cepSolicitacao,  
                     sl.logradouroSol    ,  sl.numeroSol,
                     sl.complemento, sl.bairro ,
                     date_format(dataSolicitacao, '%d ' ) as 'dias', 
@@ -225,7 +226,7 @@ class Solicitacao
                     date_format(dataSolicitacao, ' de %Y ' ) as 'ano',  date_format(dataSolicitacao, '%d/%m/%Y') as 'diaDaSolicitacao' ,
                     sts.descricaoStatus, descricaoCategoria 
                     from solicitacao sl inner join  linkCartaServico lc on lc.idlinkCartaServico = sl.assuntoSolicitacao 
-                    inner join documentos dc on dc.idDoc = sl.tipoDocumento inner join pessoas ps on ps.idPessoas = sl.solicitante                     
+                    inner join documentos dc on dc.idDoc = sl.tipoDocumento inner join pessoa ps on ps.id_pessoa = sl.solicitante                     
                     inner join status sts on sts.idStatus = sl.statusSolicitacao                    
                     inner join categoria ct on ct.idCategoria = lc.categoria
                     where  statusSolicitacao = 10 and   lc.categoria = " . $idCategoria . "  order by date_format(dataSolicitacao, '%d/%m/%Y'), rand() asc    limit 1  ";
@@ -257,7 +258,7 @@ class Solicitacao
     }
 
 
-    public function  consultarSolicitacaoRelatorio($idSolicitacao)
+    public function  consultarSolicitacaoRelatorio($id_solicitacao)
     {
         try {
 
@@ -267,10 +268,10 @@ class Solicitacao
 
 
             $sql = " select lc.descricaoCarta,  sl.descricaoSolicitacao  ,lc.nomeSecretaria, sl.solicitante, sl.tipoDocumento,
-             sl.documentoPublico, dc.descricaoDoc, ps.nomePessoa, ps.emailUsuario, sl.docSolicitacaoPessoal, sl.assuntoSolicitacao
+             sl.documentoPublico, dc.descricaoDoc, ps.nome_pessoa, ps.email_usuario, sl.docSolicitacaoPessoal, sl.assuntoSolicitacao
                     from solicitacao sl inner join  linkCartaServico lc on lc.idlinkCartaServico = sl.assuntoSolicitacao
-                    inner join documentos dc on dc.idDoc = sl.tipoDocumento inner join pessoas ps on ps.idPessoas = sl.solicitante 
-                    where idsolicitacao = " . $idSolicitacao;
+                    inner join documentos dc on dc.idDoc = sl.tipoDocumento inner join pessoa ps on ps.id_pessoa = sl.solicitante 
+                    where id_solicitacao = " . $id_solicitacao;
 
 
 
@@ -352,7 +353,7 @@ class Solicitacao
     }
 
 
-    public function  pesquisarAssinatura($idSolicitacao)
+    public function  pesquisarAssinatura($id_solicitacao)
     {
         try {
 
@@ -360,7 +361,7 @@ class Solicitacao
 
             $sql = " select lc.descricaoCarta,  sl.descricaoSolicitacao  ,lc.nomeSecretaria, sl.solicitante,
              sl.tipoDocumento, sl.documentoPublico,  nomeArquivo, tipoArquivo, 
-                dc.descricaoDoc, ps.nomePessoa, ps.emailUsuario, sl.docSolicitacaoPessoal, sl.assuntoSolicitacao,  sl.cepSolicitacao   ,  sl.logradouroSol    ,  sl.numeroSol,
+                dc.descricaoDoc, ps.nome_pessoa, ps.email_usuario, sl.docSolicitacaoPessoal, sl.assuntoSolicitacao,  sl.cepSolicitacao   ,  sl.logradouroSol    ,  sl.numeroSol,
                 sl.complemento, sl.bairro ,
                 date_format(dataSolicitacao, '%d ' ) as 'dias', 
 
@@ -371,10 +372,10 @@ class Solicitacao
                 
                 
                 from solicitacao sl inner join  linkCartaServico lc on lc.idlinkCartaServico = sl.assuntoSolicitacao 
-                inner join documentos dc on dc.idDoc = sl.tipoDocumento inner join pessoas ps on ps.idPessoas = sl.solicitante 
-                INNER join arquivos ar on ar.idSolicitacao  = sl.idsolicitacao 
+                inner join documentos dc on dc.idDoc = sl.tipoDocumento inner join pessoa ps on ps.id_pessoa = sl.solicitante 
+                INNER join arquivos ar on ar.id_solicitacao  = sl.id_solicitacao 
                 inner join status sts on sts.idStatus = sl.statusSolicitacao
-                where sl.idsolicitacao =" . $idSolicitacao . "  and statusSolicitacao in (10,11,12,13) ";
+                where sl.id_solicitacao =" . $id_solicitacao . "  and statusSolicitacao in (10,11,12,13) ";
 
 
 
@@ -410,7 +411,7 @@ class Solicitacao
     }
 
 
-    public function  pesquisaManualAtendente($idSolicitacao)
+    public function  pesquisaManualAtendente($id_solicitacao)
     {
         try {
 
@@ -419,7 +420,7 @@ class Solicitacao
             $sql = " select * from linkCartaServico lcs inner join servicoDocumento sd on lcs.idLinkCartaServico = sd.idServico 
             inner join documentos dc on dc.idDoc = sd.idDocumento 
             inner join solicitacao sl on sl.assuntoSolicitacao = lcs.idlinkCartaServico
-             where servicoHabilitado is not null and sl.idsolicitacao =" . $idSolicitacao;
+             where servicoHabilitado is not null and sl.id_solicitacao =" . $id_solicitacao;
 
 
 
@@ -464,15 +465,15 @@ class Solicitacao
 
 
             $idAtendente =   $this->getIdAtendente();
-            $idSolicitacao = $this->getSolicitacao();
+            $id_solicitacao = $this->getSolicitacao();
             $idStatusSolicitacao = $this->getStatusSolicitacao();
 
-            $stmt = $pdo->prepare("  UPDATE solicitacao set idAtendente=?, statusSolicitacao=?     where idSolicitacao=?");
+            $stmt = $pdo->prepare("  UPDATE solicitacao set idAtendente=?, statusSolicitacao=?     where id_solicitacao=?");
 
             //corrigir isto aqui
             $stmt->bindParam(1,  $idAtendente, PDO::PARAM_INT);
             $stmt->bindParam(2,  $idStatusSolicitacao, PDO::PARAM_INT);
-            $stmt->bindParam(3,  $idSolicitacao, PDO::PARAM_INT);
+            $stmt->bindParam(3,  $id_solicitacao, PDO::PARAM_INT);
 
 
 
@@ -496,16 +497,16 @@ class Solicitacao
 
 
             $idStatusSolicitacao = $this->getStatusSolicitacao();
-            $idSolicitacao = $this->getIdSolicitacao();
+            $id_solicitacao = $this->getIdSolicitacao();
 
 
 
 
-            $stmt = $pdo->prepare("  UPDATE solicitacao set statusSolicitacao=?     where idSolicitacao=?");
+            $stmt = $pdo->prepare("  UPDATE solicitacao set statusSolicitacao=?     where id_solicitacao=?");
 
 
             $stmt->bindParam(1,  $idStatusSolicitacao, PDO::PARAM_INT);
-            $stmt->bindParam(2,  $idSolicitacao, PDO::PARAM_INT);
+            $stmt->bindParam(2,  $id_solicitacao, PDO::PARAM_INT);
 
 
 
@@ -534,21 +535,20 @@ class Solicitacao
 
 
             $arquivo =   $this->getArquivo();
-            $idSolicitacao = $this->getSolicitacao();
+            $id_solicitacao = $this->getSolicitacao();
 
 
 
 
             if ($assinador == 0) {
-                $stmt = $pdo->prepare("  UPDATE solicitacao set assinaturaSolicitacao=?, statusSolicitacao=10   where idSolicitacao=?");
-            }else{
-                $stmt = $pdo->prepare("  UPDATE solicitacao set assinaturaTerceiro=?, statusSolicitacao=10   where idSolicitacao=?");
-                 
+                $stmt = $pdo->prepare("  UPDATE solicitacao set assinaturaSolicitacao=?, statusSolicitacao=10   where id_solicitacao=?");
+            } else {
+                $stmt = $pdo->prepare("  UPDATE solicitacao set assinaturaTerceiro=?, statusSolicitacao=10   where id_solicitacao=?");
             }
 
             //corrigir isto aqui
             $stmt->bindParam(1,  $arquivo, PDO::PARAM_LOB);
-            $stmt->bindParam(2,  $idSolicitacao, PDO::PARAM_INT);
+            $stmt->bindParam(2,  $id_solicitacao, PDO::PARAM_INT);
 
 
 
@@ -693,22 +693,21 @@ class Solicitacao
         }
     }
 
+
     public function  gravarSolicitacao()
     {
         try {
 
             $pdo = $this->getPdoConn();
-
-
+ 
             //
-            $stmt = $pdo->prepare(" INSERT INTO solicitacao (\"idCartaServico\",\"descricaoSolicitacao\", \"documentoPublico\",\"dataSolicitacao\",
-            \"statusSolicitacao\",
-             \"solicitante\",\"tipoDocumento\", \"protocolo\", \"docSolicitacaoPessoal\",  \"cepSolicitacao\"   ,  \"logradouroSol\"   
-              ,  \"numeroSol\", \"complemento\", \"bairro\", \"nomeTerceiro\",  \"documentoTerceiro\",  \"emailTerceiro\", \"telefoneTerceiro\", \"representaTerceiro\"  )
+            $stmt = $pdo->prepare(" INSERT INTO solicitacao (id_carta_servico,descricao_solicitacao, documento_publico,data_solicitacao,
+            status_solicitacao,
+             solicitante,tipo_documento, protocolo, doc_solicitacao_pessoal,  cep_solicitacao   ,  logradouro_sol   
+              ,  numero_sol, complemento, bairro, nome_terceiro,  documento_terceiro,  email_terceiro, telefone_terceiro, representa_terceiro  )
              VALUES ( :assuntoSolicitacao,:descricaoSolicitacao, :documentoPublico, :dataSolicitacao,
               :statusSolicitacao, :solicitante, :tipoDocumento, :protocolo, :docSolicitacaoPessoal,  :cepSolicitacao, 
                 :logradouroSol, :numeroSol,  :complemento,   :bairro, :nomeTerceiro,  :documentoTerceiro,  :emailTerceiro,  :telefoneTerceiro, :representaTerceiro )");
-
 
             $stmt->bindValue(':assuntoSolicitacao',  $this->getAssuntoSolicitacao(), PDO::PARAM_STR);
 
@@ -748,17 +747,11 @@ class Solicitacao
 
             $stmt->bindValue(':representaTerceiro',  $this->getRepresentaTerceiro(), PDO::PARAM_STR);
 
+ 
 
 
 
-
-
-
-            //            \\
-
-
-
-
+ 
 
 
 
@@ -1298,21 +1291,21 @@ class Solicitacao
     }
 
     /**
-     * Get the value of idSolicitacao
+     * Get the value of id_solicitacao
      */
     public function getIdSolicitacao()
     {
-        return $this->idSolicitacao;
+        return $this->id_solicitacao;
     }
 
     /**
-     * Set the value of idSolicitacao
+     * Set the value of id_solicitacao
      *
      * @return  self
      */
-    public function setIdSolicitacao($idSolicitacao)
+    public function setIdSolicitacao($id_solicitacao)
     {
-        $this->idSolicitacao = $idSolicitacao;
+        $this->id_solicitacao = $id_solicitacao;
 
         return $this;
     }
@@ -1459,7 +1452,7 @@ class Solicitacao
 
     /**
      * Get the value of autorizadosRequerimento
-     */ 
+     */
     public function getAutorizadosRequerimento()
     {
         return $this->autorizadosRequerimento;
@@ -1469,7 +1462,7 @@ class Solicitacao
      * Set the value of autorizadosRequerimento
      *
      * @return  self
-     */ 
+     */
     public function setAutorizadosRequerimento($autorizadosRequerimento)
     {
         $this->autorizadosRequerimento = $autorizadosRequerimento;

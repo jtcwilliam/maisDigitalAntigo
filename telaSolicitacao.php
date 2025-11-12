@@ -68,7 +68,7 @@ echo '</pre>';
 
 
 
-          
+
             <!-- combo com a carta de serviço.. inicial  . -->
 
 
@@ -91,7 +91,7 @@ echo '</pre>';
 
                     <div class="small-12 large-2 cell">
                         <label>Nome do Solicitante
-                            <input type="text" readonly style="width: 100%;" id="nomeSolicitante" value="<?= $_SESSION['usuariosLogados']['dados'][0]['nomePessoa'] ?>" />
+                            <input type="text" readonly style="width: 100%;" id="nomeSolicitante" value="<?= $_SESSION['usuariosLogados']['dados'][0]['nome_pessoa'] ?>" />
                         </label>
                     </div>
                     <div class="small-12 large-2 cell">
@@ -102,7 +102,7 @@ echo '</pre>';
 
                     <div class="small-12 large-2 cell">
                         <label>Email do Solicitante
-                            <input type="text" readonly style="width: 100%;" id="emailSolicitante" value="<?= $_SESSION['usuariosLogados']['dados'][0]['emailUsuario'] ?>" />
+                            <input type="text" readonly style="width: 100%;" id="emailSolicitante" value="<?= $_SESSION['usuariosLogados']['dados'][0]['email_usuario'] ?>" />
                         </label>
                     </div>
 
@@ -297,7 +297,7 @@ echo '</pre>';
 
                                 <div class="small-12 large-12 cell">
                                     <label>Assunto da Solicitação
-                                        <input type="text" readonly style="width: 100%;" id="assuntoSolicitacao" />
+                                        <input type="text" readonly style="width: 100%;" id="nomeDoServicoLabel" value="" />
                                     </label>
                                 </div>
 
@@ -336,7 +336,7 @@ echo '</pre>';
                                 <div class="small-12 large-5 cell">
                                     <label><br>
                                         <center><a class="button success" style="width: 100%;"
-                                                onclick=" inserirSolicitacao('<?= $_SESSION['usuariosLogados']['dados'][0]['idPessoas'] ?>');">Avançar para a documentação </a>
+                                                onclick=" inserirSolicitacao('<?= $_SESSION['usuariosLogados']['dados'][0]['id_pessoa'] ?>');">Avançar para a documentação </a>
                                         </center>
                                     </label>
                                 </div>
@@ -580,31 +580,16 @@ echo '</pre>';
     }
 
     function inserirSolicitacao(solicitante) {
-
-        /*nomeAtuar
-rgAtuar
-emailAtuar
-celularAtuar*/
-
-
         $('.atuarPessoa').each(function() {
-
             emailAtuar = $(this).find('.emailAtuar').val();
             nomeAtuar = $(this).find('.nomeAtuar').val();
             celularAtuar = $(this).find('.celularAtuar').val();
-
 
             pessoa = `Nome: ${nomeAtuar}. Email ${emailAtuar}. Celular  ${celularAtuar } `;
 
             console.log(pessoa);
 
-
         })
-
-
- 
-
-
 
         var formData = {
             representaTerceiro: $('#representaTerceiro').val(),

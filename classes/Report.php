@@ -11,10 +11,10 @@ class Report
     private $dns;
     private $user;
     private $pwd;
-    private $idPessoas;
+    private $id_pessoa;
     private $idStatus;
     private $idAgendamento;
-    private $idUnidade;
+    private $id_unidade;
     private $idTipoAgendamento;
     private $PdoConn;
 
@@ -35,7 +35,7 @@ class Report
     }
  
 /* select date_format(dia,'%Y-%m-%d' ) as 'dataformatada' ,date_format(dia, '%d/%m/%Y'), count(idAgendamento), st.descricaoStatus, un.nomeUnidade  from agendamento ag
-                                        inner join status st on ag.idStatus = st.idStatus  inner join unidade un on ag.idUnidade = un.idUnidade
+                                        inner join status st on ag.idStatus = st.idStatus  inner join unidade un on ag.id_unidade = un.id_unidade
                                           where dia between  :dataInicial  and  :dataFinal  
                                         group by  date_format(dia, '%d/%m/%Y'),  st.descricaoStatus, un.nomeUnidade   order by dia
                                         */
@@ -51,9 +51,10 @@ class Report
 
             $pdo = $this->getPdoConn();
 
-            $stmt = $pdo->prepare("select nomeUnidade, descricaoStatus,  count(ag.idAgendamento)  as 'qtde'   from agendamento ag inner join status st on ag.idStatus = st.idStatus 
-             inner join unidade un on ag.idUnidade = un.idUnidade  where dia between :dataInicial  and  :dataFinal   
-               group by   nomeUnidade , descricaoStatus  order by   nomeUnidade ");
+            $stmt = $pdo->prepare("select nome_unidade, descricao_status,  count(ag.id_agendamento)  as 'qtde'  
+             from agendamento ag inner join status st on ag.id_status = st.id_status 
+             inner join unidade un on ag.id_unidade = un.id_unidade  where dia between :dataInicial  and  :dataFinal   
+               group by   nome_unidade , descricao_status  order by   nome_unidade ");
                                         
 
             $stmt->execute(array(':dataInicial' => $dataInicial,  ':dataFinal' => $dataFinal,   ));
@@ -80,10 +81,10 @@ class Report
 
             $pdo = $this->getPdoConn();
 
-            $stmt = $pdo->prepare(" select date_format(dia, '%d/%m/%Y') as datas , count(ag.idAgendamento)  as 'qtde',  st.descricaoStatus  as descricao
-                  from agendamento ag inner join status st on ag.idStatus = st.idStatus  inner join unidade un on ag.idUnidade = un.idUnidade
+            $stmt = $pdo->prepare(" select date_format(dia, '%d/%m/%Y') as datas , count(ag.id_agendamento)  as 'qtde',  st.descricao_status  as descricao
+                  from agendamento ag inner join status st on ag.id_status = st.id_status  inner join unidade un on ag.id_unidade = un.id_unidade
                                           	  where date_format(dia,'%Y-%m-%d' )=   :dataInicial   
-                                          group by date_format(dia, '%d/%m/%Y') , descricao, nomeUnidade order by descricao,  dia asc ");
+                                          group by date_format(dia, '%d/%m/%Y') , descricao, nome_unidade order by descricao,  dia asc ");
                                         
 
             $stmt->execute(array(':dataInicial' => $dataInicial  ));
@@ -111,14 +112,14 @@ class Report
             //$pdo = new PDO("mysql:host='" . $host . "' ;dbname='" . $db . "', '" . $user, $password);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $sql = "UPDATE agendamento SET idPessoa = :idPessoa , idStatus = :idStatus ,  idUnidade= :idUnidade, idTipoAgendamento= :idTipoAgendamento    where idAgendamento= :idAgendamento  ";
+            $sql = "UPDATE agendamento SET id_pessoa = :idPessoa , id_status = :idStatus ,  id_unidade= :id_unidade, id_tipo_agendamento= :idTipoAgendamento    where id_agendamento= :idAgendamento  ";
 
 
             $data = [
-                ':idPessoa' =>      $this->getIdPessoas(),
+                ':idPessoa' =>      $this->getid_pessoa(),
                 ':idStatus' =>       $this->getIdStatus(),
                 ':idAgendamento' =>  $this->getIdAgendamento(),
-                ':idUnidade' => $this->getIdUnidade(),
+                ':id_unidade' => $this->getid_unidade(),
                 ':idTipoAgendamento' => $this->getIdTipoAgendamento()
 
             ];
@@ -218,21 +219,21 @@ class Report
     }
 
     /**
-     * Get the value of idPessoas
+     * Get the value of id_pessoa
      */
-    public function getIdPessoas()
+    public function getid_pessoa()
     {
-        return $this->idPessoas;
+        return $this->id_pessoa;
     }
 
     /**
-     * Set the value of idPessoas
+     * Set the value of id_pessoa
      *
      * @return  self
      */
-    public function setIdPessoas($idPessoas)
+    public function setid_pessoa($id_pessoa)
     {
-        $this->idPessoas = $idPessoas;
+        $this->id_pessoa = $id_pessoa;
 
         return $this;
     }
@@ -283,21 +284,21 @@ class Report
 
 
     /**
-     * Get the value of idUnidade
+     * Get the value of id_unidade
      */
-    public function getIdUnidade()
+    public function getid_unidade()
     {
-        return $this->idUnidade;
+        return $this->id_unidade;
     }
 
     /**
-     * Set the value of idUnidade
+     * Set the value of id_unidade
      *
      * @return  self
      */
-    public function setIdUnidade($idUnidade)
+    public function setid_unidade($id_unidade)
     {
-        $this->idUnidade = $idUnidade;
+        $this->id_unidade = $id_unidade;
 
         return $this;
     }

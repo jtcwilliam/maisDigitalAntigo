@@ -78,7 +78,7 @@ if (isset($_POST['finalizaSolicitacao'])  &&  $_POST['finalizaSolicitacao']) {
 
             <div class="small-12 large-3 cell">
                 <label>Nome do Solicitante
-                    <input type="text" readonly style="width: 100%; background-color: white;" id="nomeSolicitante" value="<?= $assinaturaAtiva[0]['nomePessoa'] ?>" />
+                    <input type="text" readonly style="width: 100%; background-color: white;" id="nomeSolicitante" value="<?= $assinaturaAtiva[0]['nome_pessoa'] ?>" />
                 </label>
             </div>
             <div class="small-12 large-3 cell">
@@ -89,7 +89,7 @@ if (isset($_POST['finalizaSolicitacao'])  &&  $_POST['finalizaSolicitacao']) {
 
             <div class="small-12 large-4 cell">
                 <label>Email do Solicitante
-                    <input type="text" readonly style="width: 100%; background-color: white;" id="emailSolicitante" value="<?= $assinaturaAtiva[0]['emailUsuario'] ?>" />
+                    <input type="text" readonly style="width: 100%; background-color: white;" id="emailSolicitante" value="<?= $assinaturaAtiva[0]['email_usuario'] ?>" />
                 </label>
             </div>
 
@@ -164,7 +164,7 @@ if (isset($_POST['finalizaSolicitacao'])  &&  $_POST['finalizaSolicitacao']) {
 
 
 
-    echo '<center><img style="" src="' . $assinaturaAtiva[0]['assinaturaSolicitacao']  . '" /><br> <p   style="margin-top: -40px; font-size:1.5em">' . $assinaturaAtiva[0]['nomePessoa']  . ' </p> </center>';
+    echo '<center><img style="" src="' . $assinaturaAtiva[0]['assinaturaSolicitacao']  . '" /><br> <p   style="margin-top: -40px; font-size:1.5em">' . $assinaturaAtiva[0]['nome_pessoa']  . ' </p> </center>';
 
 
 

@@ -162,7 +162,7 @@ if (isset($_POST['inserirSolicitacao'])) {
                 ?>
                 <h2>Olá <b><?= $_POST['nomeTerceiro']   ?></b>! Somos da Equipe Mais Digital da Prefeitura de Guarulhos </h2>
 
-                <p></b> Gostariamos de informar que <b><?php echo  $protocolo[0]['nomePessoa']  ?></b> realizou a
+                <p></b> Gostariamos de informar que <b><?php echo  $protocolo[0]['nome_pessoa']  ?></b> realizou a
                     solicitação </i><?= $protocolo[0]['descricaoCarta'] ?></i> como seu representante!<br>
 
                     <br>
@@ -215,7 +215,7 @@ if (isset($_POST['inserirSolicitacao'])) {
 
 
 
-        echo json_encode(array('retorno' => true, 'idSolicitacaoHidden' => $protocolo[0]['idSolicitacao']));
+        echo json_encode(array('retorno' => true, 'idSolicitacaoHidden' => $protocolo[0]['id_solicitacao']));
     } else {
         echo 'errado';
     }
@@ -265,7 +265,7 @@ if (isset($_POST['solicitacaoAtendente'])  &&  $_POST['solicitacaoAtendente']) {
 
             <div class="small-12 large-3 cell">
                 <label>Nome do Solicitante
-                    <input type="text" readonly style="width: 100%; background-color: white;" id="nomeSolicitante" value="<?= $assinaturaAtiva[0]['nomePessoa'] ?>" />
+                    <input type="text" readonly style="width: 100%; background-color: white;" id="nomeSolicitante" value="<?= $assinaturaAtiva[0]['nome_pessoa'] ?>" />
                 </label>
             </div>
             <div class="small-12 large-3 cell">
@@ -276,7 +276,7 @@ if (isset($_POST['solicitacaoAtendente'])  &&  $_POST['solicitacaoAtendente']) {
 
             <div class="small-12 large-4 cell">
                 <label>Email do Solicitante
-                    <input type="text" readonly style="width: 100%; background-color: white;" id="emailSolicitante" value="<?= $assinaturaAtiva[0]['emailUsuario'] ?>" />
+                    <input type="text" readonly style="width: 100%; background-color: white;" id="emailSolicitante" value="<?= $assinaturaAtiva[0]['email_usuario'] ?>" />
                 </label>
             </div>
 
@@ -331,7 +331,7 @@ if (isset($_POST['solicitacaoAtendente'])  &&  $_POST['solicitacaoAtendente']) {
 
     </fieldset>
 <?php
-    echo '<center><img style="" src="' . $assinaturaAtiva[0]['assinaturaSolicitacao']  . '" /><br> <p   style="margin-top: -40px; font-size:1.5em">' . $assinaturaAtiva[0]['nomePessoa']  . ' </p> </center>';
+    echo '<center><img style="" src="' . $assinaturaAtiva[0]['assinaturaSolicitacao']  . '" /><br> <p   style="margin-top: -40px; font-size:1.5em">' . $assinaturaAtiva[0]['nome_pessoa']  . ' </p> </center>';
 
 
 

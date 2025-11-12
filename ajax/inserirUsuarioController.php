@@ -26,14 +26,14 @@ if (strlen($nome) <= 2) {
 
 
     
-    if ($_POST['validaTipoCadastro'] == '0') {
+    if ($_POST['valida_tipo_cadastro'] == '0') {
 
 
-        $objPessoaMovimentar->setEmailUsuario(null);
+        $objPessoaMovimentar->setemail_usuario(null);
         $objPessoaMovimentar->setSenha(null);
     } else {
         
-        $objPessoaMovimentar->setEmailUsuario($_POST['emailAgendamento']);
+        $objPessoaMovimentar->setemail_usuario($_POST['emailAgendamento']);
         $objPessoaMovimentar->setSenha(md5($_POST['senhaAgendamento']));
     }
 
@@ -41,12 +41,12 @@ if (strlen($nome) <= 2) {
 
 
 
-    $objPessoaMovimentar->setNomePessoa($_POST['nomeUsuario']);
-    $objPessoaMovimentar->setTipoPessoa('1');
-    $objPessoaMovimentar->setStatusPessoa('1');
-    $objPessoaMovimentar->setDocumentoPessoa($_POST['cpf']);
-    $objPessoaMovimentar->setPrefixoDoc($prefixo);
-    $objPessoaMovimentar->setValidaTipoCadastro($_POST['validaTipoCadastro']);
+    $objPessoaMovimentar->setnome_pessoa($_POST['nomeUsuario']);
+    $objPessoaMovimentar->settipo_pessoa('1');
+    $objPessoaMovimentar->setstatus_pessoa('1');
+    $objPessoaMovimentar->setdocumento_pessoa($_POST['cpf']);
+    $objPessoaMovimentar->setprefixo_doc($prefixo);
+    $objPessoaMovimentar->setvalida_tipo_cadastro($_POST['valida_tipo_cadastro']);
 
     $objPessoaMovimentar->setConfirmaTermo($_POST['confirmaTermo']);
 

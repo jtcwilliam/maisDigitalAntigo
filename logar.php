@@ -128,10 +128,10 @@ include_once 'includes/head.php'
 
                     }
 
-                    tipoPessoa = data.dadosUsuario.dados[0]['idTipoPessoa'];
+                    tipo_pessoa = data.dadosUsuario.dados[0]['idtipo_pessoa'];
 
 
-                    switch (tipoPessoa) {
+                    switch (tipo_pessoa) {
                         case 5:
                             endereco = "managerMais.php";
                             break;

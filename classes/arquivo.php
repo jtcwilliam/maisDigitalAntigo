@@ -14,15 +14,15 @@ class Arquivo
     private $arquivo;
 
     private $pdoConn;
-    private $idArquivo;
-    private $nomeArquivo;
-    private $tipoArquivo;
-    private $idSolicitacao;
-    private $statusArquivo;
+    private $id_arquivo;
+    private $nome_arquivo;
+    private $tipo_arquivo;
+    private $id_solicitacao;
+    private $status_arquivo;
     private $estiloArquivo;
-    private $idTipoDocumento;
+    private $id_tipo_documento;
     private $codigoTrocaArquivo;
-    private $assinadoDigital;
+    private $assinado_digital;
 
     function __construct()
     {
@@ -37,17 +37,17 @@ class Arquivo
     }
 
 
-    public function  consultarListaAquivosNecessarios($idSolicitacao)
+    public function  consultarListaAquivosNecessarios($id_solicitacao)
     {
         try {
 
             $pdo = $this->getPdoConn();
 
-            $stmt = $pdo->prepare("  select * from servicoDocumento sd inner join documentos dc on dc.idDoc = sd.idDocumento
-                                where idServico in(
+            $stmt = $pdo->prepare("  select * from servico_documento sd inner join documento dc on dc.idDoc = sd.id_documento
+                                where id_servico in(
                                 select 
                                 assuntoSolicitacao from solicitacao sl inner join linkCartaServico lcs on sl.assuntoSolicitacao = lcs.idlinkCartaServico
-                                where idsolicitacao =  " . $idSolicitacao . ")");
+                                where id_solicitacao =  " . $id_solicitacao . ")");
 
             $stmt->execute();
 
@@ -60,13 +60,13 @@ class Arquivo
     }
 
 
-    public function  consultarDadosArquivosParaInfo($idSolicitacao)
+    public function  consultarDadosArquivosParaInfo($id_solicitacao)
     {
         try {
 
             $pdo = $this->getPdoConn();
 
-            $stmt = $pdo->prepare("  select  idArquivo ,nomeArquivo, tipoArquivo, idTipoDocumento, statusArquivo  from arquivos where idsolicitacao =" . $idSolicitacao);
+            $stmt = $pdo->prepare("  select  id_arquivo ,nome_arquivo, tipo_arquivo, id_tipo_documento, status_arquivo  from arquivo where id_solicitacao =" . $id_solicitacao);
 
 
             $stmt->execute();
@@ -82,15 +82,15 @@ class Arquivo
         }
     }
 
-    public function  consultaArquivosParaComuniquese($idSolicitacao, $idTipoDocumento)
+    public function  consultaArquivosParaComuniquese($id_solicitacao, $id_tipo_documento)
     {
         try {
 
             $pdo = $this->getPdoConn();
 
-            $stmt = $pdo->prepare("  select  idArquivo ,nomeArquivo, tipoArquivo, idTipoDocumento, statusArquivo, st.descricaoStatus, assinadoDigital 
-             from arquivos ar inner join status st on ar.statusArquivo = st.idStatus  where idsolicitacao =" . $idSolicitacao . " 
-               and  idTipoDocumento=" . $idTipoDocumento);
+            $stmt = $pdo->prepare("  select  id_arquivo ,nome_arquivo, tipo_arquivo, id_tipo_documento, status_arquivo, st.descricaoStatus, assinado_digital 
+             from arquivo ar inner join status st on ar.status_arquivo = st.idStatus  where id_solicitacao =" . $id_solicitacao . " 
+               and  id_tipo_documento=" . $id_tipo_documento);
 
 
             $stmt->execute();
@@ -107,14 +107,14 @@ class Arquivo
     }
 
 
-    public function  dadosArquivoSolicitante($idArquivo)
+    public function  dadosArquivoSolicitante($id_arquivo)
     {
         try {
 
             $pdo = $this->getPdoConn();
 
-            $stmt = $pdo->prepare(" select  ar.idArquivo ,sl.solicitante, ps.nomePessoa ,  nomeArquivo from solicitacao sl inner join pessoas ps on ps.idPessoas = sl.solicitante 
- INNER join arquivos ar on ar.idSolicitacao  = sl.idsolicitacao where ar.idArquivo =" . $idArquivo);
+            $stmt = $pdo->prepare(" select  ar.id_arquivo ,sl.solicitante, ps.nome_pessoa ,  nome_arquivo from solicitacao sl inner join pessoas ps on ps.id_pessoa = sl.solicitante 
+ INNER join arquivo ar on ar.id_solicitacao  = sl.id_solicitacao where ar.id_arquivo =" . $id_arquivo);
 
 
             $stmt->execute();
@@ -131,13 +131,13 @@ class Arquivo
 
 
 
-    public function  gerarArquivo($idArquivo)
+    public function  gerarArquivo($id_arquivo)
     {
         try {
 
             $pdo = $this->getPdoConn();
 
-            $stmt = $pdo->prepare(" select arquivo, nomeArquivo, tipoArquivo  from arquivos where idarquivo =" . $idArquivo);
+            $stmt = $pdo->prepare(" select arquivo, nome_arquivo, tipo_arquivo  from arquivo where id_arquivo =" . $id_arquivo);
 
 
             $stmt->execute();
@@ -151,15 +151,15 @@ class Arquivo
         }
     }
 
-    public function  solicitarArquivoRelatorio($idSolicitacao)
+    public function  solicitarArquivoRelatorio($id_solicitacao)
     {
         try {
 
             $pdo = $this->getPdoConn();
 
             $stmt = $pdo->prepare("  select lc.descricaoCarta,  sl.descricaoSolicitacao  ,lc.nomeSecretaria, sl.solicitante,
-             sl.tipoDocumento, sl.documentoPublico,  nomeArquivo, tipoArquivo, ar.arquivo, 
- dc.descricaoDoc, ps.nomePessoa, ps.emailUsuario, sl.docSolicitacaoPessoal, sl.assuntoSolicitacao,  sl.cepSolicitacao   ,  sl.logradouroSol    ,  sl.numeroSol,
+             sl.tipoDocumento, sl.documentoPublico,  nome_arquivo, tipo_arquivo, ar.arquivo, 
+ dc.descricaoDoc, ps.nome_pessoa, ps.email_usuario, sl.docSolicitacaoPessoal, sl.assuntoSolicitacao,  sl.cepSolicitacao   ,  sl.logradouroSol    ,  sl.numeroSol,
   sl.complemento, sl.bairro , sl.representaTerceiro    ,    sl.nomeTerceiro,  sl.documentoTerceiro , sl.emailTerceiro, sl.telefoneTerceiro , 
   date_format(dataSolicitacao, '%d ' ) as 'dias', 
 
@@ -169,8 +169,8 @@ class Arquivo
  
  
   from solicitacao sl inner join  linkCartaServico lc on lc.idlinkCartaServico = sl.assuntoSolicitacao 
- inner join documentos dc on dc.idDoc = sl.tipoDocumento inner join pessoas ps on ps.idPessoas = sl.solicitante 
- INNER join arquivos ar on ar.idSolicitacao  = sl.idsolicitacao where sl.idsolicitacao =" . $idSolicitacao);
+ inner join documento dc on dc.idDoc = sl.tipoDocumento inner join pessoas ps on ps.id_pessoa = sl.solicitante 
+ INNER join arquivo ar on ar.id_solicitacao  = sl.id_solicitacao where sl.id_solicitacao =" . $id_solicitacao);
 
 
             $stmt->execute();
@@ -186,13 +186,13 @@ class Arquivo
         }
     }
 
-    public function  consultarArquivoParaSolicitacao($idSolicitacao)
+    public function  consultarArquivoParaSolicitacao($id_solicitacao)
     {
         try {
 
             $pdo = $this->getPdoConn();
 
-            $stmt = $pdo->prepare("  select   nomeArquivo, tipoArquivo, arquivo from arquivos where idsolicitacao =" . $idSolicitacao);
+            $stmt = $pdo->prepare("  select   nome_arquivo, tipo_arquivo, arquivo from arquivo where id_solicitacao =" . $id_solicitacao);
 
             $stmt->execute();
 
@@ -204,33 +204,13 @@ class Arquivo
         }
     }
 
-    public function  consultarArquivoParaSolicitacaoRelatorio($idSolicitacao)
+    public function  consultarArquivoParaSolicitacaoRelatorio($id_solicitacao)
     {
         try {
 
             $pdo = $this->getPdoConn();
 
-            $stmt = $pdo->prepare("  select   nomeArquivo, tipoArquivo, arquivo from arquivos where  assinadoDigital !=1 and  idsolicitacao =" . $idSolicitacao);
-
-            $stmt->execute();
-
-            $datasDisponiveis = $stmt->fetchAll();
-
-            return $datasDisponiveis;
-        } catch (PDOException $e) {
-            echo 'Error: ' . $e->getMessage();
-        }
-    }
-
-
-
-    public function  consultarArquivoParaSolicitacaoTeste($idArquivo)
-    {
-        try {
-
-            $pdo = $this->getPdoConn();
-
-            $stmt = $pdo->prepare("  select   nomeArquivo, tipoArquivo, arquivo from arquivos where idArquivo =" . $idArquivo);
+            $stmt = $pdo->prepare("  select   nome_arquivo, tipo_arquivo, arquivo from arquivo where  assinado_digital !=1 and  id_solicitacao =" . $id_solicitacao);
 
             $stmt->execute();
 
@@ -243,13 +223,33 @@ class Arquivo
     }
 
 
-    public function  consultarQuantidadeArquivo($idSolicitacao)
+
+    public function  consultarArquivoParaSolicitacaoTeste($id_arquivo)
     {
         try {
 
             $pdo = $this->getPdoConn();
 
-            $stmt = $pdo->prepare(" select arquivo from arquivos where idSolicitacao =" . $idSolicitacao);
+            $stmt = $pdo->prepare("  select   nome_arquivo, tipo_arquivo, arquivo from arquivo where id_arquivo =" . $id_arquivo);
+
+            $stmt->execute();
+
+            $datasDisponiveis = $stmt->fetchAll();
+
+            return $datasDisponiveis;
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+
+    public function  consultarQuantidadeArquivo($id_solicitacao)
+    {
+        try {
+
+            $pdo = $this->getPdoConn();
+
+            $stmt = $pdo->prepare(" select arquivo from arquivo where id_solicitacao =" . $id_solicitacao);
 
 
             $stmt->execute();
@@ -278,25 +278,25 @@ class Arquivo
 
             $arquivo =   $this->getArquivo();
             $arquivoTipo = $this->getTipoArquivo();
-            $nomeArquivo = $this->getNomeArquivo();
-            $idSolicitacao = $this->getIdSolicitacao();
-            $statusArquivo = $this->getStatusArquivo();
-            $idTipoDocumento = $this->getIdTipoDocumento();
-            $assinadoDigital = $this->getAssinadoDigital();
+            $nome_arquivo = $this->getNomeArquivo();
+            $id_solicitacao = $this->getIdSolicitacao();
+            $status_arquivo = $this->getStatusArquivo();
+            $id_tipo_documento = $this->getIdTipoDocumento();
+            $assinado_digital = $this->getAssinadoDigital();
 
 
 
-            $stmt = $pdo->prepare("  INSERT INTO  arquivos ( arquivo, tipoArquivo, nomeArquivo, idSolicitacao, statusArquivo, idTipoDocumento,assinadoDigital    )   values (?,?,?,?,?, ?,?) ");
+            $stmt = $pdo->prepare("  INSERT INTO  arquivo ( arquivo, tipo_arquivo, nome_arquivo, id_solicitacao, status_arquivo, id_tipo_documento,assinado_digital    )   values (?,?,?,?,?, ?,?) ");
 
 
             //corrigir isto aqui
             $stmt->bindParam(1,  $arquivo, PDO::PARAM_LOB);
             $stmt->bindParam(2,  $arquivoTipo, PDO::PARAM_LOB);
-            $stmt->bindParam(3,  $nomeArquivo, PDO::PARAM_LOB);
-            $stmt->bindParam(4,  $idSolicitacao, PDO::PARAM_LOB);
-            $stmt->bindParam(5,  $statusArquivo, PDO::PARAM_LOB);
-            $stmt->bindParam(6,  $idTipoDocumento, PDO::PARAM_LOB);
-            $stmt->bindParam(7,  $assinadoDigital, PDO::PARAM_LOB);
+            $stmt->bindParam(3,  $nome_arquivo, PDO::PARAM_LOB);
+            $stmt->bindParam(4,  $id_solicitacao, PDO::PARAM_LOB);
+            $stmt->bindParam(5,  $status_arquivo, PDO::PARAM_LOB);
+            $stmt->bindParam(6,  $id_tipo_documento, PDO::PARAM_LOB);
+            $stmt->bindParam(7,  $assinado_digital, PDO::PARAM_LOB);
 
 
 
@@ -332,17 +332,17 @@ class Arquivo
             //$pdo = new PDO("mysql:host='" . $host . "' ;dbname='" . $db . "', '" . $user, $password);
             //    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $idArquivo =   $this->getIdArquivo();
+            $id_arquivo =   $this->getIdArquivo();
 
 
 
 
 
-            $stmt = $pdo->prepare("  UPDATE arquivos set   statusArquivo=13  where idArquivo = ? ");
+            $stmt = $pdo->prepare("  UPDATE arquivo set   status_arquivo=13  where id_arquivo = ? ");
 
 
             //corrigir isto aqui
-            $stmt->bindParam(1,  $idArquivo, PDO::PARAM_LOB);
+            $stmt->bindParam(1,  $id_arquivo, PDO::PARAM_LOB);
 
 
 
@@ -364,20 +364,20 @@ class Arquivo
             //$pdo = new PDO("mysql:host='" . $host . "' ;dbname='" . $db . "', '" . $user, $password);
             //    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $idArquivo =   $this->getIdArquivo();
-            $assinadoDigital = $this->getAssinadoDigital();
+            $id_arquivo =   $this->getIdArquivo();
+            $assinado_digital = $this->getAssinadoDigital();
 
 
 
 
 
 
-            $stmt = $pdo->prepare("  UPDATE arquivos set assinadoDigital = ?   where idArquivo = ? ");
+            $stmt = $pdo->prepare("  UPDATE arquivo set assinado_digital = ?   where id_arquivo = ? ");
 
             //corrigir isto aqui
 
-            $stmt->bindParam(1,  $assinadoDigital, PDO::PARAM_INT);
-            $stmt->bindParam(2,  $idArquivo, PDO::PARAM_INT);
+            $stmt->bindParam(1,  $assinado_digital, PDO::PARAM_INT);
+            $stmt->bindParam(2,  $id_arquivo, PDO::PARAM_INT);
 
 
 
@@ -398,20 +398,20 @@ class Arquivo
             //$pdo = new PDO("mysql:host='" . $host . "' ;dbname='" . $db . "', '" . $user, $password);
             //    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $idArquivo =   $this->getIdArquivo();
+            $id_arquivo =   $this->getIdArquivo();
             $arquivo = $this->getArquivo();
-            $tipoArquivo = $this->getTipoArquivo();
+            $tipo_arquivo = $this->getTipoArquivo();
 
-            $stmt = $pdo->prepare("  UPDATE arquivos set arquivo = ?, tipoArquivo=?,  statusArquivo='1' where idArquivo = ?;
-             Update log set statusLog=1 where idArquivo =?  ");
+            $stmt = $pdo->prepare("  UPDATE arquivo set arquivo = ?, tipo_arquivo=?,  status_arquivo='1' where id_arquivo = ?;
+             Update log set statusLog=1 where id_arquivo =?  ");
 
 
 
             //corrigir isto aqui
             $stmt->bindParam(1,  $arquivo, PDO::PARAM_LOB);
-            $stmt->bindParam(2,  $tipoArquivo, PDO::PARAM_STR);
-            $stmt->bindParam(3,  $idArquivo, PDO::PARAM_INT);
-            $stmt->bindParam(4,  $idArquivo, PDO::PARAM_INT);
+            $stmt->bindParam(2,  $tipo_arquivo, PDO::PARAM_STR);
+            $stmt->bindParam(3,  $id_arquivo, PDO::PARAM_INT);
+            $stmt->bindParam(4,  $id_arquivo, PDO::PARAM_INT);
 
             if ($stmt->execute()) {
 
@@ -438,11 +438,11 @@ class Arquivo
 
 
             $arquivo = $this->getArquivo();
-            $tipoArquivo = $this->getTipoArquivo();
-            $idtipoDocumento = $this->getIdTipoDocumento();
+            $tipo_arquivo = $this->getTipoArquivo();
+            $id_tipo_documento = $this->getIdTipoDocumento();
             $idTrocaArquivo = $this->getCodigoTrocaArquivo();
 
-            $stmt = $pdo->prepare("  UPDATE arquivos set arquivo = ?, tipoArquivo=?, idTipoDocumento=?, statusArquivo='1'  where tipoArquivo = ?");
+            $stmt = $pdo->prepare("  UPDATE arquivo set arquivo = ?, tipo_arquivo=?, id_tipo_documento=?, status_arquivo='1'  where tipo_arquivo = ?");
 
 
 
@@ -450,8 +450,8 @@ class Arquivo
 
             //corrigir isto aqui
             $stmt->bindParam(1,  $arquivo, PDO::PARAM_LOB);
-            $stmt->bindParam(2,  $tipoArquivo, PDO::PARAM_STR);
-            $stmt->bindParam(3,  $idtipoDocumento, PDO::PARAM_INT);
+            $stmt->bindParam(2,  $tipo_arquivo, PDO::PARAM_STR);
+            $stmt->bindParam(3,  $id_tipo_documento, PDO::PARAM_INT);
             $stmt->bindParam(4,  $idTrocaArquivo, PDO::PARAM_STR);
 
             if ($stmt->execute()) {
@@ -584,101 +584,101 @@ class Arquivo
     }
 
     /**
-     * Get the value of nomeArquivo
+     * Get the value of nome_arquivo
      */
     public function getNomeArquivo()
     {
-        return $this->nomeArquivo;
+        return $this->nome_arquivo;
     }
 
     /**
-     * Set the value of nomeArquivo
+     * Set the value of nome_arquivo
      *
      * @return  self
      */
-    public function setNomeArquivo($nomeArquivo)
+    public function setNomeArquivo($nome_arquivo)
     {
-        $this->nomeArquivo = $nomeArquivo;
+        $this->nome_arquivo = $nome_arquivo;
 
         return $this;
     }
 
     /**
-     * Get the value of tipoArquivo
+     * Get the value of tipo_arquivo
      */
     public function getTipoArquivo()
     {
-        return $this->tipoArquivo;
+        return $this->tipo_arquivo;
     }
 
     /**
-     * Set the value of tipoArquivo
+     * Set the value of tipo_arquivo
      *
      * @return  self
      */
-    public function setTipoArquivo($tipoArquivo)
+    public function setTipoArquivo($tipo_arquivo)
     {
-        $this->tipoArquivo = $tipoArquivo;
+        $this->tipo_arquivo = $tipo_arquivo;
 
         return $this;
     }
 
     /**
-     * Get the value of idSolicitacao
+     * Get the value of id_solicitacao
      */
     public function getIdSolicitacao()
     {
-        return $this->idSolicitacao;
+        return $this->id_solicitacao;
     }
 
     /**
-     * Set the value of idSolicitacao
+     * Set the value of id_solicitacao
      *
      * @return  self
      */
-    public function setIdSolicitacao($idSolicitacao)
+    public function setIdSolicitacao($id_solicitacao)
     {
-        $this->idSolicitacao = $idSolicitacao;
+        $this->id_solicitacao = $id_solicitacao;
 
         return $this;
     }
 
     /**
-     * Get the value of statusArquivo
+     * Get the value of status_arquivo
      */
     public function getStatusArquivo()
     {
-        return $this->statusArquivo;
+        return $this->status_arquivo;
     }
 
     /**
-     * Set the value of statusArquivo
+     * Set the value of status_arquivo
      *
      * @return  self
      */
-    public function setStatusArquivo($statusArquivo)
+    public function setStatusArquivo($status_arquivo)
     {
-        $this->statusArquivo = $statusArquivo;
+        $this->status_arquivo = $status_arquivo;
 
         return $this;
     }
 
     /**
-     * Get the value of idArquivo
+     * Get the value of id_arquivo
      */
     public function getIdArquivo()
     {
-        return $this->idArquivo;
+        return $this->id_arquivo;
     }
 
     /**
-     * Set the value of idArquivo
+     * Set the value of id_arquivo
      *
      * @return  self
      */
-    public function setIdArquivo($idArquivo)
+    public function setIdArquivo($id_arquivo)
     {
-        $this->idArquivo = $idArquivo;
+        $this->id_arquivo = $id_arquivo;
 
         return $this;
     }
@@ -704,21 +704,21 @@ class Arquivo
     }
 
     /**
-     * Get the value of idTipoDocumento
+     * Get the value of id_tipo_documento
      */
     public function getIdTipoDocumento()
     {
-        return $this->idTipoDocumento;
+        return $this->id_tipo_documento;
     }
 
     /**
-     * Set the value of idTipoDocumento
+     * Set the value of id_tipo_documento
      *
      * @return  self
      */
-    public function setIdTipoDocumento($idTipoDocumento)
+    public function setIdTipoDocumento($id_tipo_documento)
     {
-        $this->idTipoDocumento = $idTipoDocumento;
+        $this->id_tipo_documento = $id_tipo_documento;
 
         return $this;
     }
@@ -744,21 +744,21 @@ class Arquivo
     }
 
     /**
-     * Get the value of assinadoDigital
+     * Get the value of assinado_digital
      */
     public function getAssinadoDigital()
     {
-        return $this->assinadoDigital;
+        return $this->assinado_digital;
     }
 
     /**
-     * Set the value of assinadoDigital
+     * Set the value of assinado_digital
      *
      * @return  self
      */
-    public function setAssinadoDigital($assinadoDigital)
+    public function setAssinadoDigital($assinado_digital)
     {
-        $this->assinadoDigital = $assinadoDigital;
+        $this->assinado_digital = $assinado_digital;
 
         return $this;
     }

@@ -67,12 +67,12 @@ if (isset($_POST['acaoComuniqueSE']) &&  $_POST['acaoComuniqueSE'] == 'solicitar
         $dataLog = date('Y-m-d H:i:s');
 
 
-        $objLog->setNomePessoaLog($usuarioLog);
+        $objLog->setnome_pessoaLog($usuarioLog);
         $objLog->setNomeLog($nomeLog);
         $objLog->setTextoLog($textoLog);
         $objLog->setStatusLog($statusLog);
         $objLog->setDataLog($dataLog);
-        $objLog->setTipoPessoaLog($_SESSION['usuarioLogado']['dados'][0]['tipoPessoa']);
+        $objLog->settipo_pessoaLog($_SESSION['usuarioLogado']['dados'][0]['tipo_pessoa']);
         $objLog->setSolicitacao($_POST['solicitacao']);
         $objLog->setIdArquivo($idArquivoParaLog);
 
@@ -106,7 +106,7 @@ if (isset($_POST['acaoComuniqueSE']) &&  $_POST['acaoComuniqueSE'] == 'alterarAr
         $dataLog = date('Y-m-d H:i:s');
 
 
-        $objLog->setNomePessoaLog($usuarioLog);
+        $objLog->setnome_pessoaLog($usuarioLog);
         $objLog->setNomeLog($nomeLog);
         $objLog->setTextoLog($textoLog);
         $objLog->setStatusLog($statusLog);
@@ -114,7 +114,7 @@ if (isset($_POST['acaoComuniqueSE']) &&  $_POST['acaoComuniqueSE'] == 'alterarAr
         $objLog->setIdArquivo($_POST['codigoId']);
         
 
-        $objLog->setTipoPessoaLog($_SESSION['usuarioLogado']['dados'][0]['tipoPessoa']);
+        $objLog->settipo_pessoaLog($_SESSION['usuarioLogado']['dados'][0]['tipo_pessoa']);
         $objLog->setSolicitacao($_POST['solicitacao']);
 
         if ($objLog->inserirLog()) {
@@ -271,7 +271,7 @@ if (isset($_POST['enviarEmail'])) {
 
 
 
-    $objEnvio->setDestinatario($dadosSolicitacao[0]['emailUsuario']);
+    $objEnvio->setDestinatario($dadosSolicitacao[0]['email_usuario']);
     $objEnvio->setAssunto('Alteração de Arquivo na sua solicitação');
     $objEnvio->setConteudo($dados);
 

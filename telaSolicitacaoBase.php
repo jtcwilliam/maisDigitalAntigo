@@ -79,7 +79,7 @@ echo '</pre>';
 
                     <div class="small-12 large-3 cell">
                         <label>Nome do Solicitante
-                            <input type="text" readonly style="width: 100%;" id="nomeSolicitante" value="<?= $_SESSION['usuariosLogados'][0]['nomePessoa'] ?>" />
+                            <input type="text" readonly style="width: 100%;" id="nomeSolicitante" value="<?= $_SESSION['usuariosLogados'][0]['nome_pessoa'] ?>" />
                         </label>
                     </div>
                     <div class="small-12 large-3 cell">
@@ -90,7 +90,7 @@ echo '</pre>';
 
                     <div class="small-12 large-4 cell">
                         <label>Email do Solicitante
-                            <input type="text" readonly style="width: 100%;" id="emailSolicitante" value="<?= $_SESSION['usuariosLogados'][0]['emailUsuario'] ?>" />
+                            <input type="text" readonly style="width: 100%;" id="emailSolicitante" value="<?= $_SESSION['usuariosLogados'][0]['email_usuario'] ?>" />
                         </label>
                     </div>
 
@@ -201,7 +201,7 @@ echo '</pre>';
                     <div class="small-12 large-5 cell">
                         <label><br>
                             <center><a class="button success" style="width: 100%;"
-                                    onclick=" inserirSolicitacao('<?= $_SESSION['usuariosLogados'][0]['idPessoas'] ?>');">Avançar para a documentação </a>
+                                    onclick=" inserirSolicitacao('<?= $_SESSION['usuariosLogados'][0]['id_pessoa'] ?>');">Avançar para a documentação </a>
                             </center>
                         </label>
                     </div>

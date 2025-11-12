@@ -12,7 +12,7 @@ class Unidade
 
 
     private $conexao;
-    private $idUnidade;
+    private $id_unidade;
     private $nomeUnidade;
     private $statusUnidade;
     private $responsavelUnidade;
@@ -49,21 +49,21 @@ class Unidade
 
 
     /**
-     * Get the value of idUnidade
+     * Get the value of id_unidade
      */
-    public function getIdUnidade()
+    public function getid_unidade()
     {
-        return $this->idUnidade;
+        return $this->id_unidade;
     }
 
     /**
-     * Set the value of idUnidade
+     * Set the value of id_unidade
      *
      * @return  self
      */
-    public function setIdUnidade($idUnidade)
+    public function setid_unidade($id_unidade)
     {
-        $this->idUnidade = $idUnidade;
+        $this->id_unidade = $id_unidade;
 
         return $this;
     }

@@ -56,8 +56,8 @@ $pdf->SetFont('Arial', '', 13);
 $pdf->SetX(10);
 $pdf->MultiCell(0, 6, '', 0, 'J'); // Reservar área
 $pdf->SetXY(10, 53, $pdf->GetY());
-$pdf->WriteHTML(iconv("UTF-8", "ISO-8859-1//TRANSLIT", "<b>Nome do Solicitante:</b> " . $dadosSolicitacao[0]['nomePessoa'] . "<br><br><b>CPF ou CNPJ:</b> " . $dadosSolicitacao[0]['docSolicitacaoPessoal'] . " 
-<br><br><b>Email:</b> " . $dadosSolicitacao[0]['emailUsuario'] . " <br> <br><b>Endereço: </b>" . $dadosSolicitacao[0]['logradouroSol'] .
+$pdf->WriteHTML(iconv("UTF-8", "ISO-8859-1//TRANSLIT", "<b>Nome do Solicitante:</b> " . $dadosSolicitacao[0]['nome_pessoa'] . "<br><br><b>CPF ou CNPJ:</b> " . $dadosSolicitacao[0]['docSolicitacaoPessoal'] . " 
+<br><br><b>Email:</b> " . $dadosSolicitacao[0]['email_usuario'] . " <br> <br><b>Endereço: </b>" . $dadosSolicitacao[0]['logradouroSol'] .
     ", " . $dadosSolicitacao[0]['numeroSol'] . ". " . $dadosSolicitacao[0]['complemento'] . "  " . $dadosSolicitacao[0]['bairro'] . " <br><br><b>" . $dadosSolicitacao[0]['descricaoDoc'] . ":</b> " . $dadosSolicitacao[0]['documentoPublico'] . "<b><br><br>Venho, respeitosamente, solicitar</b><br><i><center>"
     . $dadosSolicitacao[0]['descricaoCarta'] . "<center></i>.<br><br><b>Complemento da Solicitação</b>:  <br>" . $dadosSolicitacao[0]['descricaoSolicitacao'] . " <br>  "));
 
@@ -114,7 +114,7 @@ if ($dadosSolicitacao[0]['representaTerceiro'] == '1') {
 
     //
 
-    $pdf->Cell(90, 7, $dadosSolicitacao[0]['nomePessoa'], 0, 0, 'C'); // 1 = borda, 0 = continua na mesma linha
+    $pdf->Cell(90, 7, $dadosSolicitacao[0]['nome_pessoa'], 0, 0, 'C'); // 1 = borda, 0 = continua na mesma linha
 
     // --- Segunda célula ---
     // A posição da segunda célula é determinada pela largura da anterior
@@ -141,7 +141,7 @@ if ($dadosSolicitacao[0]['representaTerceiro'] == '1') {
 
     //
 
-    $pdf->Cell(190, 7, $dadosSolicitacao[0]['nomePessoa'], 0, 0, 'C'); // 1 = borda, 0 = continua na mesma linha
+    $pdf->Cell(190, 7, $dadosSolicitacao[0]['nome_pessoa'], 0, 0, 'C'); // 1 = borda, 0 = continua na mesma linha
 
     unlink($file);
 }

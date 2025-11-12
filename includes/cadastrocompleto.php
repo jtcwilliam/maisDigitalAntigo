@@ -7,7 +7,7 @@
     <label style="font-weight: bold;  display: none; "> validacao tipo de usuario
 
         <input type="text" placeholder="Digite aqui seu  validador" class=""
-            id="validaTipoCadastro" value='1' />
+            id="valida_tipo_cadastro" value='1' />
     </label>
 
     <label style="font-weight: bold;  font-size: 1.3em; " class="agendaCompleto"> Qual seu email?<br>

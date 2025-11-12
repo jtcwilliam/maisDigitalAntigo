@@ -365,7 +365,7 @@ include_once 'includes/head.php';
                                     <label style="font-weight: bold;  display: none; "> validacao tipo de usuario
 
                                         <input type="text" placeholder="Digite aqui seu  validador" class=""
-                                            id="validaTipoCadastro" value='1' />
+                                            id="valida_tipo_cadastro" value='1' />
                                     </label>
 
                                     <label style="font-weight: bold;  font-size: 1.3em; " class="agendaCompleto"> Qual seu email?<br>
@@ -699,7 +699,7 @@ include_once 'includes/head.php';
 
 
                         //verificou se o cara é um usuario cadastrao para o completo e ai abre pra vir a senha
-                        if (data.retornoCondicao.dados[0].validaTipoCadastro == 1) {
+                        if (data.retornoCondicao.dados[0].valida_tipo_cadastro == 1) {
 
 
 
@@ -782,12 +782,12 @@ include_once 'includes/head.php';
                         $('#nomeUsuario').hide();
                         $('#formularioAgendamento').show();
 
-                        $('#txtNome').val(data.retornoCondicao.dados[0].nomePessoa);
+                        $('#txtNome').val(data.retornoCondicao.dados[0].nome_pessoa);
                         $('#txtCPF').val(cpf);
-                        $('#txtIdUsuario').val(data.retornoCondicao.dados[0].idPessoas);
+                        $('#txtIdUsuario').val(data.retornoCondicao.dados[0].id_pessoa);
 
                         comboUnidadesComum();
-                        agendamentosAtivos(data.retornoCondicao.dados[0].idPessoas);
+                        agendamentosAtivos(data.retornoCondicao.dados[0].id_pessoa);
                         */
                     }
                 });
@@ -800,7 +800,7 @@ include_once 'includes/head.php';
 
         function inserirUsuario() {
 
-            var validaTipoCadastro = $('#validaTipoCadastro').val();
+            var valida_tipo_cadastro = $('#valida_tipo_cadastro').val();
             var nomeUsuario = $('#nomeAgendamento').val();
             var cpf = $('#cpf').val();
             var emailAgendamento = $('#emailAgendamento').val();
@@ -825,7 +825,7 @@ include_once 'includes/head.php';
             var formData = {
                 cpf: cpf,
                 nomeUsuario: nomeUsuario,
-                validaTipoCadastro: validaTipoCadastro,
+                valida_tipo_cadastro: valida_tipo_cadastro,
                 emailAgendamento: emailAgendamento,
                 senhaAgendamento: senhaAgendamento,
                 confirmaTermo: confirmaTermo
@@ -857,7 +857,7 @@ include_once 'includes/head.php';
 
                         if (data.retorno == true) {
 
-                            if (validaTipoCadastro == 1) {
+                            if (valida_tipo_cadastro == 1) {
                                 $('#usuarioInserido').foundation('open');
                             }
 

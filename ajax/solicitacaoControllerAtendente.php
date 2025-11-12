@@ -223,8 +223,8 @@ if (isset($_POST['exibirSolicitacaoAtendente'])) {
 
             <div class="small-12 large-4 cell">
                 <label style="color: #56658E; font-size: 1.1em; ">Nome do Solicitante</label>
-                <input type="hidden" value="<?= $assinaturaAtiva[0]['nomePessoa'] ?>" id="txtNomePessoaParaEnvioArquivo" />
-                <p><?= $assinaturaAtiva[0]['nomePessoa'] ?> </p>
+                <input type="hidden" value="<?= $assinaturaAtiva[0]['nome_pessoa'] ?>" id="txtnome_pessoaParaEnvioArquivo" />
+                <p><?= $assinaturaAtiva[0]['nome_pessoa'] ?> </p>
             </div>
             <div class="small-12 large-4 cell">
                 <label style="color: #56658E; font-size: 1.1em; ">CPF do Solicitante</label>
@@ -233,8 +233,8 @@ if (isset($_POST['exibirSolicitacaoAtendente'])) {
 
             <div class="small-12 large-4 cell">
                 <label style="color: #56658E; font-size: 1.1em; ">Email do Solicitante</label>
-                <input type="hidden" value="<?= $assinaturaAtiva[0]['emailUsuario'] ?>" id="txtEmailParaEnvioArquivo" />
-                <p><?= $assinaturaAtiva[0]['emailUsuario'] ?></p>
+                <input type="hidden" value="<?= $assinaturaAtiva[0]['email_usuario'] ?>" id="txtEmailParaEnvioArquivo" />
+                <p><?= $assinaturaAtiva[0]['email_usuario'] ?></p>
             </div>
 
 

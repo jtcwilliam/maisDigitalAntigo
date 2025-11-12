@@ -7,8 +7,8 @@ include_once 'includes/head.php';
 
 session_start();
 
-$dadoTipoPessoa =     $_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'];
-$responsavelPessoa =   $_SESSION['usuarioLogado']['dados'][0]['idUnidade'];
+$dadotipo_pessoa =     $_SESSION['usuarioLogado']['dados'][0]['idtipo_pessoa'];
+$responsavelPessoa =   $_SESSION['usuarioLogado']['dados'][0]['id_unidade'];
 
 
 
@@ -20,7 +20,7 @@ if (!isset($_SESSION)) {
 
 
 if (
-    $_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] == 5    || $_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] == 4
+    $_SESSION['usuarioLogado']['dados'][0]['idtipo_pessoa'] == 5    || $_SESSION['usuarioLogado']['dados'][0]['idtipo_pessoa'] == 4
 ) {
 
 
@@ -152,7 +152,7 @@ if (
                 comboTipoAgendamento();
                 datasNaUnidadeAdm(1, <?= $responsavelPessoa ?>);
 
-                listasDataUnidadeSuperAdm(<?= $_SESSION['usuarioLogado']['dados']['0']['idUnidade']   ?>)
+                listasDataUnidadeSuperAdm(<?= $_SESSION['usuarioLogado']['dados']['0']['id_unidade']   ?>)
             })
 
 

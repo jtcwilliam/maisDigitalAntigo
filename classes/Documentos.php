@@ -12,7 +12,7 @@ class Documentos
     private $user;
     private $pwd;
     private $pdoConn;
-    private $idDocumento;
+    private $id_documento;
     private $idServico;
     private $status;
 
@@ -39,7 +39,7 @@ class Documentos
 
 
 
-            $sql = "select  * from documentos ";
+            $sql = "select  * from documento ";
 
             if ($filtro != null) {
                 $sql .= $filtro;
@@ -89,7 +89,7 @@ class Documentos
 
 
 
-            $sql = "select * from \"servicoDocumento\" dc inner join cartaservico c  on c.\"idCartaServico\"  = dc.\"idServico\"  inner join documentos dcm    on dcm.\"idDoc\" =  \"idDocumento\"    where \"idServico\"=" . $filtro;
+            $sql = "select * from servico_documento dc inner join carta_servico c  on c.id_carta_servico = dc.id_servico  inner join documento dcm    on dcm.\"id_doc\" =  id_documento    where id_servico=" . $filtro;
 
 
             $stmt = $pdo->prepare($sql);
@@ -133,7 +133,7 @@ class Documentos
 
             $pdo = $this->getPdoConn();
 
-            $sql = "select idArquivo,nomeArquivo from arquivos where idsolicitacao =" . $idSolicitacao . "  and  statusArquivo in (12, 13) ";
+            $sql = "select id_arquivo,nome_arquivo from arquivo where id_solicitacao =" . $idSolicitacao . "  and  status_arquivo in (12, 13) ";
 
             $stmt = $pdo->prepare($sql);
 
@@ -176,13 +176,13 @@ class Documentos
             $pdo = $this->getPdoConn();
 
             //
-            $stmt = $pdo->prepare("INSERT INTO \"servicoDocumento\"(\"idServico\",\"idDocumento\", status) VALUES (:idservico,:idDocumento,:idstatus)");
+            $stmt = $pdo->prepare("INSERT INTO servico_documento(id_servico,id_documento, status) VALUES (:idservico,:id_documento,:idstatus)");
 
-            // $stmt = $pdo->prepare("  UPDATE  pessoas SET pwd =  :senha  WHERE idPessoas = :idPessoa   ");
+            // $stmt = $pdo->prepare("  UPDATE  pessoas SET pwd =  :senha  WHERE id_pessoa = :idPessoa   ");
 
             $stmt->bindValue(':idservico',  $this->getIdServico(), PDO::PARAM_STR);
 
-            $stmt->bindValue(':idDocumento',  $this->getIdDocumento(), PDO::PARAM_STR);
+            $stmt->bindValue(':id_documento',  $this->getIdDocumento(), PDO::PARAM_STR);
 
             $stmt->bindValue(':idstatus', $this->getStatus(), PDO::PARAM_STR);
 
@@ -339,21 +339,21 @@ class Documentos
     }
 
     /**
-     * Get the value of idDocumento
+     * Get the value of id_documento
      */
     public function getIdDocumento()
     {
-        return $this->idDocumento;
+        return $this->id_documento;
     }
 
     /**
-     * Set the value of idDocumento
+     * Set the value of id_documento
      *
      * @return  self
      */
-    public function setIdDocumento($idDocumento)
+    public function setIdDocumento($id_documento)
     {
-        $this->idDocumento = $idDocumento;
+        $this->id_documento = $id_documento;
 
         return $this;
     }

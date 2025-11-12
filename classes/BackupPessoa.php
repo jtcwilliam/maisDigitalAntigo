@@ -15,11 +15,11 @@ class Pessoa_____
 
     private $sqlQuery;
 
-    private $idPessoas;
-    private $nomePessoa;
-    private $tipoPessoa;
-    private $statusPessoa;
-    private $documentoPessoa;
+    private $id_pessoa;
+    private $nome_pessoa;
+    private $tipo_pessoa;
+    private $status_pessoa;
+    private $documento_pessoa;
     private $pwd;
 
 
@@ -75,13 +75,13 @@ class Pessoa_____
     public function  logarPessoa()
     {
 
-        $sql = "select  ps.nomePessoa as 'nome', un.nomeUnidade as 'nomeUnidade', st.descricaoStatus as 'descricaoStatus' , 
-        tp.descricaoTipoPessoa as 'tipoPessoa', ps.pwd, ps.documentoPessoa  as 'documentoPessoa',  ps.*, st.*, tp.*, un.*
+        $sql = "select  ps.nome_pessoa as 'nome', un.nomeUnidade as 'nomeUnidade', st.descricaoStatus as 'descricaoStatus' , 
+        tp.descricaotipo_pessoa as 'tipo_pessoa', ps.pwd, ps.documento_pessoa  as 'documento_pessoa',  ps.*, st.*, tp.*, un.*
         from pessoas ps 
-        inner join unidade un on un.responsavelUnidade = ps.idPessoas  
-        inner join status st on st.idStatus = ps.statusPessoa 
-        inner join tipoPessoa tp on tp.idTipoPessoa = ps.tipoPessoa
-         where documentoPessoa = '" . $this->getDocumentoPessoa() . "'  and pwd= '" . $this->getPwd() . "' ";
+        inner join unidade un on un.responsavelUnidade = ps.id_pessoa  
+        inner join status st on st.idStatus = ps.status_pessoa 
+        inner join tipo_pessoa tp on tp.idtipo_pessoa = ps.tipo_pessoa
+         where documento_pessoa = '" . $this->getdocumento_pessoa() . "'  and pwd= '" . $this->getPwd() . "' ";
 
         $executar = mysqli_query($this->getConexao(), $sql);
 
@@ -101,7 +101,7 @@ class Pessoa_____
 
     public function  pesquisarCPF($cpf)
     {
-        $sql = "select * from pessoas where documentoPessoa = '" . $cpf . "'";
+        $sql = "select * from pessoas where documento_pessoa = '" . $cpf . "'";
 
 
         $executar = mysqli_query($this->getConexao(), $sql);
@@ -125,8 +125,8 @@ class Pessoa_____
     {
         try {
 
-            $sql = "   INSERT INTO  pessoas ( `nomePessoa`, `tipoPessoa`,`statusPessoa`, `documentoPessoa`) 
-            VALUES ('" . $this->getNomePessoa() . "', '" . $this->getTipoPessoa() . "', '" . $this->getStatusPessoa() . "', '" . $this->getDocumentoPessoa() . "');";
+            $sql = "   INSERT INTO  pessoas ( `nome_pessoa`, `tipo_pessoa`,`status_pessoa`, `documento_pessoa`) 
+            VALUES ('" . $this->getnome_pessoa() . "', '" . $this->gettipo_pessoa() . "', '" . $this->getstatus_pessoa() . "', '" . $this->getdocumento_pessoa() . "');";
 
 
 
@@ -145,101 +145,101 @@ class Pessoa_____
     }
 
     /**
-     * Get the value of idPessoas
+     * Get the value of id_pessoa
      */
-    public function getIdPessoas()
+    public function getid_pessoa()
     {
-        return $this->idPessoas;
+        return $this->id_pessoa;
     }
 
     /**
-     * Set the value of idPessoas
+     * Set the value of id_pessoa
      *
      * @return  self
      */
-    public function setIdPessoas($idPessoas)
+    public function setid_pessoa($id_pessoa)
     {
-        $this->idPessoas = $idPessoas;
+        $this->id_pessoa = $id_pessoa;
 
         return $this;
     }
 
     /**
-     * Get the value of nomePessoa
+     * Get the value of nome_pessoa
      */
-    public function getNomePessoa()
+    public function getnome_pessoa()
     {
-        return $this->nomePessoa;
+        return $this->nome_pessoa;
     }
 
     /**
-     * Set the value of nomePessoa
+     * Set the value of nome_pessoa
      *
      * @return  self
      */
-    public function setNomePessoa($nomePessoa)
+    public function setnome_pessoa($nome_pessoa)
     {
-        $this->nomePessoa = $nomePessoa;
+        $this->nome_pessoa = $nome_pessoa;
 
         return $this;
     }
 
     /**
-     * Get the value of tipoPessoa
+     * Get the value of tipo_pessoa
      */
-    public function getTipoPessoa()
+    public function gettipo_pessoa()
     {
-        return $this->tipoPessoa;
+        return $this->tipo_pessoa;
     }
 
     /**
-     * Set the value of tipoPessoa
+     * Set the value of tipo_pessoa
      *
      * @return  self
      */
-    public function setTipoPessoa($tipoPessoa)
+    public function settipo_pessoa($tipo_pessoa)
     {
-        $this->tipoPessoa = $tipoPessoa;
+        $this->tipo_pessoa = $tipo_pessoa;
 
         return $this;
     }
 
     /**
-     * Get the value of statusPessoa
+     * Get the value of status_pessoa
      */
-    public function getStatusPessoa()
+    public function getstatus_pessoa()
     {
-        return $this->statusPessoa;
+        return $this->status_pessoa;
     }
 
     /**
-     * Set the value of statusPessoa
+     * Set the value of status_pessoa
      *
      * @return  self
      */
-    public function setStatusPessoa($statusPessoa)
+    public function setstatus_pessoa($status_pessoa)
     {
-        $this->statusPessoa = $statusPessoa;
+        $this->status_pessoa = $status_pessoa;
 
         return $this;
     }
 
     /**
-     * Get the value of documentoPessoa
+     * Get the value of documento_pessoa
      */
-    public function getDocumentoPessoa()
+    public function getdocumento_pessoa()
     {
-        return $this->documentoPessoa;
+        return $this->documento_pessoa;
     }
 
     /**
-     * Set the value of documentoPessoa
+     * Set the value of documento_pessoa
      *
      * @return  self
      */
-    public function setDocumentoPessoa($documentoPessoa)
+    public function setdocumento_pessoa($documento_pessoa)
     {
-        $this->documentoPessoa = $documentoPessoa;
+        $this->documento_pessoa = $documento_pessoa;
 
         return $this;
     }

@@ -10,8 +10,8 @@ session_start();
 
 
 
-$dadoTipoPessoa =     $_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'];
-$responsavelPessoa =   $_SESSION['usuarioLogado']['dados'][0]['idUnidade'];
+$dadotipo_pessoa =     $_SESSION['usuarioLogado']['dados'][0]['idtipo_pessoa'];
+$responsavelPessoa =   $_SESSION['usuarioLogado']['dados'][0]['id_unidade'];
 
 if (!isset($_SESSION)) {
     session_start();
@@ -20,8 +20,8 @@ if (!isset($_SESSION)) {
 
 
 if (
-    $_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] == 5    || $_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] == 4
-    ||  $_SESSION['usuarioLogado']['dados'][0]['idTipoPessoa'] == 3
+    $_SESSION['usuarioLogado']['dados'][0]['idtipo_pessoa'] == 5    || $_SESSION['usuarioLogado']['dados'][0]['idtipo_pessoa'] == 4
+    ||  $_SESSION['usuarioLogado']['dados'][0]['idtipo_pessoa'] == 3
 ) {
 
 
@@ -118,7 +118,7 @@ if (
 
                             <div class="small-12 large-5 cell">
                                 <label for="dadosEntrada">Email do Usuário
-                                    <input type="text" id='emailUsuario' />
+                                    <input type="text" id='email_usuario' />
                                 </label>
                             </div>
 
@@ -223,10 +223,10 @@ if (
                         console.log(data.retornoCondicao.dados[0]);
 
 
-                        $('#idUsuario').val(data.retornoCondicao.dados[0]['idPessoas']);
+                        $('#idUsuario').val(data.retornoCondicao.dados[0]['id_pessoa']);
 
-                        $('#nomeUsuario').val(data.retornoCondicao.dados[0]['nomePessoa']);
-                        $('#emailUsuario').val(data.retornoCondicao.dados[0]['emailUsuario']);
+                        $('#nomeUsuario').val(data.retornoCondicao.dados[0]['nome_pessoa']);
+                        $('#email_usuario').val(data.retornoCondicao.dados[0]['email_usuario']);
 
 
 
@@ -250,7 +250,7 @@ if (
 
                 senhaUsuario = $('#senhaUsuario').val();
 
-                emailUsuario = $('#emailUsuario').val();
+                email_usuario = $('#email_usuario').val();
 
                 confirmaSenha = $('#confirmaSenha').val();
 
@@ -276,7 +276,7 @@ if (
                     var formData = {
                         cpf,
                         nomeUsuario,
-                        emailUsuario,
+                        email_usuario,
                         senhaUsuario,
                         confirmaSenha,
                         atualizarUsuario,
@@ -303,7 +303,7 @@ if (
 
                                 $('#nomeUsuario').val('');
 
-                                $('#emailUsuario').val('');
+                                $('#email_usuario').val('');
                             }
                         });
 

@@ -10,15 +10,15 @@ class Pessoa
 
     private $sqlQuery;
 
-    private $idPessoas;
-    private $nomePessoa;
-    private $tipoPessoa;
-    private $statusPessoa;
-    private $documentoPessoa;
-    private $emailUsuario;
+    private $id_pessoa;
+    private $nome_pessoa;
+    private $tipo_pessoa;
+    private $status_pessoa;
+    private $documento_pessoa;
+    private $email_usuario;
     private $unidade;
-    private $prefixoDoc;
-    private $validaTipoCadastro;
+    private $prefixo_doc;
+    private $valida_tipo_cadastro;
 
     private $confirmaTermo;
 
@@ -64,7 +64,7 @@ class Pessoa
 
             $pdo = $this->getPdoConn();
 
-            $stmt = $pdo->prepare("select * from \"pessoas\" where \"documentoPessoa\" =:cpf  and pwd= :pwd  ");
+            $stmt = $pdo->prepare("select * from pessoa where documento_pessoa=:cpf  and pwd= :pwd  ");
 
             $stmt->execute(array(':cpf' => $cpf, ':pwd' => $senha));
 
@@ -109,7 +109,7 @@ class Pessoa
 
             $pdo = $this->getPdoConn();
 
-            $stmt = $pdo->prepare("select *, UPPER(\"nomePessoa\") as \"nomePessoa\" from pessoas where \"documentoPessoa\" =:cpf   ");
+            $stmt = $pdo->prepare("select *, UPPER(\"nome_pessoa\") as \"nome_pessoa\" from pessoa where documento_pessoa=:cpf   ");
 
             $stmt->execute(array(':cpf' => $cpf));
 
@@ -143,8 +143,8 @@ class Pessoa
     ///fazer essa classe igual a da backup pessoa
 
     /*
-        $sql = "   INSERT INTO  pessoas ( `nomePessoa`, `tipoPessoa`,`statusPessoa`, `documentoPessoa`) 
-            VALUES ('" . $this->getNomePessoa() . "',  '" . $this->getTipoPessoa() . "', '" . $this->getStatusPessoa() . "', '" . $this->getDocumentoPessoa() . "');";
+        $sql = "   INSERT INTO  pessoas ( `nome_pessoa`, `tipo_pessoa`,`status_pessoa`, `documento_pessoa`) 
+            VALUES ('" . $this->getnome_pessoa() . "',  '" . $this->gettipo_pessoa() . "', '" . $this->getstatus_pessoa() . "', '" . $this->getdocumento_pessoa() . "');";
 */
     public function  inserirPessoasAgendamento()
     {
@@ -155,16 +155,16 @@ class Pessoa
             //$pdo = new PDO("mysql:host='" . $host . "' ;dbname='" . $db . "', '" . $user, $password);
             //    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $stmt = $pdo->prepare("  INSERT INTO  pessoas ( nomePessoa, tipoPessoa,statusPessoa, documentoPessoa, prefixoDoc, validaTipoCadastro, emailUsuario, pwd, termoUso   ) 
-            values (:nomePessoa, :tipoPessoa, :statusPessoa, :documentoPessoa, :prefixoDoc, :validaTipoCadastro,  :emailUsuario, :pwd, :termoUso ) ");
+            $stmt = $pdo->prepare("  INSERT INTO  pessoas ( nome_pessoa, tipo_pessoa,status_pessoa, documento_pessoa, prefixo_doc, valida_tipo_cadastro, email_usuario, pwd, termoUso   ) 
+            values (:nome_pessoa, :tipo_pessoa, :status_pessoa, :documento_pessoa, :prefixo_doc, :valida_tipo_cadastro,  :email_usuario, :pwd, :termoUso ) ");
 
-            $stmt->bindValue(':nomePessoa',  $this->getNomePessoa(), PDO::PARAM_STR);
-            $stmt->bindValue(':tipoPessoa', $this->getTipoPessoa(), PDO::PARAM_STR);
-            $stmt->bindValue(':documentoPessoa', md5($this->getDocumentoPessoa()), PDO::PARAM_STR);
-            $stmt->bindValue(':statusPessoa', $this->getStatusPessoa(), PDO::PARAM_STR);
-            $stmt->bindValue(':prefixoDoc', $this->getPrefixoDoc(), PDO::PARAM_STR);
-            $stmt->bindValue(':validaTipoCadastro', $this->getValidaTipoCadastro(), PDO::PARAM_STR);
-            $stmt->bindValue(':emailUsuario', $this->getEmailUsuario(), PDO::PARAM_STR);
+            $stmt->bindValue(':nome_pessoa',  $this->getnome_pessoa(), PDO::PARAM_STR);
+            $stmt->bindValue(':tipo_pessoa', $this->gettipo_pessoa(), PDO::PARAM_STR);
+            $stmt->bindValue(':documento_pessoa', md5($this->getdocumento_pessoa()), PDO::PARAM_STR);
+            $stmt->bindValue(':status_pessoa', $this->getstatus_pessoa(), PDO::PARAM_STR);
+            $stmt->bindValue(':prefixo_doc', $this->getprefixo_doc(), PDO::PARAM_STR);
+            $stmt->bindValue(':valida_tipo_cadastro', $this->getvalida_tipo_cadastro(), PDO::PARAM_STR);
+            $stmt->bindValue(':email_usuario', $this->getemail_usuario(), PDO::PARAM_STR);
             $stmt->bindValue(':pwd', $this->getSenha(), PDO::PARAM_STR);
             $stmt->bindValue(':termoUso', $this->getConfirmaTermo(), PDO::PARAM_STR);
 
@@ -185,18 +185,18 @@ class Pessoa
             //$pdo = new PDO("mysql:host='" . $host . "' ;dbname='" . $db . "', '" . $user, $password);
             //    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $stmt = $pdo->prepare("  INSERT INTO  pessoas ( nomePessoa, tipoPessoa,statusPessoa, documentoPessoa, emailUsuario, unidade, prefixoDoc) 
-            values (:nomePessoa, :tipoPessoa, :statusPessoa, :documentoPessoa, :emailUsuario, :unidade, :prefixoDoc) ");
+            $stmt = $pdo->prepare("  INSERT INTO  pessoas ( nome_pessoa, tipo_pessoa,status_pessoa, documento_pessoa, email_usuario, unidade, prefixo_doc) 
+            values (:nome_pessoa, :tipo_pessoa, :status_pessoa, :documento_pessoa, :email_usuario, :unidade, :prefixo_doc) ");
 
 
 
-            $stmt->bindValue(':nomePessoa',  $this->getNomePessoa(), PDO::PARAM_STR);
-            $stmt->bindValue(':tipoPessoa', $this->getTipoPessoa(), PDO::PARAM_STR);
-            $stmt->bindValue(':documentoPessoa', md5($this->getDocumentoPessoa()), PDO::PARAM_STR);
-            $stmt->bindValue(':statusPessoa', $this->getStatusPessoa(), PDO::PARAM_STR);
-            $stmt->bindValue(':emailUsuario', $this->getEmailUsuario(), PDO::PARAM_STR);
+            $stmt->bindValue(':nome_pessoa',  $this->getnome_pessoa(), PDO::PARAM_STR);
+            $stmt->bindValue(':tipo_pessoa', $this->gettipo_pessoa(), PDO::PARAM_STR);
+            $stmt->bindValue(':documento_pessoa', md5($this->getdocumento_pessoa()), PDO::PARAM_STR);
+            $stmt->bindValue(':status_pessoa', $this->getstatus_pessoa(), PDO::PARAM_STR);
+            $stmt->bindValue(':email_usuario', $this->getemail_usuario(), PDO::PARAM_STR);
             $stmt->bindValue(':unidade', $this->getUnidade(), PDO::PARAM_STR);
-            $stmt->bindValue(':prefixoDoc', $this->getPrefixoDoc(), PDO::PARAM_STR);
+            $stmt->bindValue(':prefixo_doc', $this->getprefixo_doc(), PDO::PARAM_STR);
 
 
 
@@ -216,11 +216,11 @@ class Pessoa
 
             $pdo = $this->getPdoConn();
 
-            $stmt = $pdo->prepare("  UPDATE  pessoas SET pwd =  :senha  WHERE idPessoas = :idPessoa   ");
+            $stmt = $pdo->prepare("  UPDATE  pessoas SET pwd =  :senha  WHERE id_pessoa = :idPessoa   ");
 
             $stmt->bindValue(':senha',  $this->getSenha(), PDO::PARAM_STR);
 
-            $stmt->bindValue(':idPessoa', $this->getIdPessoas(), PDO::PARAM_STR);
+            $stmt->bindValue(':idPessoa', $this->getid_pessoa(), PDO::PARAM_STR);
 
             if ($stmt->execute()) {
 
@@ -238,13 +238,13 @@ class Pessoa
 
             $pdo = $this->getPdoConn();
 
-            $stmt = $pdo->prepare("  UPDATE  pessoas SET nomePessoa= :nome,    emailUsuario = :email  WHERE idPessoas = :idPessoa   ");
+            $stmt = $pdo->prepare("  UPDATE  pessoas SET nome_pessoa= :nome,    email_usuario = :email  WHERE id_pessoa = :idPessoa   ");
 
-            $stmt->bindValue(':email',  $this->getEmailUsuario(), PDO::PARAM_STR);
+            $stmt->bindValue(':email',  $this->getemail_usuario(), PDO::PARAM_STR);
 
-            $stmt->bindValue(':nome',  $this->getNomePessoa(), PDO::PARAM_STR);
+            $stmt->bindValue(':nome',  $this->getnome_pessoa(), PDO::PARAM_STR);
 
-            $stmt->bindValue(':idPessoa', $this->getIdPessoas(), PDO::PARAM_STR);
+            $stmt->bindValue(':idPessoa', $this->getid_pessoa(), PDO::PARAM_STR);
 
             if ($stmt->execute()) {
 
@@ -271,14 +271,14 @@ class Pessoa
 
 
 
-            $stmt = $pdo->prepare("select  ps.nomePessoa as 'nome', un.nomeUnidade as 'nomeUnidade', st.descricaoStatus as 'descricaoStatus' , 
-            tp.descricaoTipoPessoa as 'tipoPessoa', ps.pwd, ps.documentoPessoa  as 'documentoPessoa',  
+            $stmt = $pdo->prepare("select  ps.nome_pessoa as 'nome', un.nomeUnidade as 'nomeUnidade', st.descricaoStatus as 'descricaoStatus' , 
+            tp.descricaotipo_pessoa as 'tipo_pessoa', ps.pwd, ps.documento_pessoa  as 'documento_pessoa',  
             ps.*, st.*, tp.*, un.*, ptc.categoriaPessoas from pessoas ps 
-            inner join unidade un on ps.unidade = un.idUnidade 
-            inner join status st on st.idStatus = ps.statusPessoa  
-            inner join tipoPessoa tp on tp.idTipoPessoa = ps.tipoPessoa 
-            inner join pessoaTemCategoria ptc on ptc.PessoasCategoria = ps.idPessoas
-            where emailUsuario ='" . $this->getEmailUsuario() . "'");
+            inner join unidade un on ps.unidade = un.id_unidade 
+            inner join status st on st.idStatus = ps.status_pessoa  
+            inner join tipo_pessoa tp on tp.idtipo_pessoa = ps.tipo_pessoa 
+            inner join pessoaTemCategoria ptc on ptc.PessoasCategoria = ps.id_pessoa
+            where email_usuario ='" . $this->getemail_usuario() . "'");
 
             $stmt->execute();
 
@@ -392,7 +392,7 @@ class Pessoa
     }
 
     /**
-     * Get the value of idUnidade
+     * Get the value of id_unidade
      */
 
     /**
@@ -416,101 +416,101 @@ class Pessoa
     }
 
     /**
-     * Get the value of idPessoas
+     * Get the value of id_pessoa
      */
-    public function getIdPessoas()
+    public function getid_pessoa()
     {
-        return $this->idPessoas;
+        return $this->id_pessoa;
     }
 
     /**
-     * Set the value of idPessoas
+     * Set the value of id_pessoa
      *
      * @return  self
      */
-    public function setIdPessoas($idPessoas)
+    public function setid_pessoa($id_pessoa)
     {
-        $this->idPessoas = $idPessoas;
+        $this->id_pessoa = $id_pessoa;
 
         return $this;
     }
 
     /**
-     * Get the value of nomePessoa
+     * Get the value of nome_pessoa
      */
-    public function getNomePessoa()
+    public function getnome_pessoa()
     {
-        return $this->nomePessoa;
+        return $this->nome_pessoa;
     }
 
     /**
-     * Set the value of nomePessoa
+     * Set the value of nome_pessoa
      *
      * @return  self
      */
-    public function setNomePessoa($nomePessoa)
+    public function setnome_pessoa($nome_pessoa)
     {
-        $this->nomePessoa = $nomePessoa;
+        $this->nome_pessoa = $nome_pessoa;
 
         return $this;
     }
 
     /**
-     * Get the value of tipoPessoa
+     * Get the value of tipo_pessoa
      */
-    public function getTipoPessoa()
+    public function gettipo_pessoa()
     {
-        return $this->tipoPessoa;
+        return $this->tipo_pessoa;
     }
 
     /**
-     * Set the value of tipoPessoa
+     * Set the value of tipo_pessoa
      *
      * @return  self
      */
-    public function setTipoPessoa($tipoPessoa)
+    public function settipo_pessoa($tipo_pessoa)
     {
-        $this->tipoPessoa = $tipoPessoa;
+        $this->tipo_pessoa = $tipo_pessoa;
 
         return $this;
     }
 
     /**
-     * Get the value of statusPessoa
+     * Get the value of status_pessoa
      */
-    public function getStatusPessoa()
+    public function getstatus_pessoa()
     {
-        return $this->statusPessoa;
+        return $this->status_pessoa;
     }
 
     /**
-     * Set the value of statusPessoa
+     * Set the value of status_pessoa
      *
      * @return  self
      */
-    public function setStatusPessoa($statusPessoa)
+    public function setstatus_pessoa($status_pessoa)
     {
-        $this->statusPessoa = $statusPessoa;
+        $this->status_pessoa = $status_pessoa;
 
         return $this;
     }
 
     /**
-     * Get the value of documentoPessoa
+     * Get the value of documento_pessoa
      */
-    public function getDocumentoPessoa()
+    public function getdocumento_pessoa()
     {
-        return $this->documentoPessoa;
+        return $this->documento_pessoa;
     }
 
     /**
-     * Set the value of documentoPessoa
+     * Set the value of documento_pessoa
      *
      * @return  self
      */
-    public function setDocumentoPessoa($documentoPessoa)
+    public function setdocumento_pessoa($documento_pessoa)
     {
-        $this->documentoPessoa = $documentoPessoa;
+        $this->documento_pessoa = $documento_pessoa;
 
         return $this;
     }
@@ -556,21 +556,21 @@ class Pessoa
     }
 
     /**
-     * Get the value of emailUsuario
+     * Get the value of email_usuario
      */
-    public function getEmailUsuario()
+    public function getemail_usuario()
     {
-        return $this->emailUsuario;
+        return $this->email_usuario;
     }
 
     /**
-     * Set the value of emailUsuario
+     * Set the value of email_usuario
      *
      * @return  self
      */
-    public function setEmailUsuario($emailUsuario)
+    public function setemail_usuario($email_usuario)
     {
-        $this->emailUsuario = $emailUsuario;
+        $this->email_usuario = $email_usuario;
 
         return $this;
     }
@@ -596,41 +596,41 @@ class Pessoa
     }
 
     /**
-     * Get the value of prefixoDoc
+     * Get the value of prefixo_doc
      */
-    public function getPrefixoDoc()
+    public function getprefixo_doc()
     {
-        return $this->prefixoDoc;
+        return $this->prefixo_doc;
     }
 
     /**
-     * Set the value of prefixoDoc
+     * Set the value of prefixo_doc
      *
      * @return  self
      */
-    public function setPrefixoDoc($prefixoDoc)
+    public function setprefixo_doc($prefixo_doc)
     {
-        $this->prefixoDoc = $prefixoDoc;
+        $this->prefixo_doc = $prefixo_doc;
 
         return $this;
     }
 
     /**
-     * Get the value of validaTipoCadastro
+     * Get the value of valida_tipo_cadastro
      */
-    public function getValidaTipoCadastro()
+    public function getvalida_tipo_cadastro()
     {
-        return $this->validaTipoCadastro;
+        return $this->valida_tipo_cadastro;
     }
 
     /**
-     * Set the value of validaTipoCadastro
+     * Set the value of valida_tipo_cadastro
      *
      * @return  self
      */
-    public function setValidaTipoCadastro($validaTipoCadastro)
+    public function setvalida_tipo_cadastro($valida_tipo_cadastro)
     {
-        $this->validaTipoCadastro = $validaTipoCadastro;
+        $this->valida_tipo_cadastro = $valida_tipo_cadastro;
 
         return $this;
     }

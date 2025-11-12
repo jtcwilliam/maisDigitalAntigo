@@ -35,13 +35,13 @@ $prefixo = $_POST['cpf'];
 $prefixo = substr($prefixo, 0, 3);
 
 
-    $objPessoaMovimentar->setNomePessoa($_POST['nomeUsuario']);
-    $objPessoaMovimentar->setTipoPessoa('3');
-    $objPessoaMovimentar->setStatusPessoa('1');
-    $objPessoaMovimentar->setDocumentoPessoa($_POST['cpf']);
-    $objPessoaMovimentar->setEmailUsuario($_POST['usuario']);
+    $objPessoaMovimentar->setnome_pessoa($_POST['nomeUsuario']);
+    $objPessoaMovimentar->settipo_pessoa('3');
+    $objPessoaMovimentar->setstatus_pessoa('1');
+    $objPessoaMovimentar->setdocumento_pessoa($_POST['cpf']);
+    $objPessoaMovimentar->setemail_usuario($_POST['usuario']);
     $objPessoaMovimentar->setUnidade($selectUnidade);
-    $objPessoaMovimentar->setPrefixoDoc($prefixo);
+    $objPessoaMovimentar->setprefixo_doc($prefixo);
 
 
 

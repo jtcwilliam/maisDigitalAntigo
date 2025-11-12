@@ -1,10 +1,10 @@
 <?php
 
 
-$tipoPessoa = $_SESSION['usuarioLogado']['dados'][0]['tipoPessoa'];
+$tipo_pessoa = $_SESSION['usuarioLogado']['dados'][0]['tipo_pessoa'];
 
 
-switch ($tipoPessoa) {
+switch ($tipo_pessoa) {
     case '5':
         $link = 'areaSuperAdm.php';
         break;
