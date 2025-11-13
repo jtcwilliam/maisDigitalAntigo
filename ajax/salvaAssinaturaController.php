@@ -55,12 +55,12 @@ if (isset($_POST['finalizaSolicitacao'])  &&  $_POST['finalizaSolicitacao']) {
 
             <div class="small-12 large-10 cell">
                 <label>Assunto da Solicitação
-                    <input type="text" readonly style="width: 100%; background-color: white;" value="<?= $assinaturaAtiva[0]['descricaoCarta'] ?>" />
+                    <input type="text" readonly style="width: 100%; background-color: white;" value="<?= $assinaturaAtiva[0]['nome_servico'] ?>" />
                 </label>
             </div>
             <div class="small-12 large-2 cell">
                 <label>Status
-                    <input type="text" readonly style="width: 100%; background-color: white;" value="<?= $assinaturaAtiva[0]['descricaoStatus'] ?>" />
+                    <input type="text" readonly style="width: 100%; background-color: white;" value="<?= $assinaturaAtiva[0]['descricao_status'] ?>" />
                 </label>
 
             </div>
@@ -70,7 +70,7 @@ if (isset($_POST['finalizaSolicitacao'])  &&  $_POST['finalizaSolicitacao']) {
 
             <div class="small-12 large-12 cell">
                 <label>Descrição da Sua Solicitação <i>(Campo Obrigatório)</i>
-                    <textarea id='txtDescricao' rows="5" readonly style="width: 100%; background-color: white;">  <?= $assinaturaAtiva[0]['descricaoSolicitacao'] ?> </textarea>
+                    <textarea id='txtDescricao' rows="5" readonly style="width: 100%; background-color: white;">  <?= $assinaturaAtiva[0]['descricao_solicitacao'] ?> </textarea>
                 </label>
             </div>
 
@@ -83,7 +83,7 @@ if (isset($_POST['finalizaSolicitacao'])  &&  $_POST['finalizaSolicitacao']) {
             </div>
             <div class="small-12 large-3 cell">
                 <label>CPF do Solicitante
-                    <input type="text" readonly style="width: 100%; background-color: white;" id="cpfSolicitante" value="<?= $assinaturaAtiva[0]['docSolicitacaoPessoal'] ?>" />
+                    <input type="text" readonly style="width: 100%; background-color: white;" id="cpfSolicitante" value="<?= $assinaturaAtiva[0]['doc_solicitacao_pessoal'] ?>" />
                 </label>
             </div>
 
@@ -97,27 +97,27 @@ if (isset($_POST['finalizaSolicitacao'])  &&  $_POST['finalizaSolicitacao']) {
 
             <div class="small-12 large-2 cell">
                 <label>Dia da Solicitação
-                    <input type="text" readonly style="width: 100%; background-color: white;" value="<?= $assinaturaAtiva[0]['diaDaSolicitacao'] ?>" />
+                    <input type="text" readonly style="width: 100%; background-color: white;" value="<?= $assinaturaAtiva[0]['dia_da_solicitacao'] ?>" />
                 </label>
 
             </div>
 
             <div class="small-12 large-1 cell">
                 <label>CEP:
-                    <input type="text" readonly style="width: 100%; background-color: white;" id="txtCEP" value="<?= $assinaturaAtiva[0]['cepSolicitacao'] ?>" />
+                    <input type="text" readonly style="width: 100%; background-color: white;" id="txtCEP" value="<?= $assinaturaAtiva[0]['cep_solicitacao'] ?>" />
                 </label>
 
             </div>
 
             <div class="small-12 large-4 cell">
                 <label>Logradouro
-                    <input type="text" id="txtRua" readonly style="width: 100%; background-color: white;" value="<?= $assinaturaAtiva[0]['logradouroSol'] ?>" />
+                    <input type="text" id="txtRua" readonly style="width: 100%; background-color: white;" value="<?= $assinaturaAtiva[0]['logradouro_sol'] ?>" />
                 </label>
 
             </div>
             <div class="small-12 large-1 cell">
                 <label>Nº
-                    <input type="text" id="txtNUmero" readonly style="width: 100%; background-color: white;" value="<?= $assinaturaAtiva[0]['numeroSol'] ?>" />
+                    <input type="text" id="txtNUmero" readonly style="width: 100%; background-color: white;" value="<?= $assinaturaAtiva[0]['numero_sol'] ?>" />
                 </label>
 
             </div>
@@ -143,9 +143,9 @@ if (isset($_POST['finalizaSolicitacao'])  &&  $_POST['finalizaSolicitacao']) {
 
 
             <div class="small-12 large-2 cell" id="boxInsc">
-                <label><?= $assinaturaAtiva[0]['descricaoDoc'] ?>
+                <label><?= $assinaturaAtiva[0]['descricao_doc'] ?>
 
-                    <input id="inscDocu" type="text" readonly style="width: 100%; background-color: white;" value="<?= $assinaturaAtiva[0]['documentoPublico'] ?>" />
+                    <input id="inscDocu" type="text" readonly style="width: 100%; background-color: white;" value="<?= $assinaturaAtiva[0]['documento_publico'] ?>" />
 
             </div>
 
@@ -162,9 +162,10 @@ if (isset($_POST['finalizaSolicitacao'])  &&  $_POST['finalizaSolicitacao']) {
 
 
 
+ 
+    echo $assinaturaAtiva[0]['assinatura_solicitacao'] ;
 
-
-    echo '<center><img style="" src="' . $assinaturaAtiva[0]['assinaturaSolicitacao']  . '" /><br> <p   style="margin-top: -40px; font-size:1.5em">' . $assinaturaAtiva[0]['nome_pessoa']  . ' </p> </center>';
+    echo   ' <br> <center><img style="" src="' . $assinaturaAtiva[0]['assinatura_solicitacao']  . '" /><br> <p   style="margin-top: -40px; font-size:1.5em">' . $assinaturaAtiva[0]['nome_pessoa']  . ' </p> </center>';
 
 
 

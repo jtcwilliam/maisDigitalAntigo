@@ -359,23 +359,22 @@ class Solicitacao
 
             $pdo = $this->getPdoConn();
 
-            $sql = " select lc.descricaoCarta,  sl.descricaoSolicitacao  ,lc.nomeSecretaria, sl.solicitante,
-             sl.tipoDocumento, sl.documentoPublico,  nomeArquivo, tipoArquivo, 
-                dc.descricaoDoc, ps.nome_pessoa, ps.email_usuario, sl.docSolicitacaoPessoal, sl.assuntoSolicitacao,  sl.cepSolicitacao   ,  sl.logradouroSol    ,  sl.numeroSol,
+            $sql = " select ncs.nome_servico   ,  sl.descricao_solicitacao  ,  sl.solicitante,
+             sl.tipo_documento, sl.documento_publico,
+              ps.nome_pessoa, ps.email_usuario, sl.doc_solicitacao_pessoal, /*sl.assuntoSolicitacao,*/
+                sl.cep_solicitacao   ,  sl.logradouro_sol    ,  sl.numero_sol, 
                 sl.complemento, sl.bairro ,
-                date_format(dataSolicitacao, '%d ' ) as 'dias', 
-
-                date_format(dataSolicitacao, '%M' ) as 'mes', 
-
-                date_format(dataSolicitacao, ' de %Y ' ) as 'ano', sl.assinaturaSolicitacao,
-                date_format(dataSolicitacao, '%d/%m/%Y') as 'diaDaSolicitacao' , sts.descricaoStatus
-                
-                
-                from solicitacao sl inner join  linkCartaServico lc on lc.idlinkCartaServico = sl.assuntoSolicitacao 
-                inner join documentos dc on dc.idDoc = sl.tipoDocumento inner join pessoa ps on ps.id_pessoa = sl.solicitante 
-                INNER join arquivos ar on ar.id_solicitacao  = sl.id_solicitacao 
-                inner join status sts on sts.idStatus = sl.statusSolicitacao
-                where sl.id_solicitacao =" . $id_solicitacao . "  and statusSolicitacao in (10,11,12,13) ";
+                TO_CHAR(data_solicitacao, 'DD') as dia,
+ 				TO_CHAR(data_solicitacao, 'MM') as mês,
+				TO_CHAR(data_solicitacao, 'YY') as ano,
+				sl.assinatura_solicitacao,d.descricao_doc,   encode(assinatura_solicitacao,'hex') as assinatura_solicitacao, 
+                TO_CHAR(data_solicitacao, 'DD/MM/YYYY') as dia_da_solicitacao , sts.descricao_status
+                from solicitacao sl inner join  carta_servico cs on cs.id_carta_servico = sl.id_carta_servico  
+                inner join nome_carta_servico ncs on ncs.id_nome_carta_servico  = cs.id_nome_carta_servico 
+                inner join pessoa ps on ps.id_pessoa = sl.solicitante 
+                inner join documento d on d.id_doc = sl.tipo_documento 
+                inner join status sts on sts.id_status = sl.status_solicitacao
+                where sl.id_solicitacao =" . $id_solicitacao . "  and status_solicitacao in (10,11,12,13)   ";
 
 
 
@@ -541,9 +540,9 @@ class Solicitacao
 
 
             if ($assinador == 0) {
-                $stmt = $pdo->prepare("  UPDATE solicitacao set assinaturaSolicitacao=?, statusSolicitacao=10   where id_solicitacao=?");
+                $stmt = $pdo->prepare("  UPDATE solicitacao set assinatura_solicitacao=?, status_solicitacao=10   where id_solicitacao=?");
             } else {
-                $stmt = $pdo->prepare("  UPDATE solicitacao set assinaturaTerceiro=?, statusSolicitacao=10   where id_solicitacao=?");
+                $stmt = $pdo->prepare("  UPDATE solicitacao set assinatura_terceiro=?, status_solicitacao=10   where id_solicitacao=?");
             }
 
             //corrigir isto aqui

@@ -1,369 +1,35 @@
 <?php
-
-/*echo '<pre>';
-print_r($_SESSION['usuariosLogados']['cpfDoUsuario']);
+/*
+echo '<pre>';
+print_r($_SESSION['usuariosLogados']);
 echo '</pre>';
 */
 
 
 ?>
 
-<div class="small-12 large-12 cell" style="padding: 30px;">
-
-    <div class=" grid-x grid-padding-x" style="padding: 30px;">
-        <div class="small-12 large-12 cell">
-
-
-
-            <!-- combo com a carta de serviço.. inicial  . -->
-            <fieldset class="fieldset" id="iniciosSolicitacao" style="display: none;  ">
-                <legend>
-                    <h3>Olá. Vamos fazer sua solicitação no +Digital</h3>
-                </legend>
-                <label>No que podemos te ajudar? Digite abaixo alguma palavra do que deseja e vamos encontrar o serviço mais adequado
-                    <div class=" grid-x  grid-padding-x" style="padding-bottom: 10px;">
-                        <div class="small-12 large-12 cell">
-                            <script>
-                                criaCombo('comboServicos');
-                            </script>
-                            <select class="js-example-basic-single  responsive-combobox" id="comboServicos"
-                                onchange="$('a#linkHelpServico').attr('href', $('#comboServicos').val());
-                                 $('#modalDuvidasCartas').foundation('open'); 
-                                 
-                                    criarCaixaArquivo($('#comboServicos').find(':selected').attr('codigo'));
-
-                                 $('#codigoSolicitacao').html( $('#comboServicos option:selected').text()) ;
-                                 $('#assuntoSolicitacao').val( $('#comboServicos option:selected').text()) ;" name="state" style="width: 100%;">
-
-                            </select>
-
-                        </div>
-                </label>
-                <div class="small-12 large-12 cell">
-                    <br>
-                    <a class="button " target="_blank" id="linkHelpServico" style="font-weight: 300; width: 100%;">
-                        Se você tem alguma dúvida sobre procedimentos ou documentação desta solicitação, <b>clique aqui</b>.
-                        Você será redirecionado para o portal da prefeitura para saber tudo o que precisa. Após isto, feche o Site da Prefeitura e continue sua solicitação aqui! </a>
-                </div>
-
-
-                <div class="small-12 large-12 cell">
-                    <br>
-                    <center>
-                        <a class="button " target="_blank" style="font-weight: 300; width: 50%;" onclick="$('#iniciosSolicitacao').hide(); 
-                         $('#fieldSolicitacao').show();   
-                           $('#escolha').css('color', 'rgba(8, 124, 4, 0.66)');  
-                           $('#complemento').css('color', 'rgba(0, 0, 0, 1)');  
-                         
-                           
-                           
-                           
-                           ">
-                            Tudo Certo! Quero continuar!
-                        </a>
-                    </center>
-                </div>
-
-
-            </fieldset>
-
-
-
-            <!-- area para fazer a solicitacao-->
-            <fieldset class="fieldset" id="fieldSolicitacao" style="display: none;">
-                <legend>
-                    <h4 id=""> </h4>
-                </legend>
-
-                <div class=" grid-x  grid-padding-x" style="padding-bottom: 10px;">
-
-                    <div class="small-12 large-3 cell">
-                        <label>Nome do Solicitante
-                            <input type="text" readonly style="width: 100%;" id="nomeSolicitante" value="<?= $_SESSION['usuariosLogados'][0]['nome_pessoa'] ?>" />
-                        </label>
-                    </div>
-                    <div class="small-12 large-3 cell">
-                        <label>CPF do Solicitante
-                            <input type="text" readonly style="width: 100%;" id="cpfSolicitante" value="<?= $_SESSION['usuariosLogados']['cpfDoUsuario'] ?>" />
-                        </label>
-                    </div>
-
-                    <div class="small-12 large-4 cell">
-                        <label>Email do Solicitante
-                            <input type="text" readonly style="width: 100%;" id="emailSolicitante" value="<?= $_SESSION['usuariosLogados'][0]['email_usuario'] ?>" />
-                        </label>
-                    </div>
-
-                    <div class="small-12 large-2 cell">
-                        <label>Dia da Solicitação
-                            <input type="text" readonly style="width: 100%;" value="<?php echo date('d/m/Y'); ?>" />
-                        </label>
-
-                    </div>
-
-                    <div class="small-12 large-1 cell">
-                        <label>CEP:
-                            <input type="text" id="txtCEP" onchange="chamaCEP($('#txtCEP').val())" style="width: 100%;" />
-                        </label>
-
-                    </div>
-
-                    <div class="small-12 large-3 cell">
-                        <label>Logradouro
-                            <input type="text" id="txtRua" style="width: 100%;" />
-                        </label>
-
-                    </div>
-                    <div class="small-12 large-1 cell">
-                        <label>Nº
-                            <input type="text" id="txtNUmero" style="width: 100%;" />
-                        </label>
-
-                    </div>
-                    <div class="small-12 large-2 cell">
-                        <label>Complemento
-                            <input type="text" id="txtComplemento" style="width: 100%;" />
-                        </label>
-
-                    </div>
-
-                    <div class="small-12 large-2 cell">
-                        <label>Bairro
-                            <input type="text" id="txtBairro" style="width: 100%;" />
-                        </label>
-
-                    </div>
-
-                    <div class="small-12 large-2 cell">
-                        <label>Cidade / Estado
-                            <input type="text" id="txtCidade" style="width: 100%;" />
-                        </label>
-
-                    </div>
-
-
-                    <div class="small-12 large-1 cell">
-                        <label>UF
-                            <input type="text" id="txtEstado" style="width: 100%;" />
-                        </label>
-
-                    </div>
-
-
-
-
-
-
-
-
-
-
-                    <div class="small-12 large-12 cell">
-                        <label>Assunto da Solicitação
-                            <input type="text" readonly style="width: 100%;" id="assuntoSolicitacao" />
-                        </label>
-                    </div>
-
-
-
-                    <div class="small-12 large-12 cell">
-                        <label>Descrição da Sua Solicitação <i>(Campo Obrigatório)</i>
-                            <textarea id='txtDescricao' rows="5" style="width: 100%;"></textarea>
-                        </label>
-                    </div>
-
-                    <div class="small-12 large-3 cell">
-                        <label>Escolha qual tipo de Inscrição
-
-                            <script>
-                                criaCombo('comboTipoInscricao');
-                            </script>
-                            <select id="comboTipoInscricao"
-                                onchange="trocaCampo($(this).val())" name="state" style="width: 100%; ">
-
-                            </select>
-                        </label>
-                    </div>
-
-                    <div class="small-12 large-2 cell" id="boxInsc">
-                        <label id="tipoInscricaoLbl">Inscrição Mobiliária </label>
-                        <input id="inscDocu" type="text" style="width: 100%;" />
-
-                    </div>
-
-                    <div class="small-12 large-2 cell">
-                        <label>Status da Solicitação
-                            <input type="text" readonly style="width: 100%;" value="Abertura" />
-                        </label>
-
-                    </div>
-
-                    <div class="small-12 large-5 cell">
-                        <label><br>
-                            <center><a class="button success" style="width: 100%;"
-                                    onclick=" inserirSolicitacao('<?= $_SESSION['usuariosLogados'][0]['id_pessoa'] ?>');">Avançar para a documentação </a>
-                            </center>
-                        </label>
-                    </div>
-            </fieldset>
-
-            <fieldset class="fieldset" id="documentacao" style="display: none;">
-                <input type="hidden" id='idSolicitacaoHidden' />
-
-                <legend>
-                    <h4 id="">Documentação Necessária para Solicitação</h4>
-                </legend>
-                <div class=" grid-x grid-padding-x">
-                    <div class="small-12 large-12 cell" id="arquivosInseriveis" style="width: 100%;">
-
-
-                    </div>
-                </div>
-
-                <div class=" grid-x grid-padding-x" id="arquivosAnexosSucesso">
-                    <div class="small-12 large-12 cell" style="width: 100%; padding-top: 30px;">
-                        <center><a class="button success " onclick=" $('#envioAssinatura').show();  
-                         verificarAssinatura($('#idSolicitacaoHidden').val())  ;
-                         qrCodeAssinatura('https:\/\/wmhtecnologia.com.br\/testeDigitalPlus_agosto\/assinatura.php?idSolicitacao='+$('#idSolicitacaoHidden').val());
-                          $('#documentacao').hide(); $('#fieldSolicitacao').hide();
-                           $('#escolha').css('color', 'rgba(8, 124, 4, 0.66)' );
-                            $('#complemento').css('color', 'rgba(8, 124, 4, 0.66)' ); 
-                            $('#docsEstagio').css('color', 'rgba(8, 124, 4, 0.66)' );" style="  width: 100%; font-size: 1.3em; border-radius: 10px; ">Todos os arquivos foram anexados com sucesso! Clique aqui para assinatura da Solicitação</a></center>
-
-                    </div>
-                </div>
-            </fieldset>
-
-
-            <fieldset class="fieldset" id="envioAssinatura" style="display: none;">
-
-
-                <legend>
-                    <h4 id="">Deite o Celular e escaneie o QRCode abaixo. Você irá assinar esta solicitação</h4>
-                </legend>
-                <br>
-
-                <div class=" grid-x grid-padding-x">
-                    <div class="small-12 large-12 cell" style="width: 100%;  ">
-
-
-
-                        <div id="img" style="padding-top: 30px;"></div>
-                        <br>
-                        <center> <a class="button" onclick="finalizarSolicitacao($('#idSolicitacaoHidden').val());
-
-                         $('#escolha').css('color', 'rgba(8, 124, 4, 0.66)' );
-                            $('#complemento').css('color', 'rgba(8, 124, 4, 0.66)' ); 
-                            $('#docsEstagio').css('color', 'rgba(8, 124, 4, 0.66)' );
-                            $('#finalizacao').css('color', 'rgba(8, 124, 4, 0.66)' );
-                            
-                        
-                        " style="width: 60%;">Se você ja assinou, clique aqui!</a></center>
-
-
-
-
-                    </div>
-                </div>
-
-
-            </fieldset>
-
-            <fieldset class="fieldset" id="finalizacaoSolicitacao" style="display: block; margin-top: 0px;">
-
-
-                <legend>
-                    <h4 id="">Aqui está sua solicitacao</h4>
-                </legend>
-                <br>
-
-                <div class=" grid-x grid-padding-x"    style="display: block; margin-top: -60px;">
-                    <div class="small-12 large-12 cell" style="width: 100%;  " id="solicitacaoFinalizada">
-
-
-
-
-                    </div>
-                </div>
-
-
-            </fieldset>
-
-
-
-            <fieldset class="fieldset" id="estagios">
-
-                <div class=" grid-x grid-padding-x">
-                    <div class="small-12 large-3 cell">
-
-
-                    </div>
-
-
-                    <center>
-                        <div class="small-12 large-8 cell">
-
-                            <div class=" grid-x grid-padding-x">
-                                <div class="small-12 large-2 cell" id="escolha"> <b>1</b><br>
-                                    <i>Escolha da Solicitação</i>
-                                </div>
-
-                                <div class="small-12 large-2 cell" id="complemento" style="color: #999;"> <b>2</b><br>
-                                    <i>Complemento da Solicitação</i>
-                                </div>
-
-                                <div class="small-12 large-2 cell" id="docsEstagio" style="color: #999;"> <b>3</b><br>
-                                    <i id="docsEstagio">Documentação Necessária</i>
-                                </div>
-
-                                <div class="small-12 large-2 cell" id="finalizacao" style="color: #999;"> <b>3</b><br>
-                                    <i>Assinatura</i>
-                                </div>
-
-                                <div class="small-12 large-2 cell" id="solicitacaoEnviada" style="color: #999;"> <b>3</b><br>
-                                    <i>Solicitação Enviada</i>
-                                </div>
-
-
-
-
-
-                            </div>
-
-                        </div>
-                    </center>
-
-                    <div class="small-12 large-3 cell">
-
-
-                    </div>
-                </div>
-
-
-
-
-
-
-            </fieldset>
-
-
-
-
-
-
-
-
-        </div>
-
-
-
-
-    </div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=
+    
+    , initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <div id='solicitacaoFinalizada' ></div>    
+        
+</body>
 
 <script>
+
+    exibirSolicitacao(62)
+
     $('#linkHelpServico').hide();
+    $('#iniciosSolicitacao').hide();
     $('#fieldSolicitacao').hide();
+    $('#boxTerceiro').hide();
     $('#documentacao').hide();
     $('.mensagemB').hide();
     $('#arquivosAnexosSucesso').hide();
@@ -371,15 +37,25 @@ echo '</pre>';
     $('#finalizacaoSolicitacao').hide();
     $('#txtCEP').mask("00000-000");
 
-    finalizarSolicitacao(170);
+    $('#botaoRetorno').hide();
+    $('#tudoCertoLink').hide();
+
+
+
+    consultarSolicitacaoStatus('10, 11');
 
 
 
 
+    function clonarClasse() {
+        var elementoParaClonar = $('#boxPessoas');
 
-    //aqui que traz os arquivos pertinentes a esse servico;
-    //criarCaixaArquivo($('#comboServicos').find(':selected').attr('codigo'));
+        // 2. Clona o elemento, incluindo seus descendentes e nós de texto (cópia profunda)
+        var elementoClonado = elementoParaClonar.clone(false, false); // O 'true, true' garante a cópia de eventos e descendentes
 
+        // 3. Adiciona o elemento clonado ao final da div com a classe "container"
+        elementoClonado.appendTo('#containerClone');
+    }
 
 
     function trocaCampo(valor) {
@@ -399,11 +75,19 @@ echo '</pre>';
 
             $('#inscDocu').mask("000.000.000.000");
 
-        } else {
+        } else if (valor === '37') {
+
+            $('#boxInsc').show();
             $('#tipoInscricaoLbl').html('Cadastro');
 
 
             $('#inscDocu').mask("0000000000000000");
+
+        } else {
+            $('#tipoInscricaoLbl').html('Outros');
+
+
+            $('#inscDocu').mask("000000000000000    00000000");
 
         }
 
@@ -412,9 +96,26 @@ echo '</pre>';
     }
 
     function inserirSolicitacao(solicitante) {
+        $('.atuarPessoa').each(function() {
+            emailAtuar = $(this).find('.emailAtuar').val();
+            nomeAtuar = $(this).find('.nomeAtuar').val();
+            celularAtuar = $(this).find('.celularAtuar').val();
+
+            pessoa = `Nome: ${nomeAtuar}. Email ${emailAtuar}. Celular  ${celularAtuar } `;
+
+            console.log(pessoa);
+
+        })
 
         var formData = {
-            assuntoSolicitacao: $('#comboServicos').find(':selected').attr('codigo'),
+            representaTerceiro: $('#representaTerceiro').val(),
+            nomeTerceiro: $('#nomeTerceiro').val(),
+            cpfTerceiro: $('#cpfTerceiro').val(),
+            emailTerceiro: $('#emailTerceiro').val(),
+            telefoneTerceiro: $('#telefoneTerceiro').val(),
+
+            //alterar o nome para idServicos
+            assuntoSolicitacao: $('#txtServicoSolicitar').val(),
             descricao: $('#txtDescricao').val(),
             documentoPublico: $('#inscDocu').val(),
             comboTipoInscricao: $('#comboTipoInscricao').val(),
@@ -429,10 +130,6 @@ echo '</pre>';
             txtBairro: $('#txtBairro').val()
 
 
-
-
-
-
         };
         $.ajax({
                 type: 'POST',
@@ -443,18 +140,16 @@ echo '</pre>';
             })
             .done(function(data) {
 
-
+                console.log(data);
 
 
                 if (data.retorno == true) {
-
                     $('#idSolicitacaoHidden').val(data.idSolicitacaoHidden);
                     $('#documentacao').show();
                     $('#fieldSolicitacao').hide();
                     $('#escolha').css('color', 'rgba(8, 124, 4, 0.66)');
                     $('#complemento').css('color', 'rgba(8, 124, 4, 0.66)');
                     $('#docsEstagio').css('color', 'rgba(0, 0, 0, 1)');
-
                 }
             });
     }
@@ -512,6 +207,35 @@ echo '</pre>';
     }
 
 
+
+
+
+
+
+    //solicitacaoStatusContainer
+
+    function consultarSolicitacaoStatus(idStatus) {
+
+        var formData = {
+            idStatus,
+
+            trazerSolicitacaoStatus: '1'
+
+        };
+        $.ajax({
+                type: 'POST',
+                url: 'ajax/solicitacaoController.php',
+                data: formData,
+                dataType: 'html',
+                encode: true
+            })
+            .done(function(data) {
+                $('#solicitacaoStatusContainer').html(data);
+            });
+    }
+
+
+
     function finalizarSolicitacao(idSolicitacao) {
 
         var formData = {
@@ -529,21 +253,44 @@ echo '</pre>';
             })
             .done(function(data) {
 
-
-                console.log(data);
-
-
-
                 $('#envioAssinatura').hide();
 
                 $('#finalizacaoSolicitacao').show();
 
+                $('#botaoRetorno').show();
+
                 $('#solicitacaoFinalizada').html(data);
 
+            });
+    }
 
 
 
+    function exibirSolicitacao(idSolicitacao) {
+        exibirSolicitacao(idSolicitacao)
 
+        $('#exibirSolicitacoes').foundation('open');
+
+        var formData = {
+            idSolicitacao,
+
+            finalizaSolicitacao: '1'
+
+        };
+        $.ajax({
+                type: 'POST',
+                url: 'ajax/salvaAssinaturaController.php',
+                data: formData,
+                dataType: 'html',
+                encode: true
+            })
+            .done(function(data) {
+
+                $('#envioAssinatura').hide();
+
+
+
+                $('#exibirSolicitacaoModal').html(data);
 
             });
     }

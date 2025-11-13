@@ -19,7 +19,7 @@ if (isset($_POST['containner']) && $_POST['containner'] == 'comboServicosCategor
     echo  '<option    >     </option>';
 
     foreach ($dados as $key => $value) {
-        echo '<option     value=' . $value['idCategoria'] . '  >' .  $value['descricaoCategoria'] . '</option>';
+        echo '<option     value=' . $value['id_categoria'] . '  >' .  $value['descricao_categoria'] . '</option>';
     }
 }
 
@@ -87,14 +87,14 @@ if (isset($_POST['containner']) && $_POST['containner'] == 'comboServicosDocumen
 
     foreach ($dados as $key => $value) {
 
-        $descricao = $value['nomeServico'];
+        $descricao = $value['nome_servico'];
         if (strlen($descricao) > 200) {
 
             $descricao = substr($descricao, 0, 200) . '...';
         }
 
 
-        echo '<option value=' . $value['idCartaServico'] . '>' . $descricao . '</option>';
+        echo '<option value=' . $value['id_carta_servico'] . '>' . $descricao . '</option>';
     }
 }
 
@@ -113,14 +113,14 @@ if (isset($_POST['containner']) && $_POST['containner'] == 'comboDocumentos') {
 
     foreach ($dados as $key => $value) {
 
-        $descricao = $value['descricaoDoc'];
+        $descricao = $value['descricao_doc'];
         if (strlen($descricao) > 200) {
 
             $descricao = substr($descricao, 0, 200) . '...';
         }
 
 
-        echo '<option value=' . $value['idDoc'] . '  >' . $descricao . '</option>';
+        echo '<option value=' . $value['id_doc'] . '  >' . $descricao . '</option>';
     }
 }
 
