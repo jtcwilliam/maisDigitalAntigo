@@ -367,7 +367,7 @@ class Solicitacao
                 TO_CHAR(data_solicitacao, 'DD') as dia,
  				TO_CHAR(data_solicitacao, 'MM') as mês,
 				TO_CHAR(data_solicitacao, 'YY') as ano,
-				sl.assinatura_solicitacao,d.descricao_doc,   encode(assinatura_solicitacao,'hex') as assinatura_solicitacao, 
+				sl.assinatura_solicitacao,d.descricao_doc,    assinatura_solicitacao,
                 TO_CHAR(data_solicitacao, 'DD/MM/YYYY') as dia_da_solicitacao , sts.descricao_status
                 from solicitacao sl inner join  carta_servico cs on cs.id_carta_servico = sl.id_carta_servico  
                 inner join nome_carta_servico ncs on ncs.id_nome_carta_servico  = cs.id_nome_carta_servico 

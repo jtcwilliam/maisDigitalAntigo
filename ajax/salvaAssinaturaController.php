@@ -7,9 +7,7 @@ include_once '../classes/Solicitacao.php';
 
 
 
-
-$objSolicitacao = new Solicitacao();
-
+$objSolicitacao = new Solicitacao(); 
 
 
 if (isset($_POST['verificarAssinatura'])  &&  $_POST['verificarAssinatura']) {
@@ -162,10 +160,10 @@ if (isset($_POST['finalizaSolicitacao'])  &&  $_POST['finalizaSolicitacao']) {
 
 
 
- 
-    echo $assinaturaAtiva[0]['assinatura_solicitacao'] ;
 
-    echo   ' <br> <center><img style="" src="' . $assinaturaAtiva[0]['assinatura_solicitacao']  . '" /><br> <p   style="margin-top: -40px; font-size:1.5em">' . $assinaturaAtiva[0]['nome_pessoa']  . ' </p> </center>';
+    //echo $assinaturaAtiva[0]['assinatura_solicitacao'] ;
+
+    echo   '<center><img style="" src="' . $assinaturaAtiva[0]['assinatura_solicitacao']  . '" /><br> <p   style="margin-top: -40px; font-size:1.5em">' . $assinaturaAtiva[0]['nome_pessoa']  . ' </p> </center>';
 
 
 
@@ -181,7 +179,7 @@ if (isset($_POST['finalizaSolicitacao'])  &&  $_POST['finalizaSolicitacao']) {
 $objSolicitacao->setArquivo($_POST['assinatura']);
 $objSolicitacao->setSolicitacao($_POST['idSolicitacao']);
 
-
+ 
 
 if ($_POST['assinaturaTerceiro'] && $_POST['assinaturaTerceiro'] == '1') {
     if ($objSolicitacao->inserirAssinaturaSolicitacao(1) == true) {

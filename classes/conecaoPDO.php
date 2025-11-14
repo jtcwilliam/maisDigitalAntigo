@@ -39,20 +39,20 @@ class Conexao
 
             //  servidor desenvolvimento
 
-           /* $user = 'dbagenddevpost';
+            $user = 'dbagenddevpost';
             $pwd = 'Sge@4@5';
             $db = 'dbagenddevpost';
             $host = 'dbagenddevpost.postgresql.dbaas.com.br';
-            $port = '5432';*/
+            $port = '5432';
 
 
-            $user = $_SERVER['DB_USER'];
+          /*  $user = $_SERVER['DB_USER'];
             $pwd = $_SERVER['DB_PASS'];
             $db = $_SERVER['DB_NAME'];
             $host = $_SERVER['DB_HOST'];
             $port = $_SERVER['DB_PORT'];
 
-
+*/
 
             $dns = "pgsql:host=$host;port=$port;dbname=$db";
 

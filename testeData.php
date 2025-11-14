@@ -1,29 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
-<body>
-<script>
-var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
- 
 
-</script>
+<body>
+  <script>
+    var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  </script>
 
 </body>
+
 </html>
 
 
 <?php
 
 
- 
+include_once './classes/Solicitacao.php';
 
-  $rootDir = realpath($_SERVER["DOCUMENT_ROOT"]);
+$objSolicitacao = new Solicitacao();
 
-if($rootDir == "/var/www/html/php83" ){
+$dados =  $objSolicitacao->pesquisarAssinatura(71);
+
+echo '<pre>';
+print_r($dados);
+echo '</pre>';
+
+
+
+$rootDir = realpath($_SERVER["DOCUMENT_ROOT"]);
+
+if ($rootDir == "/var/www/html/php83") {
   echo 'servidor funcionando blz';
 }
 
@@ -50,11 +61,3 @@ if ($variavel == "   ") {
 }
 
 */
-
-
- 
-
-
-
-
-
